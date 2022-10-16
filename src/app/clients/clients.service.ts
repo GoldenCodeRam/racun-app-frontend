@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Component,OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Client} from '../models/Client';
 import { Observable } from 'rxjs';
@@ -6,11 +6,16 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class ClientsService {
+export class ClientsService  implements OnInit{
 
   API_URI = '';
 
+
+
   constructor(private http: HttpClient) { }
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
   getClients(){
     return this.http.get(`${this.API_URI}/clients`);
