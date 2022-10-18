@@ -34,32 +34,33 @@
             <tbody>
                 <tr appCellClick *ngFor="let item of clients">
                     <th scope="row">{{item.document}}</th>
-                    <td>{{item.first_name}} </td>
-                    <td>{{item.last_name}}</td>
+                    <td>{{item.firstName}} </td>
+                    <td>{{item.lastName}}</td>
                     <td>{{item.address}}</td>
-                    <td>{{item.service}}</td>
-                    <td *ngIf="item.status==0"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    <td> Servicio </td>
+
+                    <td *ngIf="true"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
                             data-bs-whatever="@getbootstrap" style="background-color: rgb(244, 244, 244);"
                             class="btn btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z" />
                             </svg></a></td>
-                    <td *ngIf="item.status==1"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    <td *ngIf="false"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
                             data-bs-whatever="@getbootstrap" style="background-color: rgb(80, 241, 11);"
                             class="btn btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z" />
                             </svg></a></td>
-                    <td *ngIf="item.status==2"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    <td *ngIf="false"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
                             data-bs-whatever="@getbootstrap" style="background-color: rgb(241, 214, 11);"
                             class="btn btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm6.5-11a.5.5 0 0 0-1 0V6H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V7H10a.5.5 0 0 0 0-1H8.5V4.5z" />
                             </svg></a></td>
-                    <td *ngIf="item.status==3"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
+                    <td *ngIf="false"><a data-bs-toggle="modal" data-bs-target="#exampleModal"
                             data-bs-whatever="@getbootstrap" style="background-color: rgb(241, 49, 11);"
                             class="btn btn-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                 fill="currentColor" class="bi bi-bookmark-plus-fill" viewBox="0 0 16 16">

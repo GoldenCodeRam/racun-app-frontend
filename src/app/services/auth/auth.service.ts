@@ -1,16 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { environment } from "src/environments/environment";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root",
 })
 export class AuthService {
-
-    constructor(
-    ) { }
+    constructor() {}
 
     async login(email: string, password: string): Promise<boolean> {
-        await fetch('http://localhost:8000/login/password', {
-            method: 'POST',
+        await fetch(`${environment.backendUrl}/login/password`, {
+            method: "POST",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json",
@@ -24,9 +23,12 @@ export class AuthService {
     }
 
     async canActivate(): Promise<boolean> {
-        const response = await fetch('http://localhost:8000/auth/canActivate', {
-            credentials: "include",
-        });
+        const response = await fetch(
+            `${environment.backendUrl}/auth/canActivate`,
+            {
+                credentials: "include",
+            }
+        );
         return response.status === 200;
     }
 }
