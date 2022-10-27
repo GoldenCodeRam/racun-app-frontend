@@ -11,6 +11,10 @@ import { LoginService } from './login/login.service';
 import { ClientsComponent } from './clients/clients.component';
 import { ClientsFormComponent } from './clients-form/clients-form.component';
 import { ClientsService } from './clients/clients.service';
+import { ZonesComponent } from './zones/zones.component';
+import { ZoneService } from './zones/zone.service';
+import { ZonesFormComponent } from './zones-form/zones-form.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 
@@ -24,7 +28,10 @@ const appRoutes:Routes = [
     AppComponent,
     LoginComponent,
     ClientsComponent,
-    ClientsFormComponent
+    ClientsFormComponent,
+    ZonesComponent,
+    ZonesFormComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +41,8 @@ const appRoutes:Routes = [
   ],
   providers: [
     LoginService,
-    ClientsService
+    ClientsService,
+    ZoneService
   ],
   bootstrap: [AppComponent]
 })
