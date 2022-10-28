@@ -10,9 +10,9 @@ import { ZoneService } from './zone.service';
 export class ZonesComponent implements OnInit {
 
 
-  //zones : any = [];
+  zones : any = [];
 
-    zonesList=[
+    /*zonesList=[
       {
         id:1,
         name:"San Cayetano",
@@ -45,7 +45,7 @@ export class ZonesComponent implements OnInit {
         equipos:["TP-Link Nuevo","TP-Link Prestado"],
         url:""
       }
-    ]
+    ]*/
 
   constructor(private zoneService: ZoneService) { }
 
@@ -54,12 +54,12 @@ export class ZonesComponent implements OnInit {
   }
 
   getZones(){
-    /*this.zoneService.getZones().subscribe(
+    this.zoneService.getZones().subscribe(
       res => {
         this.zones = res;
       },
       err => console.error(err)
-    );*/
+    );
   }
 
   deleteZone(id:number){
