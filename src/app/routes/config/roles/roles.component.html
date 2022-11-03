@@ -1,0 +1,35 @@
+<app-main-navbar></app-main-navbar>
+<div class="h-full">
+    <h1 class="text-center">Permisos de roles</h1>
+    <hr>
+    <div class="row m-0 p-0">
+        <div class="col-12 col-sm-4 py-2 p-0 border rounded shadow-sm">
+            <h2 class="text-center">Rol</h2>
+            <div class="list-group list-group-flush overflow-auto max-vh-50">
+                <div *ngIf="roles.length === 0" class="text-center py-2">
+                    <i class="bi bi-box me-2"></i>
+                    Sin roles
+                </div>
+                <button
+                    *ngFor="let role of roles"
+                    type="button"
+                    class="list-group-item list-group-item-action"
+                >
+                    The current button
+                </button>
+            </div>
+            <button
+                class="btn btn-primary d-block m-auto mt-2"
+                (click)="showCreateRoleModal()"
+            >
+                <i class="bi bi-plus-lg"></i>
+                Añadir rol
+            </button>
+        </div>
+        <div class="col mt-sm-0 mt-2">
+            <h2 class="text-center">Permisos</h2>
+        </div>
+    </div>
+</div>
+
+<app-create-role-modal></app-create-role-modal>

@@ -1,21 +1,34 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ClientsComponent } from "./clients/clients.component";
+import { ClientsComponent } from "./routes/clients/clients.component";
 import { AuthGuard } from "./guards/auth.guard";
-import { HomeComponent } from "./home/home/home.component";
-import { PageNotFoundComponent } from "./home/page-not-found/page-not-found.component";
-import { LoginComponent } from "./login/login.component";
+import { HomeComponent } from "./routes/home/home/home.component";
+import { PageNotFoundComponent } from "./routes/home/page-not-found/page-not-found.component";
+import { LoginComponent } from "./routes/login/login.component";
+import { RolesComponent } from "./routes/config/roles/roles.component";
 
 const routes: Routes = [
     {
         path: "home",
         component: HomeComponent,
         canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        children: [
+            {
+                path: "clients",
+                component: ClientsComponent,
+            },
+        ]
     },
     {
-        path: "clients",
-        component: ClientsComponent,
-        canActivate: [AuthGuard],
+        path: "config",
+        canActivateChild: [AuthGuard],
+        children: [
+            {
+                path: "roles",
+                component: RolesComponent,
+            }
+        ]
     },
     {
         path: "login",
@@ -36,4 +49,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
