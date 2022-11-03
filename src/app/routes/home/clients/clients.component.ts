@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { Client } from "../../models/Client";
-import { ClientsService } from "./clients.service";
+import { Client } from "src/app/models/client";
+import { ApiService } from "src/app/services/api/api.service";
 
 @Component({
     selector: "app-clients",
@@ -8,7 +8,7 @@ import { ClientsService } from "./clients.service";
     styleUrls: ["./clients.component.css"],
 })
 export class ClientsComponent implements OnInit {
-    clients: Client[] = [];
+    public clients: Client[] = [];
 
     Equipos = [
         {
@@ -61,13 +61,11 @@ export class ClientsComponent implements OnInit {
         },
     ];
 
-    constructor(private clientService: ClientsService) {}
+    constructor(private apiService: ApiService) {}
 
-    ngOnInit(): void {
-        this.clientService.getClients().subscribe({
-            next: (clients: Client[]) => (this.clients = clients),
-            error: (err) => console.log(err),
-        });
+    async ngOnInit() {
+        const clients = await this.apiService.getClients();
+        this.clients = clients;
     }
 
     traerInfoClientes(id: any) {

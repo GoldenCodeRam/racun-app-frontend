@@ -1,33 +1,99 @@
 <app-main-navbar></app-main-navbar>
-<div class="h-full">
-    <h1 class="text-center">Permisos de roles</h1>
-    <hr>
-    <div class="row m-0 p-0">
-        <div class="col-12 col-sm-4 py-2 p-0 border rounded shadow-sm">
-            <h2 class="text-center">Rol</h2>
-            <div class="list-group list-group-flush overflow-auto max-vh-50">
-                <div *ngIf="roles.length === 0" class="text-center py-2">
-                    <i class="bi bi-box me-2"></i>
-                    Sin roles
+
+<div>
+    <h1 class="text-center">Configuración de roles</h1>
+    <hr />
+    <div class="row m-0 p-0 px-4">
+        <div class="col-12 col-sm-4">
+            <div class="d-flex py-2 p-0 flex-column border rounded shadow-sm">
+                <h2 class="text-center">Rol</h2>
+                <div
+                    class="list-group list-group-flush overflow-auto max-vh-50"
+                >
+                    <div *ngIf="roles.length === 0" class="text-center py-2">
+                        <i class="bi bi-box me-2"></i>
+                        Sin roles
+                    </div>
+                    <button
+                        *ngFor="let role of roles"
+                        type="button"
+                        class="list-group-item list-group-item-action"
+                        [ngClass]="{
+                            active: selectedRole
+                                ? selectedRole.id == role.id
+                                : false
+                        }"
+                        (click)="getRolePermissions(role)"
+                    >
+                        {{ role.name }}
+                    </button>
                 </div>
                 <button
-                    *ngFor="let role of roles"
-                    type="button"
-                    class="list-group-item list-group-item-action"
+                    class="btn btn-primary d-block m-auto mt-2"
+                    (click)="showCreateRoleModal()"
                 >
-                    The current button
+                    <i class="bi bi-plus-lg"></i>
+                    Añadir rol
                 </button>
             </div>
-            <button
-                class="btn btn-primary d-block m-auto mt-2"
-                (click)="showCreateRoleModal()"
-            >
-                <i class="bi bi-plus-lg"></i>
-                Añadir rol
-            </button>
         </div>
         <div class="col mt-sm-0 mt-2">
+            <h2 class="text-center">Información del rol</h2>
+            <hr />
             <h2 class="text-center">Permisos</h2>
+            <div class="d-grid gap-2">
+                <div *ngFor="let permission of permissions">
+                    <div class="row border rounded shadow-sm">
+                        <div class="col">
+                            {{ permission.api.route }}
+                        </div>
+                        <div class="col">
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefault"
+                                    [checked]="permission.get"
+                                />
+                                <label
+                                    class="form-check-label"
+                                    for="flexCheckDefault"
+                                    >GET</label
+                                >
+                            </div>
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefault"
+                                    [checked]="permission.post"
+                                />
+                                <label
+                                    class="form-check-label"
+                                    for="flexCheckDefault"
+                                    >POST</label
+                                >
+                            </div>
+                            <div class="form-check">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    value=""
+                                    id="flexCheckDefault"
+                                    [checked]="permission.delete"
+                                />
+                                <label
+                                    class="form-check-label"
+                                    for="flexCheckDefault"
+                                    >DELETE</label
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

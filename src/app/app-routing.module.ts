@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ClientsComponent } from "./routes/clients/clients.component";
 import { AuthGuard } from "./guards/auth.guard";
 import { HomeComponent } from "./routes/home/home/home.component";
 import { PageNotFoundComponent } from "./routes/home/page-not-found/page-not-found.component";
 import { LoginComponent } from "./routes/login/login.component";
 import { RolesComponent } from "./routes/config/roles/roles.component";
+import { ClientsComponent } from "./routes/home/clients/clients.component";
 
 const routes: Routes = [
     {
