@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ClientsService } from './clients.service';
+import {NavigationComponent} from "../navigation/navigation.component"
 
 describe('ClientsService', () => {
   let service: ClientsService;

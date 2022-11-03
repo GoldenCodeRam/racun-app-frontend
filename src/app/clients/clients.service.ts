@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
+import { Injectable, Type } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Client } from "../models/Client";
+import { Client, Hadware, Type_document } from "../models/Client";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
 
@@ -16,8 +16,19 @@ export class ClientsService {
         });
     }
 
+    getTypeDocs(): Observable<Type_document[]> {
+        return this.http.get<Type_document[]>(`${environment.apiUrl}/typeDoc`, {
+            withCredentials: true,
+        });
+    }
     getClient(id: string) {
         return this.http.get(`${environment.apiUrl}/clients/${id}`);
+    }
+
+    gethadwareByClient(id: string) {
+        return this.http.get<Hadware[]>(`${environment.apiUrl}/clients`, {
+            withCredentials: true,
+        });
     }
 
     saveClient(client: Client) {

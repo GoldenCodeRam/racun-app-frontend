@@ -7,3 +7,15 @@ export interface Client {
     address: string;
     email?: string;
 }
+
+export interface Type_document{
+    value: string;
+    name: string;
+}
+
+export interface Hadware{
+    id: string;
+    model: string;
+    name:string;
+    details:string;
+}
