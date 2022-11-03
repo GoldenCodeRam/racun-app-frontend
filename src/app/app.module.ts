@@ -11,6 +11,7 @@ import { ClientsComponent } from './clients/clients.component';
 import { ClientsFormComponent } from './clients-form/clients-form.component';
 import { ClientsService } from './clients/clients.service';
 import { NavigationComponent } from './navigation/navigation.component';
+import { UsersComponent } from './users/users.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NavigationComponent } from './navigation/navigation.component';
     LoginComponent,
     ClientsComponent,
     ClientsFormComponent,
-    NavigationComponent
+    NavigationComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,

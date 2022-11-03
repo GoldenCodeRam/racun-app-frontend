@@ -86,6 +86,8 @@ export class ClientsComponent implements OnInit {
 
     })
 
+
+
     ngOnInit(): void {
         this.clientService.getClients().subscribe({
             next: (clients: Client[]) => (this.clients = clients),
@@ -97,6 +99,18 @@ export class ClientsComponent implements OnInit {
         })
     }
 
+    initForm(){
+        this.formClient=new FormGroup({
+            first_name: new FormControl("", Validators.required),
+            last_name: new FormControl("", Validators.required),
+            type_document: new FormControl("", Validators.required),
+            document: new FormControl("", Validators.required),
+            phone: new FormControl("", Validators.required),
+            email: new FormControl("", Validators.required),
+            address: new FormControl("", Validators.required),
+    
+        })
+    }
 
     //Trae la informacion del usuario seleccionado (Documento lo trae cc-123312 y lo separa )
     getInfo(client: Client) {
@@ -115,6 +129,9 @@ export class ClientsComponent implements OnInit {
             type_document: client.document.split('-')[0]
         }
         )
+    }
+    clearForm(){
+        this.initForm();
     }
 
     addClient() {
