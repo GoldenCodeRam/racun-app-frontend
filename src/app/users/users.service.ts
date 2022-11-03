@@ -3,32 +3,29 @@ import { HttpClient } from "@angular/common/http";
 import { Client, Hadware, Type_document } from "../models/Client";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { User } from "../models/Users";
 
 @Injectable({
     providedIn: "root",
 })
-export class ClientsService {
+export class UsersService {
     constructor(private http: HttpClient) {}
 
-    getClients(): Observable<Client[]> {
-        return this.http.get<Client[]>(`${environment.apiUrl}/clients`, {
+    getUsers(): Observable<User[]> {
+        return this.http.get<User[]>(`${environment.apiUrl}/users`, {
             withCredentials: true,
         });
     }
 
-    getTypeDocs(): Observable<Type_document[]> {
-        return this.http.get<Type_document[]>(`${environment.apiUrl}/typeDoc`, {
+    getUsersByRols(id: string): Observable<User[]> {
+        return this.http.get<User[]>(`${environment.apiUrl}/users/order/${id}`, {
             withCredentials: true,
         });
     }
+
+
     getClient(id: string) {
-        return this.http.get(`${environment.apiUrl}/clients/${id}`);
-    }
-
-    gethadwareByClient(id: string) {
-        return this.http.get<Hadware[]>(`${environment.apiUrl}/clients`, {
-            withCredentials: true,
-        });
+        return this.http.get(`${environment.apiUrl}/users/${id}`);
     }
 
     saveClient(client: Client) {
