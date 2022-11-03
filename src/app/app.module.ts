@@ -1,6 +1,9 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
+import { Routes } from '@angular/router';
+import { FormsModule, ReactiveFormsModule  } from "@angular/forms";
+
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
@@ -10,8 +13,14 @@ import { LoginService } from './login/login.service';
 import { ClientsComponent } from './clients/clients.component';
 import { ClientsFormComponent } from './clients-form/clients-form.component';
 import { ClientsService } from './clients/clients.service';
-import { NavigationComponent } from './navigation/navigation.component';
+
 import { UsersComponent } from './users/users.component';
+
+import { ZonesComponent } from './zones/zones.component';
+import { ZoneService } from './zones/zone.service';
+import { ZonesFormComponent } from './zones-form/zones-form.component';
+import { NavigationComponent } from './navigation/navigation.component';
+
 
 
 @NgModule({
@@ -20,8 +29,9 @@ import { UsersComponent } from './users/users.component';
     LoginComponent,
     ClientsComponent,
     ClientsFormComponent,
-    NavigationComponent,
-    UsersComponent
+    ZonesComponent,
+    ZonesFormComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +42,8 @@ import { UsersComponent } from './users/users.component';
   ],
   providers: [
     LoginService,
-    ClientsService
+    ClientsService,
+    ZoneService
   ],
   bootstrap: [AppComponent]
 })
