@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { CreateRoleModalComponent } from "src/app/components/modals/create-role-modal/create-role-modal.component";
+import { CreateRoleModalComponent } from "src/app/components/modals/roles/create-role-modal/create-role-modal.component";
+import { EditRoleModalComponent } from "src/app/components/modals/roles/edit-role-modal/edit-role-modal.component";
 import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
 import { ApiService } from "src/app/services/api/api.service";
@@ -13,6 +14,9 @@ export class RolesComponent implements OnInit {
     @ViewChild(CreateRoleModalComponent)
     public createRoleModal!: CreateRoleModalComponent;
 
+    @ViewChild(EditRoleModalComponent)
+    public editRoleModal!: EditRoleModalComponent;
+
     public selectedRole!: Role;
 
     public roles: Role[] = [];
@@ -25,7 +29,7 @@ export class RolesComponent implements OnInit {
     }
 
     public showCreateRoleModal() {
-        console.log(this.createRoleModal.showModal());
+        this.createRoleModal.showModal();
     }
 
     public async getRolePermissions(role: Role) {

@@ -4,12 +4,23 @@
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/utilities";
 
-html {
-    height: 100%;
-}
-
+html,
 body {
     height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.flex-1-1-auto {
+    flex: 1 1 auto;
+}
+
+.mh-min-content {
+    max-height: min-content;
+}
+
+.mh-50vh {
+    max-height: 50vh;
 }
 
 $all-colors: map-merge-multiple(
@@ -26,7 +37,10 @@ $all-colors: map-merge-multiple(
     $grays
 );
 
-$theme-colors-rgb: map-merge($theme-colors-rgb, map-loop($all-colors, to-rgb, "$value"));
+$theme-colors-rgb: map-merge(
+    $theme-colors-rgb,
+    map-loop($all-colors, to-rgb, "$value")
+);
 
 $utilities: map-merge(
     $utilities,

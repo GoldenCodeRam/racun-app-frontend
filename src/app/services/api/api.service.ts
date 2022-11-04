@@ -5,6 +5,7 @@ import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
 import { environment } from "src/environments/environment";
+import { SearchResult } from "./apiTypes";
 
 @Injectable({
     providedIn: "root",
@@ -21,6 +22,39 @@ export class ApiService {
                 .subscribe({
                     next(result) {
                         resolve(result as User);
+                    },
+                });
+        });
+    }
+
+    public getUser(userId: number): Promise<User> {
+        return this.makeSimpleGetRequest(`/users/${userId}`);
+    }
+
+    // TODO: This method is too big and should be divided.
+    public getUsers(
+        userSearch: string,
+        currentPage: number,
+        searchAmount: number
+    ): Promise<SearchResult<User>> {
+        return new Promise((resolve, reject) => {
+            this.httpClient
+                .post(
+                    `${environment.apiUrl}/users`,
+                    {
+                        userSearch: userSearch,
+                        // Say we are on page 3 with a search amount of 5, so we
+                        // need to skip 15 ahead and search five more.
+                        skip: currentPage * searchAmount,
+                        take: searchAmount,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .subscribe({
+                    next: (value) => {
+                        resolve(value as SearchResult<User>);
                     },
                 });
         });
@@ -54,12 +88,38 @@ export class ApiService {
             });
     }
 
-    public getClients(): Promise<Client[]> {
-        return this.makeSimpleGetRequest<Client[]>("/clients");
+    // TODO: We should refactor the getClients and getUsers methods as they are
+    // the same.
+    public getClients(
+        userSearch: string,
+        currentPage: number,
+        searchAmount: number
+    ): Promise<SearchResult<Client>> {
+        return new Promise((resolve, reject) => {
+            this.httpClient
+                .post(
+                    `${environment.apiUrl}/clients`,
+                    {
+                        userSearch: userSearch,
+                        // Say we are on page 3 with a search amount of 5, so we
+                        // need to skip 15 ahead and search five more.
+                        skip: currentPage * searchAmount,
+                        take: searchAmount,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .subscribe({
+                    next: (value) => {
+                        resolve(value as SearchResult<Client>);
+                    },
+                });
+        });
     }
 
-    public getClient(id: string) {
-        return this.httpClient.get(`${environment.apiUrl}/clients/${id}`);
+    public getClient(clientId: number) {
+        return this.makeSimpleGetRequest<Client>(`/clients/${clientId}`);
     }
 
     public saveClient(client: Client) {
@@ -71,6 +131,29 @@ export class ApiService {
             `${environment.apiUrl}/clients/${id}`,
             updateClient
         );
+    }
+
+    public getZones() {
+        return this.makeSimpleGetRequest("/zones");
+    }
+
+    public getZone(id: string) {
+        return this.makeSimpleGetRequest(`/zones/${id}`);
+    }
+
+    public saveZone(zone: Zone) {
+        return this.httpClient.post(`${environment.apiUrl}/zones`, zone);
+    }
+
+    public updateZone(id: string | number, updateZone: Zone) {
+        return this.httpClient.put(
+            `${environment.apiUrl}/zones/${id}`,
+            updateZone
+        );
+    }
+
+    public deleteZone(id: number) {
+        return this.httpClient.delete(`${environment.apiUrl}/zones/${id}`);
     }
 
     private async makeSimpleGetRequest<T>(url: string): Promise<T> {

@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3 mt-4" *ngFor="let zone of zones">
+            <div class="card text-center">
+                <div
+                    class="card-header bg-dark text-white justify-content-between align-items-center"
+                >
+                    {{ zone.name }}
+                </div>
+                <img
+                    src="{{ zone.url }}"
+                    class="card-img-top"
+                    style="height: 300px"
+                />
+                <div class="card-body">
+                    <p>{{ zone.equipos }}</p>
+                    <div>
+                        <a
+                            href=""
+                            class="btn btn-block disabled"
+                            style="background-color: gray; width: 400px"
+                        ></a>
+                    </div>
+                    <a
+                        class="btn btn-primary mt-3 mr-4"
+                        style="margin-right: 30px"
+                        >Actualizar&nbsp;&nbsp;<i
+                            class="fa-solid fa-pen-to-square"
+                        ></i
+                    ></a>
+                    <button
+                        class="btn btn-danger mt-3"
+                        (click)="deleteZone(zone.id)"
+                    >
+                        Eliminar&nbsp;&nbsp;<i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

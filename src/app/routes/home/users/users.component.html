@@ -1,19 +1,19 @@
 <div class="h-100 d-flex flex-column">
     <app-main-navbar></app-main-navbar>
 
-    <h1 class="text-700 text-center m-0">Clientes</h1>
+    <h1 class="text-700 text-center m-0">Usuarios</h1>
     <div class="text-center py-2 border-bottom">
         <button class="btn btn-primary disabled">
             <i class="bi bi-plus-lg"></i>
-            Crear cliente
+            Crear usuario
         </button>
     </div>
     <div class="h-100">
         <app-search-list [getFunction]="getFunction" #search>
             <div class="list-group px-5">
                 <a
-                    *ngFor="let client of search.search"
-                    routerLink="/clients/{{ client.id }}"
+                    *ngFor="let user of search.search"
+                    routerLink="/users/{{ user.id }}"
                     class="list-group-item list-group-item-action d-flex gap-2 py-1"
                     aria-current="true"
                 >
@@ -23,11 +23,10 @@
                     >
                         <div>
                             <h6 class="mb-0">
-                                {{ client.firstName }}
-                                {{ client.lastName }}
+                                {{ user.firstName }} {{ user.lastName }}
                             </h6>
                             <p class="mb-0 opacity-75 small">
-                                {{ client.document }}
+                                {{ user.role.name }}
                             </p>
                         </div>
                     </div>

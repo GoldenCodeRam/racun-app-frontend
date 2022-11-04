@@ -6,29 +6,58 @@ import { PageNotFoundComponent } from "./routes/home/page-not-found/page-not-fou
 import { LoginComponent } from "./routes/login/login.component";
 import { RolesComponent } from "./routes/config/roles/roles.component";
 import { ClientsComponent } from "./routes/home/clients/clients.component";
+import { ZonesComponent } from "./routes/home/zones/zones.component";
+import { ConfigComponent } from "./routes/config/config/config.component";
+import { UsersComponent } from "./routes/home/users/users.component";
+import { HardwareComponent } from "./routes/home/hardware/hardware.component";
+import { ShowUserComponent } from "./routes/home/users/show-user/show-user.component";
+import { ShowClientComponent } from "./routes/home/clients/show-client/show-client.component";
 
 const routes: Routes = [
     {
         path: "home",
         component: HomeComponent,
         canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        children: [
-            {
-                path: "clients",
-                component: ClientsComponent,
-            },
-        ]
+    },
+    {
+        path: "users",
+        component: UsersComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "users/:userId",
+        component: ShowUserComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "clients",
+        component: ClientsComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "clients/:clientId",
+        component: ShowClientComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "zones",
+        component: ZonesComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "hardware",
+        component: HardwareComponent,
+        canActivate: [AuthGuard],
     },
     {
         path: "config",
-        canActivateChild: [AuthGuard],
-        children: [
-            {
-                path: "roles",
-                component: RolesComponent,
-            }
-        ]
+        component: ConfigComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "config/roles",
+        component: RolesComponent,
+        canActivate: [AuthGuard],
     },
     {
         path: "login",
@@ -49,4 +78,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

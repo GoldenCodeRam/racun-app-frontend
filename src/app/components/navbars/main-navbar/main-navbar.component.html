@@ -14,10 +14,14 @@
             Menú
         </button>
         <a class="navbar-brand" routerLink="/home">🦝 RACUN</a>
-        <button class="btn btn-light d-none d-sm-block" type="button">
+        <a
+            routerLink="/users/{{ user ? user.id : '' }}"
+            class="btn btn-light d-none d-sm-block"
+            type="button"
+        >
             <i class="bi bi-person-fill"></i>
             {{ user ? user.firstName : "" }}
-        </button>
+        </a>
     </div>
 </nav>
 
@@ -27,29 +31,83 @@
     id="offcanvasExample"
     aria-labelledby="offcanvasExampleLabel"
 >
-    <div class="offcanvas-header">
+    <div class="offcanvas-header px-3 pt-3 p-0">
         <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menú</h5>
-        <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-        ></button>
     </div>
-    <div class="offcanvas-body">
-        <ul class="list-group list-group-flush">
-            <a
-                routerLink="/home/clients"
-                class="list-group-item list-group-item-action"
-            >
-                Clientes
-            </a>
-            <a
-                routerLink="/config/roles"
-                class="list-group-item list-group-item-action"
-            >
-                Configuración
-            </a>
+    <hr />
+    <div class="offcanvas-body px-3 py-0">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a
+                    routerLink="/home"
+                    routerLinkActive="active"
+                    class="nav-link"
+                >
+                    <i class="bi bi-house-fill me-2"></i>
+                    Inicio
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    routerLink="/users"
+                    routerLinkActive="active"
+                    class="nav-link"
+                >
+                    <i class="bi bi-people-fill me-2"></i>
+                    Usuarios
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    routerLink="/clients"
+                    routerLinkActive="active"
+                    class="nav-link"
+                >
+                    <i class="bi bi-file-earmark-person-fill me-1"></i>
+                    Clientes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    routerLink="/zones"
+                    routerLinkActive="active"
+                    class="nav-link"
+                >
+                    <i class="bi bi-map-fill me-2"></i>
+                    Zonas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a
+                    routerLink="/hardware"
+                    routerLinkActive="active"
+                    class="nav-link"
+                >
+                    <i class="bi bi-motherboard-fill me-2"></i>
+                    Equipos
+                </a>
+            </li>
+        </ul>
+    </div>
+    <hr />
+    <div class="canvas-footer px-3 pb-3">
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item">
+                <a
+                    routerLink="/config"
+                    class="nav-link"
+                    routerLinkActive="active"
+                >
+                    <i class="bi bi-gear-fill me-2"></i>
+                    Configuración
+                </a>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link text-danger" routerLinkActive="active">
+                    <i class="bi bi-door-open-fill"></i>
+                    Cerrar sesión
+                </button>
+            </li>
         </ul>
     </div>
 </div>
