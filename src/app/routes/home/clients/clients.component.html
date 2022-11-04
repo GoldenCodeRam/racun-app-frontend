@@ -9,7 +9,11 @@
         </button>
     </div>
     <div class="h-100">
-        <app-search-list [getFunction]="getFunction" #search>
+        <app-search-list
+            [searchFunctionService]="searchFunctionService"
+            [searchLimit]="CLIENT_SEARCH_LIMIT"
+            #search
+        >
             <div class="list-group px-5">
                 <a
                     *ngFor="let client of search.search"

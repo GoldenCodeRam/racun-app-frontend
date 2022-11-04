@@ -4,6 +4,7 @@ import { Client } from "src/app/models/client";
 import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
+import { Zone } from "src/app/models/zone";
 import { environment } from "src/environments/environment";
 import { SearchResult } from "./apiTypes";
 
@@ -37,27 +38,12 @@ export class ApiService {
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<User>> {
-        return new Promise((resolve, reject) => {
-            this.httpClient
-                .post(
-                    `${environment.apiUrl}/users`,
-                    {
-                        userSearch: userSearch,
-                        // Say we are on page 3 with a search amount of 5, so we
-                        // need to skip 15 ahead and search five more.
-                        skip: currentPage * searchAmount,
-                        take: searchAmount,
-                    },
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (value) => {
-                        resolve(value as SearchResult<User>);
-                    },
-                });
-        });
+        return this.makeSearchPaginationRequest(
+            "/users",
+            userSearch,
+            currentPage,
+            searchAmount
+        );
     }
 
     public async getRoles(): Promise<Role[]> {
@@ -95,27 +81,12 @@ export class ApiService {
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Client>> {
-        return new Promise((resolve, reject) => {
-            this.httpClient
-                .post(
-                    `${environment.apiUrl}/clients`,
-                    {
-                        userSearch: userSearch,
-                        // Say we are on page 3 with a search amount of 5, so we
-                        // need to skip 15 ahead and search five more.
-                        skip: currentPage * searchAmount,
-                        take: searchAmount,
-                    },
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (value) => {
-                        resolve(value as SearchResult<Client>);
-                    },
-                });
-        });
+        return this.makeSearchPaginationRequest(
+            "/clients",
+            userSearch,
+            currentPage,
+            searchAmount
+        );
     }
 
     public getClient(clientId: number) {
@@ -133,8 +104,17 @@ export class ApiService {
         );
     }
 
-    public getZones() {
-        return this.makeSimpleGetRequest("/zones");
+    public getZones(
+        userSearch: string,
+        currentPage: number,
+        searchAmount: number
+    ): Promise<SearchResult<Zone>> {
+        return this.makeSearchPaginationRequest(
+            "/zones",
+            userSearch,
+            currentPage,
+            searchAmount
+        );
     }
 
     public getZone(id: string) {
@@ -156,7 +136,7 @@ export class ApiService {
         return this.httpClient.delete(`${environment.apiUrl}/zones/${id}`);
     }
 
-    private async makeSimpleGetRequest<T>(url: string): Promise<T> {
+    protected async makeSimpleGetRequest<T>(url: string): Promise<T> {
         return new Promise((resolve, reject) => {
             this.httpClient
                 .get(`${environment.apiUrl}${url}`, {
@@ -165,6 +145,35 @@ export class ApiService {
                 .subscribe({
                     next: (value) => {
                         resolve(value as T);
+                    },
+                });
+        });
+    }
+
+    protected makeSearchPaginationRequest<T>(
+        url: string,
+        userSearch: string,
+        currentPage: number,
+        searchAmount: number
+    ): Promise<SearchResult<T>> {
+        return new Promise((resolve, reject) => {
+            this.httpClient
+                .post(
+                    `${environment.apiUrl}${url}`,
+                    {
+                        userSearch: userSearch,
+                        // Say we are on page 3 with a search amount of 5, so we
+                        // need to skip 15 ahead and search five more.
+                        skip: currentPage * searchAmount,
+                        take: searchAmount,
+                    },
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .subscribe({
+                    next: (value) => {
+                        resolve(value as SearchResult<T>);
                     },
                 });
         });

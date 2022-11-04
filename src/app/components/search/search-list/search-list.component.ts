@@ -1,5 +1,5 @@
-import { HttpClient } from "@angular/common/http";
 import { Component, Input, OnInit } from "@angular/core";
+import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
 
 @Component({
     selector: "app-search-list",
@@ -7,7 +7,9 @@ import { Component, Input, OnInit } from "@angular/core";
     styleUrls: ["./search-list.component.sass"],
 })
 export class SearchListComponent<T> implements OnInit {
-    @Input() getFunction!: (
+    @Input() searchFunctionService!: SearchFunctionService<T>;
+
+    @Input() s!: (
         userSearch: string,
         currentPage: number,
         searchLimit: number
@@ -25,14 +27,14 @@ export class SearchListComponent<T> implements OnInit {
 
     public search: T[] = [];
 
-    constructor(private httpClient: HttpClient) {}
+    constructor() {}
 
     async ngOnInit() {
         await this.searchElements();
     }
 
     private async searchElements() {
-        const result = await this.getFunction(
+        const result = await this.searchFunctionService.search(
             this.userSearch,
             this.currentSearchPage,
             this.searchLimit

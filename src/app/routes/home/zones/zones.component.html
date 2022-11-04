@@ -1,41 +1,40 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3 mt-4" *ngFor="let zone of zones">
-            <div class="card text-center">
-                <div
-                    class="card-header bg-dark text-white justify-content-between align-items-center"
+<div class="h-100 d-flex flex-column">
+    <app-main-navbar></app-main-navbar>
+
+    <h1 class="text-700 text-center m-0">Clientes</h1>
+    <div class="text-center py-2 border-bottom">
+        <button class="btn btn-primary disabled">
+            <i class="bi bi-plus-lg"></i>
+            Crear zona
+        </button>
+    </div>
+    <div class="h-100">
+        <app-search-list
+            [searchFunctionService]="searchFunctionService"
+            #search
+        >
+            <div class="list-group px-5">
+                <a
+                    *ngFor="let zone of search.search"
+                    routerLink="/zones/{{ zone.id }}"
+                    class="list-group-item list-group-item-action d-flex gap-2 py-1"
+                    aria-current="true"
                 >
-                    {{ zone.name }}
-                </div>
-                <img
-                    src="{{ zone.url }}"
-                    class="card-img-top"
-                    style="height: 300px"
-                />
-                <div class="card-body">
-                    <p>{{ zone.equipos }}</p>
-                    <div>
-                        <a
-                            href=""
-                            class="btn btn-block disabled"
-                            style="background-color: gray; width: 400px"
-                        ></a>
-                    </div>
-                    <a
-                        class="btn btn-primary mt-3 mr-4"
-                        style="margin-right: 30px"
-                        >Actualizar&nbsp;&nbsp;<i
-                            class="fa-solid fa-pen-to-square"
-                        ></i
-                    ></a>
-                    <button
-                        class="btn btn-danger mt-3"
-                        (click)="deleteZone(zone.id)"
+                    <i class="bi bi-people-fill"></i>
+                    <div
+                        class="d-flex gap-2 w-100 justify-content-between align-items-center"
                     >
-                        Eliminar&nbsp;&nbsp;<i class="fa-solid fa-trash"></i>
-                    </button>
-                </div>
+                        <div>
+                            <h6 class="mb-0">
+                                {{ zone.name }}
+                            </h6>
+                            <p class="mb-0 opacity-75 small">
+                                {{ zone.code }}
+                            </p>
+                        </div>
+                    </div>
+                </a>
             </div>
-        </div>
+        </app-search-list>
     </div>
 </div>

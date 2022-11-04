@@ -1,5 +1,6 @@
-import { Component, HostBinding, OnInit } from "@angular/core";
-import { ApiService } from "src/app/services/api/api.service";
+import { Component, OnInit } from "@angular/core";
+import { Zone } from "src/app/models/zone";
+import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
 
 @Component({
     selector: "app-zones",
@@ -44,11 +45,9 @@ export class ZonesComponent implements OnInit {
       }
     ]*/
 
-    constructor(private apiService: ApiService) {}
+    constructor(public searchFunctionService: SearchFunctionService<Zone>) {}
 
-    ngOnInit(): void {
-        this.getZones();
-    }
+    ngOnInit(): void {}
 
     getZones() {}
 

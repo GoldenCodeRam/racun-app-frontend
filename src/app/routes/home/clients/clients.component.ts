@@ -1,27 +1,41 @@
-import cli from "@angular/cli";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Client } from "src/app/models/client";
 import { Hardware } from "src/app/models/hardware";
-import { ApiService } from "src/app/services/api/api.service";
+import { SearchResult } from "src/app/services/api/apiTypes";
+import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
 
-// This constant is used to determine the amount of clients searched.
-const CLIENT_SEARCH_LIMIT = 5;
+class SearchFunction extends SearchFunctionService<Client> {
+    public async search<Client>(
+        userSearch: string,
+        currentSearchPage: number,
+        searchLimit: number
+    ): Promise<SearchResult<Client>> {
+        return this.getClients(userSearch, currentSearchPage, searchLimit);
+    }
+}
 
 @Component({
     selector: "app-clients",
     templateUrl: "./clients.component.html",
+    providers: [
+        {
+            provide: SearchFunctionService<Client>,
+            useClass: SearchFunction,
+        },
+    ],
     styleUrls: ["./clients.component.css"],
 })
 export class ClientsComponent implements OnInit {
+    // This constant is used to determine the amount of clients searched.
+    readonly CLIENT_SEARCH_LIMIT = 5;
+
     public userSearch: string = "";
 
     public clients: Client[] = [];
 
     public currentPage: number = 0;
     public paginationCount: number = 0;
-
-    public getFunction = this.apiService.getClients;
 
     hardware: Hardware[] = [
         {
@@ -44,7 +58,9 @@ export class ClientsComponent implements OnInit {
         },
     ];
 
-    constructor(private apiService: ApiService) {}
+    constructor(public searchFunctionService: SearchFunctionService<Client>) {
+        console.log(this.searchFunctionService);
+    }
 
     formClient = new FormGroup({
         first_name: new FormControl("", Validators.required),
@@ -56,8 +72,7 @@ export class ClientsComponent implements OnInit {
         address: new FormControl("", Validators.required),
     });
 
-    async ngOnInit() {
-    }
+    async ngOnInit() {}
 
     initForm() {
         this.formClient = new FormGroup({

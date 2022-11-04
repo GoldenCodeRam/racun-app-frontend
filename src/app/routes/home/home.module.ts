@@ -7,11 +7,13 @@ import { AppRoutingModule } from 'src/app/app-routing.module';
 import { ShowUserComponent } from './users/show-user/show-user.component';
 import { FormsModule } from '@angular/forms';
 import { ShowClientComponent } from './clients/show-client/show-client.component';
+import { ZonesComponent } from './zones/zones.component';
 
 
 @NgModule({
   declarations: [
     UsersComponent,
+    ZonesComponent,
     HardwareComponent,
     ShowUserComponent,
     ShowClientComponent,
