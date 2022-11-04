@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Client } from "src/app/models/client";
+import { Hardware } from "src/app/models/hardware";
 import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
@@ -44,6 +45,23 @@ export class ApiService {
             currentPage,
             searchAmount
         );
+    }
+
+    public async getHardware(
+        userSearch: string,
+        currentPage: number,
+        searchAmount: number
+    ): Promise<SearchResult<Hardware>> {
+        return this.makeSearchPaginationRequest(
+            "/hardware",
+            userSearch,
+            currentPage,
+            searchAmount
+        );
+    }
+
+    public async getHardwareById(hardwareId: number): Promise<Hardware> {
+        return this.makeSimpleGetRequest(`/hardware/${hardwareId}`);
     }
 
     public async getRoles(): Promise<Role[]> {
@@ -117,8 +135,8 @@ export class ApiService {
         );
     }
 
-    public getZone(id: string) {
-        return this.makeSimpleGetRequest(`/zones/${id}`);
+    public getZone(zoneId: number): Promise<Zone> {
+        return this.makeSimpleGetRequest<Zone>(`/zones/${zoneId}`);
     }
 
     public saveZone(zone: Zone) {

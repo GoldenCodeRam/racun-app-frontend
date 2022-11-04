@@ -1,0 +1,60 @@
+<div class="h-100 d-flex flex-column">
+    <app-main-navbar></app-main-navbar>
+
+    <app-loader class="h-100" *ngIf="!hardware"></app-loader>
+
+    <div *ngIf="hardware">
+        <h2 class="text-700 text-center">Usuario</h2>
+        <h6 class="text-600 text-center border-bottom pb-3">
+            {{ hardware.name }}
+        </h6>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="form-floating mb-2 m-sm-0 border rounded">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            [value]="hardware.name"
+                        />
+                        <label>Nombre</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating border rounded">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            [value]="hardware.model"
+                        />
+                        <label>Modelo</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-floating mt-2 border rounded">
+                <textarea
+                    type="text"
+                    readonly
+                    class="form-control-plaintext"
+                    style="min-height: 10em;"
+                    [value]="hardware.details"
+                ></textarea>
+                <label>Detalles</label>
+            </div>
+            <div class="d-flex justify-content-end gap-2 mt-2">
+                <button class="btn btn-sm btn-primary disabled">
+                    <i class="bi bi-pen-fill"></i>
+                    Editar
+                </button>
+                <button class="btn btn-sm btn-danger disabled">
+                    <i class="bi bi-trash-fill"></i>
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

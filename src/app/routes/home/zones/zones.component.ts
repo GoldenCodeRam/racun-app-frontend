@@ -1,10 +1,28 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Injectable, OnInit } from "@angular/core";
 import { Zone } from "src/app/models/zone";
+import { SearchResult } from "src/app/services/api/apiTypes";
 import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
+
+@Injectable()
+class SearchFunction extends SearchFunctionService<Zone> {
+    public async search(
+        userSearch: string,
+        currentSearchPage: number,
+        searchLimit: number
+    ): Promise<SearchResult<Zone>> {
+        return this.getZones(userSearch, currentSearchPage, searchLimit);
+    }
+}
 
 @Component({
     selector: "app-zones",
     templateUrl: "./zones.component.html",
+    providers: [
+        {
+            provide: SearchFunctionService<Zone>,
+            useClass: SearchFunction,
+        },
+    ],
     styleUrls: ["./zones.component.css"],
 })
 export class ZonesComponent implements OnInit {

@@ -9,15 +9,6 @@ import { SearchFunctionService } from "src/app/services/components/search/search
 export class SearchListComponent<T> implements OnInit {
     @Input() searchFunctionService!: SearchFunctionService<T>;
 
-    @Input() s!: (
-        userSearch: string,
-        currentPage: number,
-        searchLimit: number
-    ) => Promise<{
-        search: T[];
-        searchCount: number;
-    }>;
-
     @Input() searchLimit: number = 5;
 
     public userSearch: string = "";
@@ -56,8 +47,6 @@ export class SearchListComponent<T> implements OnInit {
     }
 
     public async paginationForward() {
-        console.log(this);
-        console.log(this.search);
         // Second security validation
         if (this.currentSearchPage < this.paginationCount - 1) {
             this.currentSearchPage++;

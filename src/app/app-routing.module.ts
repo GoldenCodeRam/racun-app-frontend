@@ -12,6 +12,8 @@ import { UsersComponent } from "./routes/home/users/users.component";
 import { HardwareComponent } from "./routes/home/hardware/hardware.component";
 import { ShowUserComponent } from "./routes/home/users/show-user/show-user.component";
 import { ShowClientComponent } from "./routes/home/clients/show-client/show-client.component";
+import { ShowZoneComponent } from "./routes/home/zones/show-zone/show-zone.component";
+import { ShowHardwareComponent } from "./routes/home/hardware/show-hardware/show-hardware.component";
 
 const routes: Routes = [
     {
@@ -45,8 +47,18 @@ const routes: Routes = [
         canActivate: [AuthGuard],
     },
     {
+        path: "zones/:zoneId",
+        component: ShowZoneComponent,
+        canActivate: [AuthGuard],
+    },
+    {
         path: "hardware",
         component: HardwareComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "hardware/:hardwareId",
+        component: ShowHardwareComponent,
         canActivate: [AuthGuard],
     },
     {
