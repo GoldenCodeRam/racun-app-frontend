@@ -3,18 +3,18 @@ import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { LoginService } from './login/login.service';
-import { ClientsComponent } from './clients/clients.component';
-import { ClientsFormComponent } from './clients-form/clients-form.component';
-import { ClientsService } from './clients/clients.service';
-import { ZonesComponent } from './zones/zones.component';
-import { ZoneService } from './zones/zone.service';
-import { ZonesFormComponent } from './zones-form/zones-form.component';
-import { NavigationComponent } from './navigation/navigation.component';
-
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { ComponentsModule } from "./components/components.module";
+import { HomeModule } from "./routes/home/home.module";
+import { LoginComponent } from "./routes/login/login.component";
+import { RolesComponent } from "./routes/config/roles/roles.component";
+import { ClientsComponent } from "./routes/home/clients/clients.component";
+import { HomeComponent } from "./routes/home/home/home.component";
+import { ConfigComponent } from "./routes/config/config/config.component";
+import { AuthService } from "./services/auth/auth.service";
+import { ApiService } from "./services/api/api.service";
 
 @NgModule({
     declarations: [

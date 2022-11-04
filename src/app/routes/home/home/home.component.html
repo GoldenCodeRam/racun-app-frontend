@@ -1,5 +1,97 @@
 <div class="h-100 d-flex flex-column">
     <app-main-navbar></app-main-navbar>
+    <div
+        id="carouselExampleIndicators"
+        class="carousel slide"
+        data-bs-ride="true"
+    >
+        <div class="carousel-indicators">
+            <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="0"
+                class="active"
+                aria-current="true"
+                aria-label="Slide 1"
+            ></button>
+            <button
+                type="button"
+                data-bs-target="#carouselExampleIndicators"
+                data-bs-slide-to="1"
+                aria-label="Slide 2"
+            ></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="d-flex">
+                    <div
+                        class="bg-light shadow-sm mx-auto text-center"
+                    >
+                        <img
+                            src="../../../assets/fondo1.jpeg"
+                            class="card-img-top"
+                            alt="..."
+                            style="
+                            height: 25em;
+                            width: auto;
+                            "
+                        />
+                    </div>
+                    <div class="">
+                        <h2 class="fs-1">Llegamos a Florian</h2>
+                        <p class="lead">
+                            Nuevas Instalaciones de fibra optica en florian
+                            Santander
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div
+                    class="d-flex"
+                >
+                    <div class="my-3 p-3">
+                        <h2 class="display-5">Nuevos Precios y tecnologia</h2>
+                        <p class="lead">
+                            Se actualizaron nuestros precios en todo los
+                            municipios
+                        </p>
+                    </div>
+                    <div
+                        class="bg-dark shadow-sm mx-auto"
+                    >
+                        <img
+                            src="../../../assets/fondo2.jpeg"
+                            class="card-img-top"
+                            alt="..."
+                            style="
+                            height: 25em;
+                            width: auto;
+                            "
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev"
+        >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next"
+        >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
     <h1 class="text-700 text-center">Menú principal</h1>
 
