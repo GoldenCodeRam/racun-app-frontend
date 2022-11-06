@@ -1,0 +1,67 @@
+<app-base-modal>
+    <span *ngIf="user">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">
+                Editar usuario
+            </h1>
+            <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+        </div>
+        <form [formGroup]="user">
+            <div class="modal-body">
+                <div class="form-floating border rounded">
+                    <input
+                        type="text"
+                        class="form-control"
+                        formControlName="firstName"
+                        required
+                    />
+                    <label>Nombres</label>
+                </div>
+                    {{user.valid}}
+                    {{user.controls.firstName.errors?.["required"]}}
+                <div class="form-floating mt-2 border rounded is-invalid">
+                    <input
+                        type="text"
+                        class="form-control"
+                        minlength="4"
+                        required
+                    />
+                    <label>Apellidos</label>
+                </div>
+                <div class="form-floating mt-2 border rounded">
+                    <input type="email" class="form-control" />
+                    <label>Correo electrónico</label>
+                </div>
+                <div class="form-floating mt-2 border rounded">
+                    <input
+                        type="text"
+                        readonly
+                        class="form-control-plaintext"
+                    />
+                    <label>Rol</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                >
+                    Cancelar
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-primary"
+                    [disabled]="user.invalid"
+                >
+                    Crear
+                </button>
+            </div>
+        </form>
+    </span>
+</app-base-modal>
