@@ -1,4 +1,3 @@
-export type Role = {
-    id: number;
-    name: string;
-};
+export class Role {
+    constructor(readonly id: number, readonly name: string) {}
+}

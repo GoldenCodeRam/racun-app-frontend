@@ -1,9 +1,7 @@
 <app-base-modal>
     <span *ngIf="user">
         <div class="modal-header">
-            <h1 class="modal-title fs-5">
-                Editar usuario
-            </h1>
+            <h1 class="modal-title fs-5">Editar usuario</h1>
             <button
                 type="button"
                 class="btn-close"
@@ -18,32 +16,48 @@
                         type="text"
                         class="form-control"
                         formControlName="firstName"
-                        required
+                        [ngClass]="{
+                            'is-invalid': user.controls.firstName.invalid
+                        }"
                     />
                     <label>Nombres</label>
                 </div>
-                    {{user.valid}}
-                    {{user.controls.firstName.errors?.["required"]}}
                 <div class="form-floating mt-2 border rounded is-invalid">
                     <input
                         type="text"
                         class="form-control"
-                        minlength="4"
-                        required
+                        formControlName="lastName"
+                        [ngClass]="{
+                            'is-invalid': user.controls.lastName.invalid
+                        }"
                     />
                     <label>Apellidos</label>
                 </div>
                 <div class="form-floating mt-2 border rounded">
-                    <input type="email" class="form-control" />
+                    <input
+                        type="email"
+                        class="form-control"
+                        formControlName="email"
+                        [ngClass]="{
+                            'is-invalid': user.controls.email.invalid
+                        }"
+                    />
                     <label>Correo electrónico</label>
                 </div>
-                <div class="form-floating mt-2 border rounded">
+                <div class="input-group mt-2 border rounded">
+                    <button class="btn btn-outline-secondary" type="button">
+                        Seleccionar rol
+                    </button>
                     <input
                         type="text"
                         readonly
-                        class="form-control-plaintext"
+                        class="form-control"
+                        placeholder="Sin un rol seleccionado"
+                        formControlName="role"
+                        [ngClass]="{
+                            'is-invalid': user.controls.role.invalid
+                        }"
                     />
-                    <label>Rol</label>
                 </div>
             </div>
             <div class="modal-footer">
