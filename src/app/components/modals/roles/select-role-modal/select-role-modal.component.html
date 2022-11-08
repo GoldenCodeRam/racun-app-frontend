@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h1 class="modal-title fs-5">Seleccionar rol</h1>
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="modal"
+        (click)="activeModal.dismiss()"
+    ></button>
+</div>
+<div class="modal-body">
+    <app-search-list
+        [searchFunctionService]="searchFunctionService"
+        [searchLimit]="ROLE_SEARCH_LIMIT"
+        #search
+    >
+        <div class="list-group px-5">
+            <button
+                *ngFor="let role of search.search"
+                class="list-group-item list-group-item-action d-flex align-items-center"
+                aria-current="true"
+                (click)="selectRole(role)"
+            >
+                <i class="bi bi-people-fill"></i>
+                <h6 class="ms-2 mb-0">
+                    {{ role.name }}
+                </h6>
+            </button>
+        </div>
+    </app-search-list>
+</div>

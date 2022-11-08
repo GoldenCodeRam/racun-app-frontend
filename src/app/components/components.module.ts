@@ -9,7 +9,8 @@ import { LoaderComponent } from "./loaders/loader/loader.component";
 import { SearchListComponent } from "./search/search-list/search-list.component";
 import { HttpClientModule } from "@angular/common/http";
 import { EditUserModalComponent } from "./modals/users/edit-user-modal/edit-user-modal.component";
-import { BaseModalComponent } from "./modals/base-modal/base-modal.component";
+import { SelectRoleModalComponent } from './modals/roles/select-role-modal/select-role-modal.component';
+import { MainSidebarComponent } from './sidebars/main-sidebar/main-sidebar.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { BaseModalComponent } from "./modals/base-modal/base-modal.component";
         LoaderComponent,
         SearchListComponent,
         EditUserModalComponent,
-        BaseModalComponent,
+        SelectRoleModalComponent,
+        MainSidebarComponent,
     ],
     exports: [
         CreateRoleModalComponent,

@@ -23,6 +23,10 @@ body {
     max-height: 50vh;
 }
 
+.h-100vh {
+    height: 100vh;
+}
+
 $all-colors: map-merge-multiple(
     $blues,
     $indigos,

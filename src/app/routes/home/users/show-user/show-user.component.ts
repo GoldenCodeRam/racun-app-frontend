@@ -1,5 +1,6 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, Injector, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EditUserModalComponent } from "src/app/components/modals/users/edit-user-modal/edit-user-modal.component";
 import { User } from "src/app/models/user";
 import { ApiService } from "src/app/services/api/api.service";
@@ -10,14 +11,12 @@ import { ApiService } from "src/app/services/api/api.service";
     styleUrls: ["./show-user.component.sass"],
 })
 export class ShowUserComponent implements OnInit {
-    @ViewChild(EditUserModalComponent)
-    public editUserModal!: EditUserModalComponent;
-
     public user!: User;
 
     constructor(
         private route: ActivatedRoute,
-        private apiService: ApiService
+        private apiService: ApiService,
+        private modalService: NgbModal
     ) {}
 
     async ngOnInit() {
@@ -27,6 +26,17 @@ export class ShowUserComponent implements OnInit {
     }
 
     openEditUserModal() {
-        this.editUserModal.openModal(this.user);
+        const modal = this.modalService.open(EditUserModalComponent, {
+            centered: true,
+            // This is very important, as this is sort of seen in the documentation
+            // we need to use the injector to inject information before the render
+            // of the information.
+            //
+            // See: https://github.com/ng-bootstrap/ng-bootstrap/issues/2645
+            injector: Injector.create({
+                providers: [{ provide: User, useValue: this.user }],
+            }),
+        });
+        modal.componentInstance.user = this.user;
     }
 }

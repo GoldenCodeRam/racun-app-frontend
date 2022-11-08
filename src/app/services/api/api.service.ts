@@ -64,8 +64,17 @@ export class ApiService {
         return this.makeSimpleGetRequest(`/hardware/${hardwareId}`);
     }
 
-    public async getRoles(): Promise<Role[]> {
-        return this.makeSimpleGetRequest<Role[]>("/roles");
+    public async getRoles(
+        userSearch: string,
+        currentPage: number,
+        searchAmount: number
+    ): Promise<SearchResult<Role>> {
+        return this.makeSearchPaginationRequest(
+            "/roles",
+            userSearch,
+            currentPage,
+            searchAmount
+        );
     }
 
     public async getRolePermissions(role: Role): Promise<Permission[]> {

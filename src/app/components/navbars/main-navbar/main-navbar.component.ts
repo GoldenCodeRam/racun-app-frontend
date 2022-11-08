@@ -1,6 +1,8 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { NgbOffcanvas } from "@ng-bootstrap/ng-bootstrap";
 import { User } from "src/app/models/user";
 import { ApiService } from "src/app/services/api/api.service";
+import { MainSidebarComponent } from "../../sidebars/main-sidebar/main-sidebar.component";
 
 @Component({
     selector: "app-main-navbar",
@@ -12,9 +14,14 @@ export class MainNavbarComponent implements OnInit {
 
     constructor(
         private apiService: ApiService,
+        private offcanvasService: NgbOffcanvas
     ) {}
 
-    async ngOnInit() {
+    public openSidebar() {
+        this.offcanvasService.open(MainSidebarComponent);
+    }
+
+    public async ngOnInit() {
         const user = await this.apiService.getCurrentUser();
         this.user = user;
     }

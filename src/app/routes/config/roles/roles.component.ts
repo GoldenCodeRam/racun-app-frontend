@@ -25,11 +25,11 @@ export class RolesComponent implements OnInit {
     constructor(private apiService: ApiService) {}
 
     async ngOnInit() {
-        this.roles = await this.apiService.getRoles();
+        // this.roles = await this.apiService.getRoles();
     }
 
     public showCreateRoleModal() {
-        this.createRoleModal.showModal();
+        this.createRoleModal.openModal();
     }
 
     public async getRolePermissions(role: Role) {
