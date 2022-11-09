@@ -1,40 +1,48 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Injectable, OnInit, ViewChild } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateRoleModalComponent } from "src/app/components/modals/roles/create-role-modal/create-role-modal.component";
 import { EditRoleModalComponent } from "src/app/components/modals/roles/edit-role-modal/edit-role-modal.component";
 import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
 import { ApiService } from "src/app/services/api/api.service";
+import { SearchResult } from "src/app/services/api/apiTypes";
+import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
+
+@Injectable()
+class SearchFunction extends SearchFunctionService<Role> {
+    public async search(
+        userSearch: string,
+        currentSearchPage: number,
+        searchLimit: number
+    ): Promise<SearchResult<Role>> {
+        return this.getRoles(userSearch, currentSearchPage, searchLimit);
+    }
+}
 
 @Component({
     selector: "app-roles",
     templateUrl: "./roles.component.html",
+    providers: [
+        {
+            provide: SearchFunctionService<Role>,
+            useClass: SearchFunction,
+        },
+    ],
     styleUrls: ["./roles.component.css"],
 })
 export class RolesComponent implements OnInit {
-    @ViewChild(CreateRoleModalComponent)
-    public createRoleModal!: CreateRoleModalComponent;
+    public readonly ROLE_SEARCH_LIMIT = 5;
 
-    @ViewChild(EditRoleModalComponent)
-    public editRoleModal!: EditRoleModalComponent;
-
-    public selectedRole!: Role;
-
-    public roles: Role[] = [];
-    public permissions: Permission[] = [];
-
-    constructor(private apiService: ApiService) {}
+    constructor(
+        public searchFunctionService: SearchFunctionService<Role>,
+        private modalService: NgbModal
+    ) {}
 
     async ngOnInit() {
         // this.roles = await this.apiService.getRoles();
     }
 
     public showCreateRoleModal() {
-        this.createRoleModal.openModal();
-    }
-
-    public async getRolePermissions(role: Role) {
-        this.selectedRole = role;
-        this.permissions = await this.apiService.getRolePermissions(role);
-        console.log(this.permissions);
+        this.modalService.open(CreateRoleModalComponent);
     }
 }

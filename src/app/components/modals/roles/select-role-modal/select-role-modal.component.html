@@ -27,4 +27,18 @@
             </button>
         </div>
     </app-search-list>
+    <div class="d-flex justify-content-end align-items-center">
+        <p class="small p-0 m-0">
+            Si no encuentras el rol, puedes crear uno nuevo:
+        </p>
+        <button
+            type="button"
+            class="btn btn-sm btn-secondary ms-2"
+            (click)="closeAll()"
+            routerLink="/config/roles"
+        >
+            <i class="bi bi-box-arrow-right"></i>
+            Crear rol
+        </button>
+    </div>
 </div>

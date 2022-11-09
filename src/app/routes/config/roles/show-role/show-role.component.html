@@ -1,0 +1,29 @@
+<div class="h-100 d-flex flex-column">
+    <app-main-navbar></app-main-navbar>
+
+    <app-loader class="h-100" *ngIf="!role"></app-loader>
+
+    <div *ngIf="role">
+        <h2 class="text-700 text-center">Usuario</h2>
+        <h6 class="text-600 text-center border-bottom pb-3">
+            {{ role.name }}
+        </h6>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="form-floating mb-2 m-sm-0 border rounded">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            [value]="role.name"
+                        />
+                        <label>Nombre</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

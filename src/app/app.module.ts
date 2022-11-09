@@ -15,6 +15,7 @@ import { HomeComponent } from "./routes/home/home/home.component";
 import { ConfigComponent } from "./routes/config/config/config.component";
 import { AuthService } from "./services/auth/auth.service";
 import { ApiService } from "./services/api/api.service";
+import { ShowRoleComponent } from './routes/config/roles/show-role/show-role.component';
 
 @NgModule({
     declarations: [
@@ -24,6 +25,7 @@ import { ApiService } from "./services/api/api.service";
         ClientsComponent,
         HomeComponent,
         ConfigComponent,
+        ShowRoleComponent,
     ],
     imports: [
         BrowserModule,

@@ -1,4 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ApiService } from "src/app/services/api/api.service";
 
 @Component({
@@ -7,17 +9,21 @@ import { ApiService } from "src/app/services/api/api.service";
     styleUrls: ["./create-role-modal.component.css"],
 })
 export class CreateRoleModalComponent {
-
-    public roleName: string = "";
+    public roleForm = new FormGroup({
+        name: new FormControl<string>("", [Validators.required]),
+    });
 
     constructor(
-        private apiService: ApiService,
+        public activeModal: NgbActiveModal,
+
+        private apiService: ApiService
     ) {}
 
     public createRole(): void {
-        this.apiService.createRole(this.roleName);
+        if (this.roleForm.valid) {
+            this.apiService.createRole(this.roleForm.value.name!);
+        }
     }
 
-    public openModal() {
-    }
+    public openModal() {}
 }

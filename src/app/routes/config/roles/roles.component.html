@@ -1,152 +1,32 @@
-<div class="d-flex flex-column h-100">
+<div class="h-100 d-flex flex-column">
     <app-main-navbar></app-main-navbar>
 
-    <h1 class="text-700 text-center border-bottom pb-3 m-0">
-        Configuración de roles
-    </h1>
-    <div
-        class="d-flex m-0 p-0 flex-column flex-1-1-auto mh-min-content overflow-auto"
-    >
-        <div class="container h-100">
-            <div class="row h-100">
-                <div
-                    class="col-12 col-sm-4 py-3 m-0 p-0 border-start border-end"
+    <h1 class="text-700 text-center m-0">Roles</h1>
+    <div class="text-center py-2 border-bottom">
+        <button class="btn btn-primary disabled">
+            <i class="bi bi-plus-lg"></i>
+            Crear rol
+        </button>
+    </div>
+    <div class="h-100">
+        <app-search-list
+            [searchFunctionService]="searchFunctionService"
+            [searchLimit]="ROLE_SEARCH_LIMIT"
+            #search
+        >
+            <div class="list-group px-5">
+                <button
+                    *ngFor="let role of search.search"
+                    class="list-group-item list-group-item-action d-flex align-items-center"
+                    aria-current="true"
+                    routerLink="/config/roles/{{ role.id }}"
                 >
-                    <h4 class="text-600 text-center">Rol</h4>
-                    <div
-                        class="list-group list-group-flush mh-50vh overflow-auto border-top border-bottom"
-                    >
-                        <div
-                            *ngIf="roles.length === 0"
-                            class="text-center py-2"
-                        >
-                            <i class="bi bi-box me-2"></i>
-                            Sin roles
-                        </div>
-                        <button
-                            *ngFor="let role of roles"
-                            type="button"
-                            class="list-group-item list-group-item-action"
-                            [ngClass]="{
-                                active: selectedRole
-                                    ? selectedRole.id == role.id
-                                    : false
-                            }"
-                            (click)="getRolePermissions(role)"
-                        >
-                            {{ role.name }}
-                        </button>
-                    </div>
-                    <button
-                        class="btn btn-primary d-block m-auto mt-2"
-                        (click)="showCreateRoleModal()"
-                    >
-                        <i class="bi bi-plus-lg"></i>
-                        Añadir rol
-                    </button>
-                </div>
-                <div class="col mt-sm-0 mt-2 py-3 m-0 p-0 border-end">
-                    <div
-                        class="h-100 d-flex flex-column justify-content-center align-items-center text-500"
-                        *ngIf="!selectedRole"
-                    >
-                        <div class="text-center">
-                            <i class="bi bi-search fs-1"></i>
-                            <br />
-                            <p class="m-0 p-0">No se ha seleccionado un rol</p>
-                        </div>
-                    </div>
-                    <div *ngIf="selectedRole">
-                        <h4 class="text-600 text-center">
-                            Información del rol
-                        </h4>
-                        <div class="form-floating">
-                            <input
-                                type="text"
-                                readonly
-                                class="form-control-plaintext"
-                                id="floatingPlaintextInput"
-                                [value]="selectedRole.name"
-                            />
-                            <label for="floatingPlaintextInput">Nombre</label>
-                        </div>
-                        <div class="d-flex justify-content-evenly">
-                            <button
-                                class="btn btn-sm btn-primary d-block m-auto mt-2"
-                                (click)="showCreateRoleModal()"
-                            >
-                                <i class="bi bi-pen-fill"></i>
-                                Editar
-                            </button>
-                            <button
-                                class="btn btn-sm btn-danger d-block m-auto mt-2"
-                                (click)="showCreateRoleModal()"
-                            >
-                                <i class="bi bi-trash-fill"></i>
-                                Eliminar
-                            </button>
-                        </div>
-                        <hr />
-                        <h4 class="text-600 text-center">Permisos</h4>
-                        <div class="d-grid gap-2 px-2">
-                            <div *ngFor="let permission of permissions">
-                                <div class="border rounded shadow-sm m-0 p-0">
-                                    <p class="m-0 p-0 text-center">
-                                        {{ permission.api.route }}
-                                    </p>
-                                    <div class="d-flex justify-content-evenly">
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                value=""
-                                                id="flexCheckDefault"
-                                                [checked]="permission.get"
-                                            />
-                                            <label
-                                                class="form-check-label"
-                                                for="flexCheckDefault"
-                                                >GET</label
-                                            >
-                                        </div>
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                value=""
-                                                id="flexCheckDefault"
-                                                [checked]="permission.post"
-                                            />
-                                            <label
-                                                class="form-check-label"
-                                                for="flexCheckDefault"
-                                                >POST</label
-                                            >
-                                        </div>
-                                        <div class="form-check">
-                                            <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                value=""
-                                                id="flexCheckDefault"
-                                                [checked]="permission.delete"
-                                            />
-                                            <label
-                                                class="form-check-label"
-                                                for="flexCheckDefault"
-                                                >DELETE</label
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <i class="bi bi-people-fill"></i>
+                    <h6 class="ms-2 mb-0">
+                        {{ role.name }}
+                    </h6>
+                </button>
             </div>
-        </div>
+        </app-search-list>
     </div>
 </div>
-
-<app-create-role-modal></app-create-role-modal>
-<app-edit-role-modal></app-edit-role-modal>

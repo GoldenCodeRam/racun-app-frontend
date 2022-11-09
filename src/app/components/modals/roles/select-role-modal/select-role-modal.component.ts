@@ -1,5 +1,5 @@
 import { Component, Injectable } from "@angular/core";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Role } from "src/app/models/role";
 import { SearchResult } from "src/app/services/api/apiTypes";
 import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
@@ -31,10 +31,15 @@ export class SelectRoleModalComponent {
 
     constructor(
         public searchFunctionService: SearchFunctionService<Role>,
-        public activeModal: NgbActiveModal
+        public activeModal: NgbActiveModal,
+        public modalService: NgbModal
     ) {}
 
     public selectRole(role: Role) {
         this.activeModal.close(role);
+    }
+
+    public closeAll() {
+        this.modalService.dismissAll();
     }
 }

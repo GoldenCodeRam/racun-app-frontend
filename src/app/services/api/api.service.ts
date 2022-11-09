@@ -77,6 +77,10 @@ export class ApiService {
         );
     }
 
+    public getRole(roleId: number): Promise<Role> {
+        return this.makeSimpleGetRequest<Role>(`/roles/${roleId}`);
+    }
+
     public async getRolePermissions(role: Role): Promise<Permission[]> {
         return this.makeSimpleGetRequest<Permission[]>(
             `/permissions/${role.id}`
