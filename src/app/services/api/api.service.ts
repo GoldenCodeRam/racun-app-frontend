@@ -87,22 +87,28 @@ export class ApiService {
         );
     }
 
-    public createRole(roleName: string): void {
-        this.httpClient
-            .post(
-                `${environment.apiUrl}/roles`,
-                {
-                    roleName: roleName,
-                },
-                {
-                    withCredentials: true,
-                }
-            )
-            .subscribe({
-                error: (error) => {
-                    console.log(error);
-                },
-            });
+    public async createRole(roleName: string) {
+        await this.promisify((resolve, reject) => {
+            this.httpClient
+                .post(
+                    `${environment.apiUrl}/roles/create`,
+                    {
+                        roleName: roleName,
+                    },
+                    {
+                        withCredentials: true,
+                        responseType: "text",
+                    }
+                )
+                .subscribe({
+                    next: (_) => {
+                        resolve();
+                    },
+                    error: (_) => {
+                        reject();
+                    },
+                });
+        })
     }
 
     // TODO: We should refactor the getClients and getUsers methods as they are
@@ -208,5 +214,11 @@ export class ApiService {
                     },
                 });
         });
+    }
+
+    private promisify<T>(
+        callback: (resolve: any, reject: any) => void
+    ): Promise<T> {
+        return new Promise<T>(callback);
     }
 }

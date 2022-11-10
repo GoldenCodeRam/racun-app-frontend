@@ -55,7 +55,7 @@
                 readonly
                 class="form-control"
                 placeholder="Sin un rol seleccionado"
-                formControlName="role"
+                [value]="userForm.value.role!.name"
                 [ngClass]="{
                     'is-invalid': userForm.controls.role.invalid
                 }"

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -15,7 +15,8 @@ import { HomeComponent } from "./routes/home/home/home.component";
 import { ConfigComponent } from "./routes/config/config/config.component";
 import { AuthService } from "./services/auth/auth.service";
 import { ApiService } from "./services/api/api.service";
-import { ShowRoleComponent } from './routes/config/roles/show-role/show-role.component';
+import { ShowRoleComponent } from "./routes/config/roles/show-role/show-role.component";
+import { MainLoaderService } from "./services/components/loaders/main-loader.service";
 
 @NgModule({
     declarations: [
@@ -36,7 +37,7 @@ import { ShowRoleComponent } from './routes/config/roles/show-role/show-role.com
         ComponentsModule,
         HomeModule,
     ],
-    providers: [AuthService, ApiService],
+    providers: [AuthService, ApiService, MainLoaderService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,3 +1,3 @@
 export class Role {
-    constructor(readonly id: number, readonly name: string) {}
+    constructor(public id: number, public name: string) {}
 }

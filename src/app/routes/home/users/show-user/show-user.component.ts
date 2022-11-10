@@ -26,7 +26,7 @@ export class ShowUserComponent implements OnInit {
     }
 
     openEditUserModal() {
-        const modal = this.modalService.open(EditUserModalComponent, {
+        this.modalService.open(EditUserModalComponent, {
             centered: true,
             // This is very important, as this is sort of seen in the documentation
             // we need to use the injector to inject information before the render
@@ -37,6 +37,5 @@ export class ShowUserComponent implements OnInit {
                 providers: [{ provide: User, useValue: this.user }],
             }),
         });
-        modal.componentInstance.user = this.user;
     }
 }

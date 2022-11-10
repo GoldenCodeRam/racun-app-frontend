@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
 import { SelectRoleModalComponent } from "../../roles/select-role-modal/select-role-modal.component";
 
@@ -21,9 +22,10 @@ export class EditUserModalComponent {
             Validators.required,
             Validators.email,
         ]),
-        role: new FormControl<string>(this.user.role.name, [
-            Validators.required,
-        ]),
+        role: new FormControl<Role>(this.user.role, {
+            nonNullable: true,
+            validators: [Validators.required],
+        }),
     });
 
     constructor(
@@ -42,7 +44,8 @@ export class EditUserModalComponent {
             .result.then(
                 (role: any) => {
                     if (role) {
-                        this.user.role = role;
+                        this.userForm.value.role = role;
+                        console.log(this.userForm);
                     }
                 },
                 (reason: any) => {}

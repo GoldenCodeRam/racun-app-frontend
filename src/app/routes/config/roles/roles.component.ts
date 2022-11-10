@@ -1,10 +1,7 @@
-import { Component, Injectable, OnInit, ViewChild } from "@angular/core";
+import { Component, Injectable, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateRoleModalComponent } from "src/app/components/modals/roles/create-role-modal/create-role-modal.component";
-import { EditRoleModalComponent } from "src/app/components/modals/roles/edit-role-modal/edit-role-modal.component";
-import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
-import { ApiService } from "src/app/services/api/api.service";
 import { SearchResult } from "src/app/services/api/apiTypes";
 import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
 
@@ -43,6 +40,8 @@ export class RolesComponent implements OnInit {
     }
 
     public showCreateRoleModal() {
-        this.modalService.open(CreateRoleModalComponent);
+        this.modalService.open(CreateRoleModalComponent, {
+            centered: true,
+        });
     }
 }
