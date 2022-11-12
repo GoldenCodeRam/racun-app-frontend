@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
+import { ApiWithSearch } from "src/app/services/api/api.service";
 
 @Component({
     selector: "app-search-list",
@@ -7,7 +7,7 @@ import { SearchFunctionService } from "src/app/services/components/search/search
     styleUrls: ["./search-list.component.sass"],
 })
 export class SearchListComponent<T> implements OnInit {
-    @Input() searchFunctionService!: SearchFunctionService<T>;
+    @Input() searchFunctionService!: ApiWithSearch<T>;
 
     @Input() searchLimit: number = 5;
 

@@ -1,146 +1,31 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Client } from "src/app/models/client";
-import { Hardware } from "src/app/models/hardware";
 import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
-import { User } from "src/app/models/user";
 import { Zone } from "src/app/models/zone";
 import { environment } from "src/environments/environment";
 import { SearchResult } from "./apiTypes";
+
+/**
+ * This interface describes an API that has a search with pagination
+ * and other stuff.
+ */
+export interface ApiWithSearch<T> {
+    search(
+        userSearch: string,
+        currentSearchPage: number,
+        searchLimit: number
+    ): Promise<SearchResult<T>>;
+
+    count(): Promise<number>;
+}
 
 @Injectable({
     providedIn: "root",
 })
 export class ApiService {
-    constructor(private httpClient: HttpClient) {}
-
-    public async getCurrentUser(): Promise<User> {
-        return new Promise((resolve, reject) => {
-            this.httpClient
-                .get(`${environment.apiUrl}/current-user`, {
-                    withCredentials: true,
-                })
-                .subscribe({
-                    next(result) {
-                        resolve(result as User);
-                    },
-                });
-        });
-    }
-
-    public getUser(userId: number): Promise<User> {
-        return this.makeSimpleGetRequest(`/users/${userId}`);
-    }
-
-    // TODO: This method is too big and should be divided.
-    public getUsers(
-        userSearch: string,
-        currentPage: number,
-        searchAmount: number
-    ): Promise<SearchResult<User>> {
-        return this.makeSearchPaginationRequest(
-            "/users",
-            userSearch,
-            currentPage,
-            searchAmount
-        );
-    }
-
-    public async getHardware(
-        userSearch: string,
-        currentPage: number,
-        searchAmount: number
-    ): Promise<SearchResult<Hardware>> {
-        return this.makeSearchPaginationRequest(
-            "/hardware",
-            userSearch,
-            currentPage,
-            searchAmount
-        );
-    }
-
-    public async getHardwareById(hardwareId: number): Promise<Hardware> {
-        return this.makeSimpleGetRequest(`/hardware/${hardwareId}`);
-    }
-
-    public async getRoles(
-        userSearch: string,
-        currentPage: number,
-        searchAmount: number
-    ): Promise<SearchResult<Role>> {
-        return this.makeSearchPaginationRequest(
-            "/roles",
-            userSearch,
-            currentPage,
-            searchAmount
-        );
-    }
-
-    public getRole(roleId: number): Promise<Role> {
-        return this.makeSimpleGetRequest<Role>(`/roles/${roleId}`);
-    }
-
-    public async getRolePermissions(role: Role): Promise<Permission[]> {
-        return this.makeSimpleGetRequest<Permission[]>(
-            `/permissions/${role.id}`
-        );
-    }
-
-    public async createRole(roleName: string) {
-        await this.promisify((resolve, reject) => {
-            this.httpClient
-                .post(
-                    `${environment.apiUrl}/roles/create`,
-                    {
-                        roleName: roleName,
-                    },
-                    {
-                        withCredentials: true,
-                        responseType: "text",
-                    }
-                )
-                .subscribe({
-                    next: (_) => {
-                        resolve();
-                    },
-                    error: (_) => {
-                        reject();
-                    },
-                });
-        })
-    }
-
-    // TODO: We should refactor the getClients and getUsers methods as they are
-    // the same.
-    public getClients(
-        userSearch: string,
-        currentPage: number,
-        searchAmount: number
-    ): Promise<SearchResult<Client>> {
-        return this.makeSearchPaginationRequest(
-            "/clients",
-            userSearch,
-            currentPage,
-            searchAmount
-        );
-    }
-
-    public getClient(clientId: number) {
-        return this.makeSimpleGetRequest<Client>(`/clients/${clientId}`);
-    }
-
-    public saveClient(client: Client) {
-        return this.httpClient.post(`${environment.apiUrl}/clients`, client);
-    }
-
-    public updateClient(id: string, updateClient: Client) {
-        return this.httpClient.put(
-            `${environment.apiUrl}/clients/${id}`,
-            updateClient
-        );
-    }
-
+    constructor(protected httpClient: HttpClient) {}
     public getZones(
         userSearch: string,
         currentPage: number,
@@ -174,7 +59,7 @@ export class ApiService {
     }
 
     protected async makeSimpleGetRequest<T>(url: string): Promise<T> {
-        return new Promise((resolve, reject) => {
+        return this.promisify((resolve, reject) => {
             this.httpClient
                 .get(`${environment.apiUrl}${url}`, {
                     withCredentials: true,
@@ -216,7 +101,7 @@ export class ApiService {
         });
     }
 
-    private promisify<T>(
+    protected promisify<T>(
         callback: (resolve: any, reject: any) => void
     ): Promise<T> {
         return new Promise<T>(callback);

@@ -4,6 +4,7 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { EditUserModalComponent } from "src/app/components/modals/users/edit-user-modal/edit-user-modal.component";
 import { User } from "src/app/models/user";
 import { ApiService } from "src/app/services/api/api.service";
+import { UsersApiService } from "src/app/services/api/users/users-api.service";
 
 @Component({
     selector: "app-show-user",
@@ -15,12 +16,12 @@ export class ShowUserComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private apiService: ApiService,
+        private usersApiService: UsersApiService,
         private modalService: NgbModal
     ) {}
 
     async ngOnInit() {
-        this.user = await this.apiService.getUser(
+        this.user = await this.usersApiService.getUser(
             this.route.snapshot.params["userId"]
         );
     }

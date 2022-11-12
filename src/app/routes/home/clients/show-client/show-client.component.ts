@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Client } from "src/app/models/client";
-import { ApiService } from "src/app/services/api/api.service";
+import { ClientsApiService } from "src/app/services/api/users/clients-api.service";
 
 @Component({
     selector: "app-show-client",
@@ -13,11 +13,11 @@ export class ShowClientComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private apiService: ApiService
+        private clientsApiService: ClientsApiService
     ) {}
 
     async ngOnInit() {
-        this.client = await this.apiService.getClient(
+        this.client = await this.clientsApiService.getClient(
             this.route.snapshot.params["clientId"]
         );
     }

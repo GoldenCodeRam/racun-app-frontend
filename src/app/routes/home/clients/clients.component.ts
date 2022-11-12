@@ -1,30 +1,12 @@
-import { Component, Injectable, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Client } from "src/app/models/client";
 import { Hardware } from "src/app/models/hardware";
-import { SearchResult } from "src/app/services/api/apiTypes";
-import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
-
-@Injectable()
-class SearchFunction extends SearchFunctionService<Client> {
-    public async search(
-        userSearch: string,
-        currentSearchPage: number,
-        searchLimit: number
-    ): Promise<SearchResult<Client>> {
-        return this.getClients(userSearch, currentSearchPage, searchLimit);
-    }
-}
+import { ClientsApiService } from "src/app/services/api/users/clients-api.service";
 
 @Component({
     selector: "app-clients",
     templateUrl: "./clients.component.html",
-    providers: [
-        {
-            provide: SearchFunctionService<Client>,
-            useClass: SearchFunction,
-        },
-    ],
     styleUrls: ["./clients.component.css"],
 })
 export class ClientsComponent implements OnInit {
@@ -59,7 +41,7 @@ export class ClientsComponent implements OnInit {
         },
     ];
 
-    constructor(public searchFunctionService: SearchFunctionService<Client>) {}
+    constructor(public clientsApiService: ClientsApiService) {}
 
     formClient = new FormGroup({
         first_name: new FormControl("", Validators.required),

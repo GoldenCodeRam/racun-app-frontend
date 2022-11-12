@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Hardware } from "src/app/models/hardware";
 import { ApiService } from "src/app/services/api/api.service";
+import { HardwareApiService } from "src/app/services/api/users/hardware-api.service";
 
 @Component({
     selector: "app-show-hardware",
@@ -13,11 +14,11 @@ export class ShowHardwareComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private apiService: ApiService
+        private hardwareApiService: HardwareApiService
     ) {}
 
     async ngOnInit() {
-        this.hardware = await this.apiService.getHardwareById(
+        this.hardware = await this.hardwareApiService.getHardwareById(
             this.route.snapshot.params["hardwareId"]
         );
     }

@@ -13,6 +13,7 @@ import { SelectRoleModalComponent } from "./modals/roles/select-role-modal/selec
 import { MainSidebarComponent } from "./sidebars/main-sidebar/main-sidebar.component";
 import { ToastGeneratorComponent } from "./toasts/toast-generator/toast-generator.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { SearchTableComponent } from './search/search-table/search-table.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
         SelectRoleModalComponent,
         MainSidebarComponent,
         ToastGeneratorComponent,
+        SearchTableComponent,
     ],
     exports: [
         CreateRoleModalComponent,

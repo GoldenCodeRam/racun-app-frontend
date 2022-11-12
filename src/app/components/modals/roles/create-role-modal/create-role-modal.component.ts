@@ -1,7 +1,7 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ApiService } from "src/app/services/api/api.service";
+import { RolesApiService } from "src/app/services/api/users/roles-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
 
@@ -18,7 +18,7 @@ export class CreateRoleModalComponent {
     constructor(
         public activeModal: NgbActiveModal,
 
-        private apiService: ApiService,
+        private rolesApiService: RolesApiService,
         private mainLoaderService: MainLoaderService,
         private toastGeneratorService: ToastGeneratorService
     ) {}
@@ -26,7 +26,7 @@ export class CreateRoleModalComponent {
     public async createRole() {
         if (this.roleForm.valid) {
             await this.mainLoaderService.doWithLoadingScreen(async () => {
-                await this.apiService.createRole(this.roleForm.value.name!);
+                await this.rolesApiService.createRole(this.roleForm.value.name!);
                 this.toastGeneratorService.show("Rol creado", "Rol creado correctamente");
             });
 

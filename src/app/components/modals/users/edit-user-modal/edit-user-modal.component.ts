@@ -3,6 +3,10 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
+import { ApiService } from "src/app/services/api/api.service";
+import { UsersApiService } from "src/app/services/api/users/users-api.service";
+import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
+import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
 import { SelectRoleModalComponent } from "../../roles/select-role-modal/select-role-modal.component";
 
 @Component({
@@ -32,7 +36,10 @@ export class EditUserModalComponent {
         public modalService: NgbModal,
         public activeModal: NgbActiveModal,
 
-        private user: User
+        private user: User,
+        private usersApiService: UsersApiService,
+        private loaderService: MainLoaderService,
+        private toastService: ToastGeneratorService
     ) {}
 
     public openSelectRole() {
@@ -50,5 +57,24 @@ export class EditUserModalComponent {
                 },
                 (reason: any) => {}
             );
+    }
+
+    public async editUser() {
+        await this.loaderService.doWithLoadingScreen(async () => {
+            await this.usersApiService.updateUser({
+                id: this.user.id,
+                firstName: this.userForm.value!.firstName as string,
+                lastName: this.userForm.value!.lastName as string,
+                role: this.userForm.value!.role as Role,
+                email: this.userForm.value!.email as string,
+            });
+
+            this.toastService.show(
+                "Usuario editado",
+                "Se ha editado el usuario correctamente."
+            );
+        });
+
+        this.activeModal.close();
     }
 }

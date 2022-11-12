@@ -1,36 +1,18 @@
-import { Component, Injectable } from "@angular/core";
+import { Component } from "@angular/core";
 import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Role } from "src/app/models/role";
-import { SearchResult } from "src/app/services/api/apiTypes";
-import { SearchFunctionService } from "src/app/services/components/search/search-list/search-function.service";
-
-@Injectable()
-class SearchFunction extends SearchFunctionService<Role> {
-    public async search(
-        userSearch: string,
-        currentSearchPage: number,
-        searchLimit: number
-    ): Promise<SearchResult<Role>> {
-        return this.getRoles(userSearch, currentSearchPage, searchLimit);
-    }
-}
+import { RolesApiService } from "src/app/services/api/users/roles-api.service";
 
 @Component({
     selector: "app-select-role-modal",
     templateUrl: "./select-role-modal.component.html",
-    providers: [
-        {
-            provide: SearchFunctionService<Role>,
-            useClass: SearchFunction,
-        },
-    ],
     styleUrls: ["./select-role-modal.component.sass"],
 })
 export class SelectRoleModalComponent {
     public readonly ROLE_SEARCH_LIMIT = 5;
 
     constructor(
-        public searchFunctionService: SearchFunctionService<Role>,
+        public rolesApiService: RolesApiService,
         public activeModal: NgbActiveModal,
         public modalService: NgbModal
     ) {}
