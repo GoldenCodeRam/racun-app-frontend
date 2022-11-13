@@ -23,7 +23,7 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
     public async getCurrentUser(): Promise<User> {
         return new Promise((resolve, reject) => {
             this.httpClient
-                .get(`${environment.apiUrl}/current-user`, {
+                .get(`${environment.apiUrl}/users/current-user`, {
                     withCredentials: true,
                 })
                 .subscribe({
