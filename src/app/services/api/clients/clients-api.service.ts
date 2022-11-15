@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { from, Observable } from "rxjs";
 import { Client } from "src/app/models/client";
 import { environment } from "src/environments/environment";
 import { ApiService, ApiWithSearch } from "../api.service";
@@ -15,27 +16,38 @@ export class ClientsApiService
         userSearch: string,
         currentSearchPage: number,
         searchLimit: number
-    ): Promise<SearchResult<Client>> {
-        return this.getClients(userSearch, currentSearchPage, searchLimit);
+    ): Observable<SearchResult<Client>> {
+        return from(
+            this.getClients(userSearch, currentSearchPage, searchLimit)
+        );
     }
 
     count(): Promise<number> {
         return this.makeSimpleGetRequest<number>("/clients/count");
     }
 
-    // TODO: We should refactor the getClients and getUsers methods as they are
-    // the same.
     public getClients(
         userSearch: string,
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Client>> {
         return this.makeSearchPaginationRequest(
-            "/clients",
+            "/clients/search",
             userSearch,
             currentPage,
             searchAmount
         );
+    }
+
+    public createClient(client: {
+        firstName: string;
+        lastName: string;
+        document: string;
+        phone: string;
+        address: string;
+        email: string | null;
+    }) {
+        return this.makeSimplePostRequest("/clients/create", client);
     }
 
     public getClient(clientId: number) {

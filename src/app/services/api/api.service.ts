@@ -1,8 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Client } from "src/app/models/client";
-import { Permission } from "src/app/models/permissions";
-import { Role } from "src/app/models/role";
+import { Observable } from "rxjs";
 import { Zone } from "src/app/models/zone";
 import { environment } from "src/environments/environment";
 import { SearchResult } from "./apiTypes";
@@ -13,10 +11,10 @@ import { SearchResult } from "./apiTypes";
  */
 export interface ApiWithSearch<T> {
     search(
-        userSearch: string,
-        currentSearchPage: number,
-        searchLimit: number
-    ): Promise<SearchResult<T>>;
+        userSearch?: string,
+        currentSearchPage?: number,
+        searchLimit?: number
+    ): Observable<SearchResult<T>>;
 
     count(): Promise<number>;
 }
@@ -26,42 +24,24 @@ export interface ApiWithSearch<T> {
 })
 export class ApiService {
     constructor(protected httpClient: HttpClient) {}
-    public getZones(
-        userSearch: string,
-        currentPage: number,
-        searchAmount: number
-    ): Promise<SearchResult<Zone>> {
-        return this.makeSearchPaginationRequest(
-            "/zones",
-            userSearch,
-            currentPage,
-            searchAmount
-        );
-    }
-
-    public getZone(zoneId: number): Promise<Zone> {
-        return this.makeSimpleGetRequest<Zone>(`/zones/${zoneId}`);
-    }
-
-    public saveZone(zone: Zone) {
-        return this.httpClient.post(`${environment.apiUrl}/zones`, zone);
-    }
-
-    public updateZone(id: string | number, updateZone: Zone) {
-        return this.httpClient.put(
-            `${environment.apiUrl}/zones/${id}`,
-            updateZone
-        );
-    }
-
-    public deleteZone(id: number) {
-        return this.httpClient.delete(`${environment.apiUrl}/zones/${id}`);
-    }
-
     protected async makeSimpleGetRequest<T>(url: string): Promise<T> {
         return this.promisify((resolve, reject) => {
             this.httpClient
                 .get(`${environment.apiUrl}${url}`, {
+                    withCredentials: true,
+                })
+                .subscribe({
+                    next: (value) => {
+                        resolve(value as T);
+                    },
+                });
+        });
+    }
+
+    protected async makeSimplePostRequest<T>(url: string, body: T): Promise<T> {
+        return this.promisify((resolve, reject) => {
+            this.httpClient
+                .post(`${environment.apiUrl}${url}`, body, {
                     withCredentials: true,
                 })
                 .subscribe({

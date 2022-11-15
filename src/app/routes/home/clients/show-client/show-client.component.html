@@ -3,85 +3,112 @@
 
     <app-loader class="h-100" *ngIf="!client"></app-loader>
 
-    <div *ngIf="client">
+    <div *ngIf="client" class="d-flex flex-column h-100">
         <h2 class="text-700 text-center">Usuario</h2>
         <h6 class="text-600 text-center border-bottom pb-3">
             {{ client.firstName }} {{ client.lastName }}
         </h6>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <div class="form-floating mb-2 m-sm-0 border rounded">
-                        <input
-                            type="text"
-                            readonly
-                            class="form-control-plaintext"
-                            [value]="client.firstName"
-                        />
-                        <label>Nombres</label>
+        <ul ngbNav #nav="ngbNav" [(activeId)]="activeNav" class="nav-tabs">
+            <li [ngbNavItem]="1">
+                <a ngbNavLink>Información</a>
+                <ng-template ngbNavContent>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12 col-sm-6">
+                                <div
+                                    class="form-floating mb-2 m-sm-0 border rounded"
+                                >
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control-plaintext"
+                                        [value]="client.firstName"
+                                    />
+                                    <label>Nombres</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating border rounded">
+                                    <input
+                                        type="text"
+                                        readonly
+                                        class="form-control-plaintext"
+                                        [value]="client.lastName"
+                                    />
+                                    <label>Apellidos</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mt-2 border rounded">
+                            <input
+                                type="text"
+                                readonly
+                                class="form-control-plaintext"
+                                [value]="
+                                    client.email
+                                        ? client.email
+                                        : 'Sin correo electrónico.'
+                                "
+                            />
+                            <label>Correo electrónico</label>
+                        </div>
+                        <div class="form-floating mt-2 border rounded">
+                            <input
+                                type="text"
+                                readonly
+                                class="form-control-plaintext"
+                                [value]="client.document"
+                            />
+                            <label>Documento</label>
+                        </div>
+                        <div class="form-floating mt-2 border rounded">
+                            <input
+                                type="text"
+                                readonly
+                                class="form-control-plaintext"
+                                [value]="client.address"
+                            />
+                            <label>Dirección</label>
+                        </div>
+                        <div class="form-floating mt-2 border rounded">
+                            <input
+                                type="text"
+                                readonly
+                                class="form-control-plaintext"
+                                [value]="client.phone"
+                            />
+                            <label>Teléfono</label>
+                        </div>
+                        <div class="d-flex justify-content-end gap-2 mt-2">
+                            <button class="btn btn-sm btn-primary disabled">
+                                <i class="bi bi-pen-fill"></i>
+                                Editar
+                            </button>
+                            <button class="btn btn-sm btn-danger disabled">
+                                <i class="bi bi-trash-fill"></i>
+                                Eliminar
+                            </button>
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating border rounded">
-                        <input
-                            type="text"
-                            readonly
-                            class="form-control-plaintext"
-                            [value]="client.lastName"
-                        />
-                        <label>Apellidos</label>
-                    </div>
-                </div>
-            </div>
-            <div class="form-floating mt-2 border rounded">
-                <input
-                    type="text"
-                    readonly
-                    class="form-control-plaintext"
-                    [value]="
-                        client.email ? client.email : 'Sin correo electrónico.'
-                    "
-                />
-                <label>Correo electrónico</label>
-            </div>
-            <div class="form-floating mt-2 border rounded">
-                <input
-                    type="text"
-                    readonly
-                    class="form-control-plaintext"
-                    [value]="client.document"
-                />
-                <label>Documento</label>
-            </div>
-            <div class="form-floating mt-2 border rounded">
-                <input
-                    type="text"
-                    readonly
-                    class="form-control-plaintext"
-                    [value]="client.address"
-                />
-                <label>Dirección</label>
-            </div>
-            <div class="form-floating mt-2 border rounded">
-                <input
-                    type="text"
-                    readonly
-                    class="form-control-plaintext"
-                    [value]="client.phone"
-                />
-                <label>Teléfono</label>
-            </div>
-            <div class="d-flex justify-content-end gap-2 mt-2">
-                <button class="btn btn-sm btn-primary disabled">
-                    <i class="bi bi-pen-fill"></i>
-                    Editar
-                </button>
-                <button class="btn btn-sm btn-danger disabled">
-                    <i class="bi bi-trash-fill"></i>
-                    Eliminar
-                </button>
-            </div>
-        </div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="2">
+                <a ngbNavLink>Equipos</a>
+                <ng-template ngbNavContent>
+                    <div class="">El usuario no tiene equipos asignados</div>
+                </ng-template>
+            </li>
+            <li [ngbNavItem]="3">
+                <a ngbNavLink>Contrato</a>
+                <ng-template ngbNavContent>
+                    El usuario no tiene equipos asignados
+                </ng-template>
+            </li>
+        </ul>
+        <div
+            [ngbNavOutlet]="nav"
+            class="mt-3 d-flex flex-column flex-1-1-auto"
+        ></div>
     </div>
 </div>

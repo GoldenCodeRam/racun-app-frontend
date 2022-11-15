@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CreateUserModalComponent } from "src/app/components/modals/users/create-user-modal/create-user-modal.component";
 import { UsersApiService } from "src/app/services/api/users/users-api.service";
 
 @Component({
@@ -6,11 +8,18 @@ import { UsersApiService } from "src/app/services/api/users/users-api.service";
     templateUrl: "./users.component.html",
     styleUrls: ["./users.component.sass"],
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent {
     // This constant is used to determine the amount of users searched.
     public readonly USER_SEARCH_LIMIT = 5;
 
-    constructor(public usersApiService: UsersApiService) {}
+    constructor(
+        public usersApiService: UsersApiService,
+        private modalService: NgbModal
+    ) {}
 
-    async ngOnInit() {}
+    public openCreateUserModal() {
+        this.modalService.open(CreateUserModalComponent, {
+            centered: true,
+        });
+    }
 }

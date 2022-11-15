@@ -3,40 +3,55 @@
 
     <h1 class="text-700 text-center m-0">Clientes</h1>
     <div class="text-center py-2 border-bottom">
-        <button class="btn btn-primary disabled">
+        <button class="btn btn-primary"
+            (click)="openCreateClientModal()"
+        >
             <i class="bi bi-plus-lg"></i>
             Crear cliente
         </button>
     </div>
-    <div class="h-100">
-        <app-search-list
+    <div class="h-100 mh-100 overflow-auto">
+        <app-search-table
             [searchFunctionService]="clientsApiService"
-            [searchLimit]="CLIENT_SEARCH_LIMIT"
-            #search
+            #searchTable
         >
-            <div class="list-group px-5">
-                <a
-                    *ngFor="let client of search.search"
-                    routerLink="/clients/{{ client.id }}"
-                    class="list-group-item list-group-item-action d-flex gap-2 py-1"
-                    aria-current="true"
-                >
-                    <i class="bi bi-people-fill"></i>
-                    <div
-                        class="d-flex gap-2 w-100 justify-content-between align-items-center"
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="
+                            let client of (searchTable.searchResult | async)
+                                ?.search
+                        "
                     >
-                        <div>
-                            <h6 class="mb-0">
-                                {{ client.firstName }}
-                                {{ client.lastName }}
-                            </h6>
-                            <p class="mb-0 opacity-75 small">
-                                {{ client.document }}
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </app-search-list>
+                        <td>{{ client.firstName }}</td>
+                        <td>{{ client.lastName }}</td>
+                        <td>{{ client.phone }}</td>
+                        <td>{{ client.address }}</td>
+                        <td>{{ client.document }}</td>
+                        <td>{{ client.email ?? "Sin correo" }}</td>
+                        <td class="text-center">
+                            <button
+                                class="btn btn-sm btn-primary"
+                                routerLink="/clients/{{ client.id }}"
+                            >
+                                <i class="bi bi-eye-fill"></i>
+                                Ver
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </app-search-table>
     </div>
 </div>

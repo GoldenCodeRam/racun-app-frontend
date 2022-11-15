@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { from, Observable } from "rxjs";
 import { Permission } from "src/app/models/permissions";
 import { Role } from "src/app/models/role";
 import { environment } from "src/environments/environment";
@@ -13,8 +14,8 @@ export class RolesApiService extends ApiService implements ApiWithSearch<Role> {
         userSearch: string,
         currentSearchPage: number,
         searchLimit: number
-    ): Promise<SearchResult<Role>> {
-        return this.getRoles(userSearch, currentSearchPage, searchLimit);
+    ): Observable<SearchResult<Role>> {
+        return from(this.getRoles(userSearch, currentSearchPage, searchLimit));
     }
 
     public count(): Promise<number> {
@@ -27,7 +28,7 @@ export class RolesApiService extends ApiService implements ApiWithSearch<Role> {
         searchAmount: number
     ): Promise<SearchResult<Role>> {
         return this.makeSearchPaginationRequest(
-            "/roles",
+            "/roles/search",
             userSearch,
             currentPage,
             searchAmount

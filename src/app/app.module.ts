@@ -17,6 +17,7 @@ import { AuthService } from "./services/auth/auth.service";
 import { ApiService } from "./services/api/api.service";
 import { ShowRoleComponent } from "./routes/config/roles/show-role/show-role.component";
 import { MainLoaderService } from "./services/components/loaders/main-loader.service";
+import { ActionsComponent } from './routes/config/actions/actions.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { MainLoaderService } from "./services/components/loaders/main-loader.ser
         HomeComponent,
         ConfigComponent,
         ShowRoleComponent,
+        ActionsComponent,
     ],
     imports: [
         BrowserModule,

@@ -15,6 +15,7 @@ import { ShowClientComponent } from "./routes/home/clients/show-client/show-clie
 import { ShowZoneComponent } from "./routes/home/zones/show-zone/show-zone.component";
 import { ShowHardwareComponent } from "./routes/home/hardware/show-hardware/show-hardware.component";
 import { ShowRoleComponent } from "./routes/config/roles/show-role/show-role.component";
+import { ActionsComponent } from "./routes/config/actions/actions.component";
 
 const routes: Routes = [
     {
@@ -65,6 +66,11 @@ const routes: Routes = [
     {
         path: "config",
         component: ConfigComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "config/actions",
+        component: ActionsComponent,
         canActivate: [AuthGuard],
     },
     {

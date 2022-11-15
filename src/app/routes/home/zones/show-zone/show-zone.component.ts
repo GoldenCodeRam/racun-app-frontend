@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 
 import { Zone } from "src/app/models/zone";
-import { ApiService } from "src/app/services/api/api.service";
+import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";
 
 @Component({
     selector: "app-show-zone",
@@ -14,11 +14,11 @@ export class ShowZoneComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private apiService: ApiService
+        private zonesApiService: ZonesApiService
     ) {}
 
     async ngOnInit() {
-        this.zone = await this.apiService.getZone(
+        this.zone = await this.zonesApiService.getZone(
             this.route.snapshot.params["zoneId"]
         );
     }

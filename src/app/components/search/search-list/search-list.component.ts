@@ -25,16 +25,16 @@ export class SearchListComponent<T> implements OnInit {
     }
 
     private async searchElements() {
-        const result = await this.searchFunctionService.search(
-            this.userSearch,
-            this.currentSearchPage,
-            this.searchLimit
-        );
+       // const result = await this.searchFunctionService.search(
+       //     this.userSearch,
+       //     this.currentSearchPage,
+       //     this.searchLimit
+       // );
 
-        this.search = result.search;
+       // this.search = result.search;
 
-        // See explanation on user component.
-        this.paginationCount = Math.ceil(result.searchCount / this.searchLimit);
+       // // See explanation on user component.
+       // this.paginationCount = Math.ceil(result.searchCount / this.searchLimit);
     }
 
     public async paginationBack() {

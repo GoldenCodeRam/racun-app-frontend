@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateRoleModalComponent } from "src/app/components/modals/roles/create-role-modal/create-role-modal.component";
-import { RolesApiService } from "src/app/services/api/users/roles-api.service";
+import { RolesApiService } from "src/app/services/api/roles/roles-api.service";
 
 @Component({
     selector: "app-roles",

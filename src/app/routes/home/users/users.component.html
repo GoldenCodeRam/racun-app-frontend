@@ -3,39 +3,51 @@
 
     <h1 class="text-700 text-center m-0">Usuarios</h1>
     <div class="text-center py-2 border-bottom">
-        <button class="btn btn-primary disabled">
+        <button class="btn btn-primary"
+            (click)="openCreateUserModal()"
+        >
             <i class="bi bi-plus-lg"></i>
             Crear usuario
         </button>
     </div>
     <div class="h-100">
-        <app-search-list
+        <app-search-table
             [searchFunctionService]="usersApiService"
-            [searchLimit]="USER_SEARCH_LIMIT"
-            #search
+            #searchTable
         >
-            <div class="list-group px-5">
-                <a
-                    *ngFor="let user of search.search"
-                    routerLink="/users/{{ user.id }}"
-                    class="list-group-item list-group-item-action d-flex gap-2 py-1"
-                    aria-current="true"
-                >
-                    <i class="bi bi-people-fill"></i>
-                    <div
-                        class="d-flex gap-2 w-100 justify-content-between align-items-center"
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombres</th>
+                        <th scope="col">Apellidos</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Rol</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="
+                            let user of (searchTable.searchResult | async)
+                                ?.search
+                        "
                     >
-                        <div>
-                            <h6 class="mb-0">
-                                {{ user.firstName }} {{ user.lastName }}
-                            </h6>
-                            <p class="mb-0 opacity-75 small">
-                                {{ user.role.name }}
-                            </p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </app-search-list>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role.name }}</td>
+                        <td class="text-center">
+                            <button
+                                class="btn btn-sm btn-primary"
+                                routerLink="/users/{{ user.id }}"
+                            >
+                                <i class="bi bi-eye-fill"></i>
+                                Ver
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </app-search-table>
     </div>
 </div>

@@ -1,4 +1,7 @@
 import { Injectable } from "@angular/core";
+import { from, Observable } from "rxjs";
+import { Role } from "src/app/models/role";
+
 import { User } from "src/app/models/user";
 import { environment } from "src/environments/environment";
 import { ApiService, ApiWithSearch } from "../api.service";
@@ -12,51 +15,50 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
         userSearch: string,
         currentSearchPage: number,
         searchLimit: number
-    ): Promise<SearchResult<User>> {
-        return this.getUsers(userSearch, currentSearchPage, searchLimit);
+    ): Observable<SearchResult<User>> {
+        return from(this.getUsers(userSearch, currentSearchPage, searchLimit));
     }
 
     public count(): Promise<number> {
-        return this.makeSimpleGetRequest("/users/count")
+        return this.makeSimpleGetRequest("/users/count");
     }
 
     public async getCurrentUser(): Promise<User> {
-        return new Promise((resolve, reject) => {
-            this.httpClient
-                .get(`${environment.apiUrl}/users/current-user`, {
-                    withCredentials: true,
-                })
-                .subscribe({
-                    next(result) {
-                        resolve(result as User);
-                    },
-                });
-        });
+        return this.makeSimpleGetRequest("/users/current-user");
     }
 
     public getUser(userId: number): Promise<User> {
         return this.makeSimpleGetRequest(`/users/${userId}`);
     }
 
-    // TODO: This method is too big and should be divided.
     public getUsers(
         userSearch: string,
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<User>> {
         return this.makeSearchPaginationRequest(
-            "/users",
+            "/users/search",
             userSearch,
             currentPage,
             searchAmount
         );
     }
 
+    public createUser(userInformation: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+        role: Role;
+    }) {
+        return this.makeSimplePostRequest("/users/create", userInformation);
+    }
+
     public updateUser(updateUser: User) {
         return this.promisify((resolve, reject) => {
             return this.httpClient
                 .put(
-                    `${environment.apiUrl}/users/${updateUser.id}`,
+                    `${environment.apiUrl}/users/edit/${updateUser.id}`,
                     updateUser,
                     {
                         withCredentials: true,

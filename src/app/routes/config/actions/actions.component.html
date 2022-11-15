@@ -1,40 +1,43 @@
 <div class="h-100 d-flex flex-column">
     <app-main-navbar></app-main-navbar>
 
-    <h1 class="text-700 text-center m-0">Roles</h1>
-    <div class="text-center py-2 border-bottom">
-        <button class="btn btn-primary" (click)="showCreateRoleModal()">
-            <i class="bi bi-plus-lg"></i>
-            Crear rol
-        </button>
-    </div>
-    <div class="h-100">
+    <h1 class="text-700 text-center m-0">Auditoría</h1>
+    <div class="h-100 mh-100 overflow-auto">
         <app-search-table
-            [searchFunctionService]="rolesApiService"
+            [searchFunctionService]="actionsApiService"
             #searchTable
         >
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">Nombre</th>
+                        <th scope="col">Acción</th>
+                        <th scope="col">URL</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Usuario</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr
                         *ngFor="
-                            let role of (searchTable.searchResult | async)
+                            let action of (searchTable.searchResult | async)
                                 ?.search
                         "
                     >
-                        <td>{{ role.name }}</td>
+                        <td>{{ action.method }}</td>
+                        <td>{{ action.url }}</td>
+                        <td>{{ action.date }}</td>
+                        <td>
+                            {{ action.user.firstName }}
+                            {{ action.user.lastName }}
+                        </td>
                         <td class="text-center">
                             <button
                                 class="btn btn-sm btn-primary"
-                                routerLink="/config/roles/{{ role.id }}"
+                                routerLink="/users/{{ action.user.id }}"
                             >
                                 <i class="bi bi-eye-fill"></i>
-                                Ver
+                                Ver usuario
                             </button>
                         </td>
                     </tr>

@@ -13,7 +13,9 @@ import { SelectRoleModalComponent } from "./modals/roles/select-role-modal/selec
 import { MainSidebarComponent } from "./sidebars/main-sidebar/main-sidebar.component";
 import { ToastGeneratorComponent } from "./toasts/toast-generator/toast-generator.component";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { SearchTableComponent } from './search/search-table/search-table.component';
+import { SearchTableComponent } from "./search/search-table/search-table.component";
+import { CreateUserModalComponent } from './modals/users/create-user-modal/create-user-modal.component';
+import { CreateClientModalComponent } from './modals/clients/create-client-modal/create-client-modal.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +29,8 @@ import { SearchTableComponent } from './search/search-table/search-table.compone
         MainSidebarComponent,
         ToastGeneratorComponent,
         SearchTableComponent,
+        CreateUserModalComponent,
+        CreateClientModalComponent,
     ],
     exports: [
         CreateRoleModalComponent,
@@ -36,6 +40,7 @@ import { SearchTableComponent } from './search/search-table/search-table.compone
         SearchListComponent,
         LoaderComponent,
         ToastGeneratorComponent,
+        SearchTableComponent,
     ],
     imports: [
         ReactiveFormsModule,

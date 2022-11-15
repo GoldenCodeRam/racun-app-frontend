@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Client } from "src/app/models/client";
-import { ClientsApiService } from "src/app/services/api/users/clients-api.service";
+import { ClientsApiService } from "src/app/services/api/clients/clients-api.service";
 
 @Component({
     selector: "app-show-client",
@@ -10,6 +10,8 @@ import { ClientsApiService } from "src/app/services/api/users/clients-api.servic
 })
 export class ShowClientComponent implements OnInit {
     public client!: Client;
+
+    public activeNav: number = 1;
 
     constructor(
         private route: ActivatedRoute,

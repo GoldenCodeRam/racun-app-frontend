@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Hardware } from "src/app/models/hardware";
 import { ApiService } from "src/app/services/api/api.service";
-import { HardwareApiService } from "src/app/services/api/users/hardware-api.service";
+import { HardwareApiService } from "src/app/services/api/hardware/hardware-api.service";
 
 @Component({
     selector: "app-show-hardware",

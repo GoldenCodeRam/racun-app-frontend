@@ -22,6 +22,16 @@ export class AuthService {
         return true;
     }
 
+    async logout(): Promise<boolean> {
+        const response = await fetch(`${environment.backendUrl}/logout`, {
+            method: "POST",
+            credentials: "include",
+        });
+        console.log(response.status);
+        return true;
+    }
+
+
     async canActivate(): Promise<boolean> {
         const response = await fetch(
             `${environment.backendUrl}/auth/canActivate`,

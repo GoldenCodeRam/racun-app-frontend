@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { RolesApiService } from "src/app/services/api/users/roles-api.service";
+import { RolesApiService } from "src/app/services/api/roles/roles-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
 

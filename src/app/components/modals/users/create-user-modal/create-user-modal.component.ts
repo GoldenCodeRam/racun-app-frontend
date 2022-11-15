@@ -9,24 +9,23 @@ import { ToastGeneratorService } from "src/app/services/components/toasts/toast-
 import { SelectRoleModalComponent } from "../../roles/select-role-modal/select-role-modal.component";
 
 @Component({
-    selector: "app-edit-user-modal",
-    templateUrl: "./edit-user-modal.component.html",
-    styleUrls: ["./edit-user-modal.component.sass"],
+    selector: "app-create-user-modal",
+    templateUrl: "./create-user-modal.component.html",
+    styleUrls: ["./create-user-modal.component.sass"],
 })
-export class EditUserModalComponent {
+export class CreateUserModalComponent {
     public userForm = new FormGroup({
-        firstName: new FormControl<string>(this.user.firstName, [
-            Validators.required,
-        ]),
-        lastName: new FormControl<string>(this.user.lastName, [
-            Validators.required,
-        ]),
-        email: new FormControl<string>(this.user.email, [
+        firstName: new FormControl<string>("", [Validators.required]),
+        lastName: new FormControl<string>("", [Validators.required]),
+        email: new FormControl<string>("", [
             Validators.required,
             Validators.email,
         ]),
-        role: new FormControl<Role>(this.user.role, {
-            nonNullable: true,
+        password: new FormControl<string>("", [
+            Validators.required,
+            Validators.minLength(6),
+        ]),
+        role: new FormControl<Role | null>(null, {
             validators: [Validators.required],
         }),
     });
@@ -35,7 +34,6 @@ export class EditUserModalComponent {
         public modalService: NgbModal,
         public activeModal: NgbActiveModal,
 
-        private user: User,
         private usersApiService: UsersApiService,
         private loaderService: MainLoaderService,
         private toastService: ToastGeneratorService
@@ -48,29 +46,30 @@ export class EditUserModalComponent {
                 size: "lg",
             })
             .result.then(
-                (role: any) => {
+                (role: Role) => {
                     if (role) {
-                        this.userForm.value.role = role;
-                        console.log(this.userForm);
+                        this.userForm.patchValue({
+                            role,
+                        });
                     }
                 },
                 (reason: any) => {}
             );
     }
 
-    public async editUser() {
+    public async createUser() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.usersApiService.updateUser({
-                id: this.user.id,
+            await this.usersApiService.createUser({
                 firstName: this.userForm.value!.firstName as string,
                 lastName: this.userForm.value!.lastName as string,
-                role: this.userForm.value!.role as Role,
                 email: this.userForm.value!.email as string,
+                password: this.userForm.value!.password as string,
+                role: this.userForm.value!.role as Role,
             });
 
             this.toastService.show(
-                "Usuario editado",
-                "Se ha editado el usuario correctamente."
+                "Usuario creado",
+                "Se ha creado el usuario correctamente."
             );
         });
 

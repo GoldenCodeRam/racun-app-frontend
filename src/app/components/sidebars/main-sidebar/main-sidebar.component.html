@@ -80,7 +80,7 @@
                 <button
                     class="nav-link text-danger"
                     routerLinkActive="active"
-                    (click)="activeOffcanvas.dismiss()"
+                    (click)="activeOffcanvas.dismiss(); logout()"
                 >
                     <i class="bi bi-door-open-fill"></i>
                     Cerrar sesión

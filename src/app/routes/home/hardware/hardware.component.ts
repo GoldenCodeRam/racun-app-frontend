@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { HardwareApiService } from "src/app/services/api/users/hardware-api.service";
+import { HardwareApiService } from "src/app/services/api/hardware/hardware-api.service";
 
 @Component({
     selector: "app-hardware",
