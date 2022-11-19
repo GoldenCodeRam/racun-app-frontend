@@ -16,6 +16,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { SearchTableComponent } from "./search/search-table/search-table.component";
 import { CreateUserModalComponent } from './modals/users/create-user-modal/create-user-modal.component';
 import { CreateClientModalComponent } from './modals/clients/create-client-modal/create-client-modal.component';
+import { DeleteUserModalComponent } from './modals/users/delete-user-modal/delete-user-modal/delete-user-modal.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { CreateClientModalComponent } from './modals/clients/create-client-modal
         SearchTableComponent,
         CreateUserModalComponent,
         CreateClientModalComponent,
+        DeleteUserModalComponent,
     ],
     exports: [
         CreateRoleModalComponent,
