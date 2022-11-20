@@ -1,5 +1,7 @@
-export type Zone = {
-    id: number;
-    name: string;
-    code: number;
+export class Zone  {
+    constructor(
+        public id: number,
+        public name: string,
+        public code: number,
+    ){}
 };

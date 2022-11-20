@@ -1,0 +1,52 @@
+<div class="modal-header">
+    <h1 class="modal-title fs-5">Editar usuario</h1>
+    <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss()"
+    ></button>
+</div>
+<form [formGroup]="serviceForm">
+    <div class="modal-body">
+        <div class="form-floating border rounded">
+            <input
+                type="text"
+                class="form-control"
+                formControlName="name"
+                [ngClass]="{
+                    'is-invalid': serviceForm.controls.name.invalid
+                }"
+            />
+            <label>Nombres</label>
+        </div>
+        <div class="form-floating mt-2 border rounded is-invalid">
+            <input
+                type="text"
+                class="form-control"
+                formControlName="description"
+                [ngClass]="{
+                    'is-invalid': serviceForm.controls.description.invalid
+                }"
+            />
+            <label>Apellidos</label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="activeModal.close()"
+        >
+            Cancelar
+        </button>
+        <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="serviceForm.invalid"
+            (click)="editService()"
+        >
+            Guardar
+        </button>
+    </div>
+</form>

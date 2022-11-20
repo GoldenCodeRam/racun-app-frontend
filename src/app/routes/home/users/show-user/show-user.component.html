@@ -63,6 +63,7 @@
                 <button
                     class="btn btn-sm btn-danger"
                     [ngClass]="{ disabled: user.role.name === 'SuperAdmin' }"
+                    (click)="openDeleteUserModal()"
                 >
                     <i class="bi bi-trash-fill"></i>
                     Eliminar

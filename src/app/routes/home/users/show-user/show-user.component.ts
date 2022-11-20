@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DeleteUserModalComponent } from "src/app/components/modals/users/delete-user-modal/delete-user-modal/delete-user-modal.component";
 import { EditUserModalComponent } from "src/app/components/modals/users/edit-user-modal/edit-user-modal.component";
 import { User } from "src/app/models/user";
 import { ApiService } from "src/app/services/api/api.service";
@@ -35,6 +36,16 @@ export class ShowUserComponent implements OnInit {
             // of the information.
             //
             // See: https://github.com/ng-bootstrap/ng-bootstrap/issues/2645
+            injector: Injector.create({
+                providers: [{ provide: User, useValue: this.user }],
+            }),
+        });
+    }
+
+    openDeleteUserModal() {
+        this.modalService.open(DeleteUserModalComponent, {
+            centered: true,
+
             injector: Injector.create({
                 providers: [{ provide: User, useValue: this.user }],
             }),

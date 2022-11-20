@@ -43,14 +43,31 @@ export class ZonesApiService extends ApiService implements ApiWithSearch<Zone> {
         return this.httpClient.post(`${environment.apiUrl}/zones`, zone);
     }
 
-    public updateZone(id: string | number, updateZone: Zone) {
-        return this.httpClient.put(
-            `${environment.apiUrl}/zones/${id}`,
-            updateZone
-        );
+    public updateZone(updateZone: Zone) {
+        return this.promisify((resolve, reject) => {
+            return this.httpClient
+                .put(
+                    `${environment.apiUrl}/zones/edit/${updateZone.id}`,
+                    updateZone,
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .subscribe({
+                    next: (_) => resolve(),
+                    error: (error) => reject(error),
+                });
+        });
     }
 
     public deleteZone(id: number) {
         return this.httpClient.delete(`${environment.apiUrl}/zones/${id}`);
+    }
+
+    public createZone(zoneInformation: {
+        name: string,
+        code: string
+    }){
+        return this.makeSimplePostRequest("/zones/create", zoneInformation);
     }
 }

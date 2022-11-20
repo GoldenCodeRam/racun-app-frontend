@@ -16,6 +16,7 @@ import { ShowZoneComponent } from "./routes/home/zones/show-zone/show-zone.compo
 import { ShowHardwareComponent } from "./routes/home/hardware/show-hardware/show-hardware.component";
 import { ShowRoleComponent } from "./routes/config/roles/show-role/show-role.component";
 import { ActionsComponent } from "./routes/config/actions/actions.component";
+import { ServicesComponent } from "./routes/home/services/services.component";
 
 const routes: Routes = [
     {
@@ -46,6 +47,11 @@ const routes: Routes = [
     {
         path: "zones",
         component: ZonesComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "services",
+        component: ServicesComponent,
         canActivate: [AuthGuard],
     },
     {

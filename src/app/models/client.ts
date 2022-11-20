@@ -1,14 +1,16 @@
-export interface Client {
-    id: number;
-    firstName: string;
-    lastName: string;
-    document: string;
-    phone: string;
-    address: string;
-    email?: string;
+export class Client {
+    constructor(
+        public id: number,
+        public firstName: string,
+        public lastName: string,
+        public document: string,
+        public phone: string,
+        public address: string,
+        public email?: string,
+    ){}
 }
 
-export interface Type_document{
+/*export interface Type_document{
     value: string;
     name: string;
 }
@@ -18,4 +20,4 @@ export interface Hadware{
     model: string;
     name:string;
     details:string;
-}
+}*/

@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Injector, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { EditZoneModalComponent } from "src/app/components/modals/zones/edit-zone-modal/edit-zone-modal.component";
 
 import { Zone } from "src/app/models/zone";
 import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";
@@ -14,12 +16,27 @@ export class ShowZoneComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private zonesApiService: ZonesApiService
+        private zonesApiService: ZonesApiService,
+        private modalService: NgbModal
     ) {}
 
     async ngOnInit() {
         this.zone = await this.zonesApiService.getZone(
             this.route.snapshot.params["zoneId"]
         );
+    }
+
+    public openEditZoneModal(){
+        this.modalService.open(EditZoneModalComponent, {
+            centered: true,
+
+            injector: Injector.create({
+                providers: [{ provide: Zone, useValue: this.zone}],
+            }),
+        })
+    }
+
+    public openDeleteZoneModal(){
+
     }
 }

@@ -58,10 +58,20 @@ export class ClientsApiService
         return this.httpClient.post(`${environment.apiUrl}/clients`, client);
     }
 
-    public updateClient(id: string, updateClient: Client) {
-        return this.httpClient.put(
-            `${environment.apiUrl}/clients/${id}`,
-            updateClient
-        );
+    public updateClient(updateClient: Client) {
+        return this.promisify((resolve, reject) => {
+            return this.httpClient
+                .put(
+                    `${environment.apiUrl}/clients/edit/${updateClient.id}`,
+                    updateClient,
+                    {
+                        withCredentials: true,
+                    }
+                )
+                .subscribe({
+                    next: (_) => resolve(),
+                    error: (error) => reject(error),
+                });
+        });
     }
 }
