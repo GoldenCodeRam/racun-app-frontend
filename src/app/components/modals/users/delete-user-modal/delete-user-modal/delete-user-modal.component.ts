@@ -28,4 +28,19 @@ export class DeleteUserModalComponent implements OnInit {
     );
 
   }
+
+
+  
+  public async editUser() {
+    await this.loaderService.doWithLoadingScreen(async () => {
+        await this.usersApiService.deleteUser(this.user.id);
+
+        this.toastService.show(
+            "Usuario Eliminado",
+            "Se ha eliminado el usuario correctamente."
+        );
+    });
+
+    this.activeModal.close();
+}
 }
