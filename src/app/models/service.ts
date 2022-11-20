@@ -1,7 +1,7 @@
-export class Zone  {
+export class Service {
     constructor(
         public id: number,
         public name: string,
-        public code: number,
+        public description: string,
     ){}
 };

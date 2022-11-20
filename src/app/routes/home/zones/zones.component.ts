@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CreateZoneModalComponent } from "src/app/components/modals/zones/create-zone-modal/create-zone-modal.component";
 import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";
 
 @Component({
@@ -6,14 +8,20 @@ import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";
   templateUrl: "./zones.component.html",
   styleUrls: ["./zones.component.css"],
 })
-export class ZonesComponent implements OnInit {
+export class ZonesComponent{
   zones: any = [];
 
-  constructor(public zonesApiService: ZonesApiService) { }
+    constructor(
+        public zonesApiService: ZonesApiService,
 
-  ngOnInit(): void { }
+        private modalService: NgbModal
+    ) { }
 
-  getZones() { }
 
-  deleteZone(id: number) { }
+  public openCreateZoneModal(){
+    this.modalService.open(CreateZoneModalComponent, {
+        centered: true,
+    })
+  }
+
 }

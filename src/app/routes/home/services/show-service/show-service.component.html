@@ -1,12 +1,12 @@
 <div class="h-100 d-flex flex-column">
     <app-main-navbar></app-main-navbar>
 
-    <app-loader class="h-100" *ngIf="!zone"></app-loader>
+    <app-loader class="h-100" *ngIf="!service"></app-loader>
 
-    <div *ngIf="zone">
+    <div *ngIf="service">
         <h2 class="text-700 text-center">Usuario</h2>
         <h6 class="text-600 text-center border-bottom pb-3">
-            {{ zone.name }}
+            {{ service.name }}
         </h6>
 
         <div class="container">
@@ -17,7 +17,7 @@
                             type="text"
                             readonly
                             class="form-control-plaintext"
-                            [value]="zone.name"
+                            [value]="service.name"
                         />
                         <label>Nombre</label>
                     </div>
@@ -28,23 +28,23 @@
                             type="text"
                             readonly
                             class="form-control-plaintext"
-                            [value]="zone.code"
+                            [value]="service.description"
                         />
-                        <label>Código</label>
+                        <label>Descripcion</label>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-end gap-2 mt-2">
                 <button
                     class="btn btn-sm btn-primary "
-                    (click)="openEditZoneModal()"
+                    (click)="openEditServiceModal()"
                     >
                     <i class="bi bi-pen-fill"></i>
                     Editar
                 </button>
                 <button
                     class="btn btn-sm btn-danger "
-                    (click)="openDeleteZoneModal()"
+                    (click)="openDeleteServiceModal()"
                     >
                     <i class="bi bi-trash-fill"></i>
                     Eliminar
@@ -53,4 +53,3 @@
         </div>
     </div>
 </div>
-

@@ -17,6 +17,14 @@ import { SearchTableComponent } from "./search/search-table/search-table.compone
 import { CreateUserModalComponent } from './modals/users/create-user-modal/create-user-modal.component';
 import { CreateClientModalComponent } from './modals/clients/create-client-modal/create-client-modal.component';
 import { DeleteUserModalComponent } from './modals/users/delete-user-modal/delete-user-modal/delete-user-modal.component';
+import { CreateZoneModalComponent } from './modals/zones/create-zone-modal/create-zone-modal.component';
+import { EditZoneModalComponent } from './modals/zones/edit-zone-modal/edit-zone-modal.component';
+import { DeleteZoneModalComponent } from './modals/zones/delete-zone-modal/delete-zone-modal.component';
+import { DeleteServiceModalComponent } from './modals/services/delete-service-modal/delete-service-modal.component';
+import { CreateServiceModalComponent } from './modals/services/create-service-modal/create-service-modal.component';
+import { EditServiceModalComponent } from './modals/services/edit-service-modal/edit-service-modal.component';
+import { EditClientModalComponent } from './modals/clients/edit-client-modal/edit-client-modal.component';
+import { DeleteClientModalComponent } from './modals/clients/delete-client-modal/delete-client-modal.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +41,14 @@ import { DeleteUserModalComponent } from './modals/users/delete-user-modal/delet
         CreateUserModalComponent,
         CreateClientModalComponent,
         DeleteUserModalComponent,
+        CreateZoneModalComponent,
+        EditZoneModalComponent,
+        DeleteZoneModalComponent,
+        DeleteServiceModalComponent,
+        CreateServiceModalComponent,
+        EditServiceModalComponent,
+        EditClientModalComponent,
+        DeleteClientModalComponent,
     ],
     exports: [
         CreateRoleModalComponent,
