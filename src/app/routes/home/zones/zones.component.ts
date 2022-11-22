@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateZoneModalComponent } from "src/app/components/modals/zones/create-zone-modal/create-zone-modal.component";
 import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";

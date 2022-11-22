@@ -17,7 +17,8 @@ import { AuthService } from "./services/auth/auth.service";
 import { ApiService } from "./services/api/api.service";
 import { ShowRoleComponent } from "./routes/config/roles/show-role/show-role.component";
 import { MainLoaderService } from "./services/components/loaders/main-loader.service";
-import { ActionsComponent } from './routes/config/actions/actions.component';
+import { ActionsComponent } from "./routes/config/actions/actions.component";
+import { PlacesComponent } from './routes/config/places/places.component';
 
 @NgModule({
     declarations: [
@@ -29,6 +30,7 @@ import { ActionsComponent } from './routes/config/actions/actions.component';
         ConfigComponent,
         ShowRoleComponent,
         ActionsComponent,
+        PlacesComponent,
     ],
     imports: [
         BrowserModule,

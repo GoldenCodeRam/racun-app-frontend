@@ -6,7 +6,6 @@ import { ClientsApiService } from "src/app/services/api/clients/clients-api.serv
 import { EditClientModalComponent } from "src/app/components/modals/clients/edit-client-modal/edit-client-modal.component";
 import { DeleteClientModalComponent } from "src/app/components/modals/clients/delete-client-modal/delete-client-modal.component";
 
-
 @Component({
     selector: "app-show-client",
     templateUrl: "./show-client.component.html",
@@ -29,19 +28,23 @@ export class ShowClientComponent implements OnInit {
         );
     }
 
-    openEditClientModal(){
+    openEditClientModal() {
         this.modalService.open(EditClientModalComponent, {
             centered: true,
 
             injector: Injector.create({
-                providers: [{ provide: Client, useValue: this.client}],
+                providers: [{ provide: Client, useValue: this.client }],
             }),
         });
     }
 
-    openDeleteClientModal(){
-        this.modalService.open(DeleteClientModalComponent,{
+    openDeleteClientModal() {
+        this.modalService.open(DeleteClientModalComponent, {
+            centered: true,
 
-        })
+            injector: Injector.create({
+                providers: [{ provide: Client, useValue: this.client }],
+            }),
+        });
     }
 }

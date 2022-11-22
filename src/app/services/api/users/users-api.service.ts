@@ -71,20 +71,17 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
         });
     }
 
-    public deleteUser(userId: number){
+    public deleteUser(userId: number) {
         return this.promisify((resolve, reject) => {
             return this.httpClient
-                .delete(
-                    `${environment.apiUrl}/users/delete/${userId}`,
-                    {
-                        withCredentials: true,
-                    }
-                )
+                .delete(`${environment.apiUrl}/users/delete/${userId}`, {
+                    withCredentials: true,
+                    responseType: "text",
+                })
                 .subscribe({
                     next: (_) => resolve(),
                     error: (error) => reject(error),
                 });
         });
-
     }
 }

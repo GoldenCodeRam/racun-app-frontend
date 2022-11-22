@@ -33,6 +33,4 @@ export class CreateRoleModalComponent {
             this.activeModal.close();
         }
     }
-
-    public openModal() {}
 }

@@ -1,0 +1,229 @@
+<div class="modal-header">
+    <h1 class="modal-title fs-5">Crear contrato</h1>
+    <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss()"
+    ></button>
+</div>
+<form [formGroup]="contractForm" class="modal-content">
+    <div class="modal-body container">
+        <fieldset class="mb-5">
+            <legend>Información general del contrato</legend>
+            <div class="row">
+                <div class="col col-sm-6">
+                    <div class="form-floating">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            value="{{ client.firstName }} {{ client.lastName }}"
+                        />
+                        <label>Nombre del cliente</label>
+                    </div>
+                    <div class="form-floating">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            value="{{ client.phone }}"
+                        />
+                        <label>Teléfono</label>
+                    </div>
+                </div>
+                <div class="col col-sm-6">
+                    <div class="form-floating">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            value="{{ client.email }}"
+                        />
+                        <label>Correo electrónico</label>
+                    </div>
+                    <div class="form-floating">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            value="{{ client.address }}"
+                        />
+                        <label>Dirección</label>
+                    </div>
+                </div>
+                <div class="input-group mt-2">
+                    <button
+                        class="btn btn-outline-secondary"
+                        type="button"
+                        (click)="openSelectPlace()"
+                    >
+                        Seleccionar lugar
+                    </button>
+                    <input
+                        type="text"
+                        readonly
+                        class="form-control"
+                        placeholder="Sin un lugar seleccionado"
+                        [value]="contractForm.value.place?.name"
+                        [ngClass]="{
+                            'is-invalid': contractForm.controls.place.invalid
+                        }"
+                    />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="mb-5">
+            <legend>Servicio asociado al contrato</legend>
+            <div class="input-group mt-2">
+                <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    (click)="openSelectService()"
+                >
+                    Seleccionar servicio
+                </button>
+                <input
+                    type="text"
+                    readonly
+                    class="form-control"
+                    placeholder="Sin un servicio seleccionado"
+                    [value]="contractForm.value.service?.name"
+                    [ngClass]="{
+                        'is-invalid': contractForm.controls.service.invalid
+                    }"
+                />
+            </div>
+        </fieldset>
+
+        <fieldset class="mb-5">
+            <legend>Fechas del contrato</legend>
+
+            <div class="mb-3">
+                <div class="input-group">
+                    <div class="form-floating">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="yyyy-mm-dd"
+                            formControlName="startDate"
+                            ngbDatepicker
+                            [ngClass]="{
+                                'is-invalid':
+                                    contractForm.controls.startDate.invalid
+                            }"
+                            #startDateDatepicker="ngbDatepicker"
+                        />
+                        <label>Fecha de inicio del contrato</label>
+                    </div>
+                    <button
+                        class="btn btn-outline-secondary bi bi-calendar3"
+                        (click)="startDateDatepicker.toggle()"
+                        type="button"
+                    ></button>
+                </div>
+                <div
+                    class="invalid-feedback"
+                    [ngClass]="{
+                        'd-block':
+                            contractForm.controls.startDate.errors?.['date']
+                    }"
+                >
+                    {{
+                            contractForm.controls.startDate.errors?.["date"]
+                    }}
+                </div>
+            </div>
+
+            <div>
+                <div class="input-group">
+                    <div class="form-floating">
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Sin fecha de finalización"
+                            formControlName="endDate"
+                            ngbDatepicker
+                            [ngClass]="{
+                                'is-invalid':
+                                    contractForm.controls.endDate.invalid
+                            }"
+                            #endDateDatepicker="ngbDatepicker"
+                        />
+                        <label>Fecha de finalización del contrato</label>
+                    </div>
+                    <button
+                        class="btn btn-outline-secondary bi bi-calendar3"
+                        (click)="endDateDatepicker.toggle()"
+                        type="button"
+                    ></button>
+                    <button
+                        class="btn btn-outline-secondary bi bi-calendar3"
+                        (click)="
+                            contractForm.controls.endDate.reset();
+                            validateDates()
+                        "
+                        type="button"
+                    ></button>
+                </div>
+                <div
+                    class="invalid-feedback"
+                    [ngClass]="{
+                        'd-block':
+                            contractForm.controls.endDate.errors?.['date']
+                    }"
+                >
+                    {{
+                            contractForm.controls.endDate.errors?.["date"]
+                    }}
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset class="mb-5 border shadow rounded px-4 py-3">
+            <legend>Valor del contrato</legend>
+            <div class="row">
+                <div class="col col-sm-6">
+                    <div class="form-floating">
+                        <input
+                            type="number"
+                            min="0"
+                            class="form-control"
+                            placeholder="20000"
+                            formControlName="contractValue"
+                            [ngClass]="{
+                                'is-invalid':
+                                    contractForm.controls.contractValue.invalid
+                            }"
+                        />
+                        <label>Valor del contrato</label>
+                    </div>
+                </div>
+                <div class="col col-sm-6">
+                    <h4 class="p-0 m-0">Valor final:</h4>
+                    <h6 class="p-0 m-0">Valor del contrato</h6>
+                    <b>
+                        {{ contractForm.value.contractValue | currency }}
+                    </b>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="activeModal.close()"
+        >
+            Cancelar
+        </button>
+        <button
+            type="button"
+            class="btn btn-primary"
+            [disabled]="contractForm.invalid"
+            (click)="createContract()"
+        >
+            Crear contrato
+        </button>
+    </div>
+</form>

@@ -1,0 +1,45 @@
+<div class="h-100 d-flex flex-column">
+    <app-main-navbar></app-main-navbar>
+
+    <h1 class="text-700 text-center m-0">Lugares</h1>
+    <div class="text-center py-2 border-bottom">
+        <button class="btn btn-primary" (click)="openCreatePlaceModal()">
+            <i class="bi bi-plus-lg"></i>
+            Crear zona
+        </button>
+    </div>
+    <div class="h-100 overflow-auto mh-100">
+        <app-search-table
+            [searchFunctionService]="placesApiService"
+            #searchTable
+        >
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="
+                            let place of (searchTable.searchResult | async)
+                                ?.search
+                        "
+                    >
+                        <td>{{ place.name }}</td>
+                        <td class="text-center">
+                            <button
+                                class="btn btn-sm btn-primary"
+                                routerLink="/config/places/{{ place.id }}"
+                            >
+                                <i class="bi bi-eye-fill"></i>
+                                Ver
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </app-search-table>
+    </div>
+</div>

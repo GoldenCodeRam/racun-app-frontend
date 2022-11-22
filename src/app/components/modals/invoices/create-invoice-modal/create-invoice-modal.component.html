@@ -1,0 +1,119 @@
+<div class="modal-header">
+    <h1 class="modal-title fs-5">Añadir nueva factura</h1>
+    <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        (click)="activeModal.dismiss()"
+    ></button>
+</div>
+<form [formGroup]="invoiceForm">
+    <div class="modal-body">
+        <div class="input-group">
+            <div class="form-floating">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    formControlName="periodStart"
+                    ngbDatepicker
+                    [ngClass]="{
+                        'is-invalid': invoiceForm.controls.periodStart.invalid
+                    }"
+                    #periodStart="ngbDatepicker"
+                />
+                <label>Fecha de inicio de la factura</label>
+            </div>
+            <button
+                class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="periodStart.toggle()"
+                type="button"
+            ></button>
+        </div>
+
+        <div class="input-group">
+            <div class="form-floating">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    formControlName="periodEnd"
+                    ngbDatepicker
+                    [ngClass]="{
+                        'is-invalid': invoiceForm.controls.periodEnd.invalid
+                    }"
+                    #periodEnd="ngbDatepicker"
+                />
+                <label>Fecha final de la factura</label>
+            </div>
+            <button
+                class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="periodEnd.toggle()"
+                type="button"
+            ></button>
+        </div>
+
+        <div class="input-group">
+            <div class="form-floating">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    formControlName="paymentDate"
+                    ngbDatepicker
+                    [ngClass]="{
+                        'is-invalid': invoiceForm.controls.paymentDate.invalid
+                    }"
+                    #paymentDate="ngbDatepicker"
+                />
+                <label>Fecha de pago de la factura</label>
+            </div>
+            <button
+                class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="paymentDate.toggle()"
+                type="button"
+            ></button>
+        </div>
+
+        <div class="input-group">
+            <div class="form-floating">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    formControlName="suspensionDate"
+                    ngbDatepicker
+                    [ngClass]="{
+                        'is-invalid':
+                            invoiceForm.controls.suspensionDate.invalid
+                    }"
+                    #suspensionDate="ngbDatepicker"
+                />
+                <label>Fecha de suspensión del servicio</label>
+            </div>
+            <button
+                class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="suspensionDate.toggle()"
+                type="button"
+            ></button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            (click)="activeModal.close()"
+        >
+            Cancelar
+        </button>
+        <button
+            type="button"
+            class="btn btn-primary"
+            (click)="createInvoice()"
+            [disabled]="invoiceForm.invalid"
+        >
+            Crear
+        </button>
+    </div>
+</form>

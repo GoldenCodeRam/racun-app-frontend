@@ -3,9 +3,7 @@
 
     <h1 class="text-700 text-center m-0">Servicios</h1>
     <div class="text-center py-2 border-bottom">
-        <button class="btn btn-primary"
-            (click)="openCreateServiceModal()"
-        >
+        <button class="btn btn-primary" (click)="openCreateServiceModal()">
             <i class="bi bi-plus-lg"></i>
             Crear servicio
         </button>
@@ -30,8 +28,8 @@
                                 ?.search
                         "
                     >
-                        <td>{{ services.name }}</td>
-                        <td>{{ services.description }}</td>
+                        <td>{{ service.name }}</td>
+                        <td>{{ service.description }}</td>
                         <td class="text-center">
                             <button
                                 class="btn btn-sm btn-primary"

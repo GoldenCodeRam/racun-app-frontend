@@ -9,7 +9,7 @@
 </div>
 <form [formGroup]="serviceForm">
     <div class="modal-body">
-        <div class="form-floating border rounded">
+        <div class="form-floating border rounded mb-2">
             <input
                 type="text"
                 class="form-control"
@@ -20,33 +20,50 @@
             />
             <label>Nombre</label>
         </div>
-        <div class="form-floating mt-2 border rounded is-invalid">
+        <!--
+        <div class="border mb-2 px-2 border rounded shadow-sm">
+            <label>Valor</label>
             <input
+                type="number"
+                class="form-control form-control-sm"
+                formControlName="value"
+                min="0"
+                [ngClass]="{
+                    'is-invalid': serviceForm.controls.value.invalid
+                }"
+            />
+            Valor real:
+            <b>{{ serviceForm.value.value | currency }}</b>
+        </div>
+        -->
+        <div class="form-floating border rounded is-invalid">
+            <textarea
+                formControlName="description"
                 type="text"
                 class="form-control"
-                formControlName="description"
+                style="min-height: 10em"
                 [ngClass]="{
                     'is-invalid': serviceForm.controls.description.invalid
                 }"
-            />
+            ></textarea>
             <label>Descripcion</label>
         </div>
-    <div class="modal-footer">
-        <button
-            type="button"
-            class="btn btn-secondary"
-            (click)="activeModal.close()"
-        >
-            Cancelar
-        </button>
-        <button
-            type="button"
-            class="btn btn-primary"
-            [disabled]="serviceForm.invalid"
-            (click)="createService()"
-        >
-            Guardar
-        </button>
-    </div>
+        <div class="modal-footer">
+            <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="activeModal.close()"
+            >
+                Cancelar
+            </button>
+            <button
+                type="button"
+                class="btn btn-primary"
+                [disabled]="serviceForm.invalid"
+                (click)="createService()"
+            >
+                Guardar
+            </button>
+        </div>
     </div>
 </form>

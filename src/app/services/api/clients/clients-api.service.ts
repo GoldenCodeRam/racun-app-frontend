@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { from, Observable } from "rxjs";
 import { Client } from "src/app/models/client";
+import { ClientAccount } from "src/app/models/clientAccount";
 import { environment } from "src/environments/environment";
 import { ApiService, ApiWithSearch } from "../api.service";
 import { SearchResult } from "../apiTypes";
@@ -26,6 +27,10 @@ export class ClientsApiService
         return this.makeSimpleGetRequest<number>("/clients/count");
     }
 
+    public getClientAccounts(): Promise<ClientAccount[]> {
+        return this.makeSimpleGetRequest("/clients/accounts");
+    }
+
     public getClients(
         userSearch: string,
         currentPage: number,
@@ -48,6 +53,20 @@ export class ClientsApiService
         email: string | null;
     }) {
         return this.makeSimplePostRequest("/clients/create", client);
+    }
+
+    public deleteClient(clientId: number) {
+        return this.promisify((resolve, reject) => {
+            return this.httpClient
+                .delete(`${environment.apiUrl}/clients/delete/${clientId}`, {
+                    withCredentials: true,
+                    responseType: "text",
+                })
+                .subscribe({
+                    next: (_) => resolve(),
+                    error: (error) => reject(error),
+                });
+        });
     }
 
     public getClient(clientId: number) {

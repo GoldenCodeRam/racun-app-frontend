@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h1 class="modal-title fs-5">Editar usuario</h1>
+    <h1 class="modal-title fs-5">Editar servicio</h1>
     <button
         type="button"
         class="btn-close"
@@ -18,18 +18,19 @@
                     'is-invalid': serviceForm.controls.name.invalid
                 }"
             />
-            <label>Nombres</label>
+            <label>Nombre</label>
         </div>
         <div class="form-floating mt-2 border rounded is-invalid">
-            <input
+            <textarea
                 type="text"
                 class="form-control"
                 formControlName="description"
+                style="min-height: 12em"
                 [ngClass]="{
                     'is-invalid': serviceForm.controls.description.invalid
                 }"
-            />
-            <label>Apellidos</label>
+            ></textarea>
+            <label>Descripción</label>
         </div>
     </div>
     <div class="modal-footer">

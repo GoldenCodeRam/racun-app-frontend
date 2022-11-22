@@ -4,7 +4,6 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DeleteUserModalComponent } from "src/app/components/modals/users/delete-user-modal/delete-user-modal/delete-user-modal.component";
 import { EditUserModalComponent } from "src/app/components/modals/users/edit-user-modal/edit-user-modal.component";
 import { User } from "src/app/models/user";
-import { ApiService } from "src/app/services/api/api.service";
 import { UsersApiService } from "src/app/services/api/users/users-api.service";
 
 @Component({
