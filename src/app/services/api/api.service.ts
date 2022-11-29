@@ -1,7 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Zone } from "src/app/models/zone";
 import { environment } from "src/environments/environment";
 import { SearchResult } from "./apiTypes";
 

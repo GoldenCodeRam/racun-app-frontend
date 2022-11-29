@@ -81,7 +81,7 @@ export class ClientsApiService
         return this.promisify((resolve, reject) => {
             return this.httpClient
                 .put(
-                    `${environment.apiUrl}/clients/edit/${updateClient.id}`,
+                    `${environment.apiUrl}/clients/update/${updateClient.id}`,
                     updateClient,
                     {
                         withCredentials: true,

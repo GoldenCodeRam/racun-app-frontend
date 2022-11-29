@@ -19,6 +19,7 @@ import { ActionsComponent } from "./routes/config/actions/actions.component";
 import { ServicesComponent } from "./routes/home/services/services.component";
 import { ShowServiceComponent } from "./routes/home/services/show-service/show-service.component";
 import { PlacesComponent } from "./routes/config/places/places.component";
+import { ShowPlaceComponent } from "./routes/config/places/show-place/show-place.component";
 
 const routes: Routes = [
     {
@@ -89,6 +90,11 @@ const routes: Routes = [
     {
         path: "config/places",
         component: PlacesComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "config/places/:placeId",
+        component: ShowPlaceComponent,
         canActivate: [AuthGuard],
     },
     {

@@ -28,7 +28,7 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
     }
 
     public getUser(userId: number): Promise<User> {
-        return this.makeSimpleGetRequest(`/users/${userId}`);
+        return this.makeSimpleGetRequest(`/users/get/${userId}`);
     }
 
     public getUsers(

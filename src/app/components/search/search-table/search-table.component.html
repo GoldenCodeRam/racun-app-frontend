@@ -1,35 +1,38 @@
-<div
-    class="h-100 d-flex justify-content-center align-items-center"
-    *ngIf="loading | async; else table"
->
-    <div class="text-center">
-        <div class="spinner-border text-blue-700" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <p>Cargando...</p>
+<div class="px-5 py-3 mx-5 my-3 shadow border rounded">
+    <div class="input-group px-5 py-3">
+        <input
+            type="text"
+            class="form-control"
+            placeholder="Búsqueda..."
+            [(ngModel)]="searchInput"
+        />
+        <button
+            class="btn btn-outline-secondary"
+            type="button"
+            (click)="search()"
+        >
+            Buscar
+        </button>
     </div>
-</div>
 
-<ng-template #table>
-    <form class="h-100 pt-3 p-0">
-        <div class="input-group px-5 py-3">
-            <input
-                type="text"
-                class="form-control"
-                placeholder="Búsqueda..."
-                disabled
-            />
-            <button class="btn btn-outline-secondary disabled" type="button">
-                Buscar
-            </button>
+    <div
+        class="h-100 d-flex justify-content-center align-items-center"
+        *ngIf="loading | async; else table"
+    >
+        <div class="text-center">
+            <div class="spinner-border text-blue-700" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p>Cargando...</p>
         </div>
-
+    </div>
+    <ng-template #table>
         <div class="flex-1-1-auto">
             <ng-content></ng-content>
         </div>
 
-        <div class="d-flex justify-content-between px-3">
+        <div class="d-flex justify-content-between mt-3">
             <ngb-pagination> </ngb-pagination>
         </div>
-    </form>
-</ng-template>
+    </ng-template>
+</div>

@@ -19,6 +19,7 @@ import { ShowRoleComponent } from "./routes/config/roles/show-role/show-role.com
 import { MainLoaderService } from "./services/components/loaders/main-loader.service";
 import { ActionsComponent } from "./routes/config/actions/actions.component";
 import { PlacesComponent } from './routes/config/places/places.component';
+import { ShowPlaceComponent } from './routes/config/places/show-place/show-place.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +32,7 @@ import { PlacesComponent } from './routes/config/places/places.component';
         ShowRoleComponent,
         ActionsComponent,
         PlacesComponent,
+        ShowPlaceComponent,
     ],
     imports: [
         BrowserModule,

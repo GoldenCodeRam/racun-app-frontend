@@ -1,13 +1,7 @@
 <div class="h-100 d-flex flex-column">
     <app-main-navbar></app-main-navbar>
 
-    <h1 class="text-700 text-center m-0">Lugares</h1>
-    <div class="text-center py-2 border-bottom">
-        <button class="btn btn-primary" (click)="openCreatePlaceModal()">
-            <i class="bi bi-plus-lg"></i>
-            Crear zona
-        </button>
-    </div>
+    <h1 class="text-700 text-center m-0 pb-4 border-bottom">Lugares</h1>
     <div class="h-100 overflow-auto mh-100">
         <app-search-table
             [searchFunctionService]="placesApiService"
@@ -17,7 +11,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Nombre</th>
-                        <th scope="col">Acciones</th>
+                        <th scope="col" class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>

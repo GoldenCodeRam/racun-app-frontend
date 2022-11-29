@@ -35,4 +35,8 @@ export class PlacesApiService
             searchAmount
         );
     }
+
+    public async getPlace(placeId: number): Promise<Place> {
+        return this.makeSimpleGetRequest(`/places/get/${placeId}`);
+    }
 }

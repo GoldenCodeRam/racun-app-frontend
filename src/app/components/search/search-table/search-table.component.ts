@@ -15,11 +15,20 @@ export class SearchTableComponent<T> implements OnInit {
 
     public searchResult!: Observable<SearchResult<T>>;
 
+    public searchInput = "";
+
     constructor() {}
 
     ngOnInit() {
-        this.searchResult = this.searchFunctionService.search();
-        this.searchResult.subscribe((_) => {
+        this.search();
+    }
+
+    public search() {
+        this.loading.next(true);
+
+        this.searchResult = this.searchFunctionService.search(this.searchInput);
+        this.searchResult.subscribe((data) => {
+            console.log(data);
             this.loading.next(false);
         });
     }

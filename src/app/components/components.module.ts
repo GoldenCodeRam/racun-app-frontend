@@ -26,10 +26,9 @@ import { EditServiceModalComponent } from "./modals/services/edit-service-modal/
 import { EditClientModalComponent } from "./modals/clients/edit-client-modal/edit-client-modal.component";
 import { DeleteClientModalComponent } from "./modals/clients/delete-client-modal/delete-client-modal.component";
 import { CreateContractModalComponent } from "./modals/contracts/create-contract-modal/create-contract-modal.component";
-import { CreatePlaceModalComponent } from './modals/places/create-place-modal/create-place-modal.component';
-import { SelectPlaceModalComponent } from './modals/places/select-place-modal/select-place-modal.component';
-import { SelectServiceModalComponent } from './modals/services/select-service-modal/select-service-modal.component';
-import { CreateInvoiceModalComponent } from './modals/invoices/create-invoice-modal/create-invoice-modal.component';
+import { SelectPlaceModalComponent } from "./modals/places/select-place-modal/select-place-modal.component";
+import { SelectServiceModalComponent } from "./modals/services/select-service-modal/select-service-modal.component";
+import { CreateInvoiceModalComponent } from "./modals/invoices/create-invoice-modal/create-invoice-modal.component";
 
 @NgModule({
     declarations: [
@@ -55,7 +54,6 @@ import { CreateInvoiceModalComponent } from './modals/invoices/create-invoice-mo
         EditClientModalComponent,
         DeleteClientModalComponent,
         CreateContractModalComponent,
-        CreatePlaceModalComponent,
         SelectPlaceModalComponent,
         SelectServiceModalComponent,
         CreateInvoiceModalComponent,
