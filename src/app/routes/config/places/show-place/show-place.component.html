@@ -1,0 +1,34 @@
+<div class="h-100 d-flex flex-column">
+    <app-main-navbar></app-main-navbar>
+
+    <div *ngIf="place">
+        <h2 class="text-700 text-center">Lugar</h2>
+        <h6 class="text-600 text-center border-bottom pb-3">
+            {{ place.name }}
+        </h6>
+
+        <div class="container">
+            <p>
+                A continuación se muestra información sobre un lugar. Se debe
+                tener en cuenta que los lugares no pueden ser ni editados, ni
+                creados, ni eliminados. Si se requieren hacer cambios, por
+                favor, llame a soporte técnico.
+            </p>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating mb-2 m-sm-0 border rounded">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            [value]="place.name"
+                        />
+                        <label>Nombre</label>
+                    </div>
+                </div>
+                <div class="col col-sm-6"></div>
+            </div>
+        </div>
+    </div>
+</div>
