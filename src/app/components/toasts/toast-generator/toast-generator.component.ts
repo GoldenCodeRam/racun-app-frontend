@@ -1,7 +1,8 @@
+import { Component } from "@angular/core";
 import {
-    Component,
-} from "@angular/core";
-import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+    ToastGeneratorService,
+    ToastType,
+} from "src/app/services/components/toasts/toast-generator.service";
 
 @Component({
     selector: "app-toast-generator",
@@ -9,9 +10,7 @@ import { ToastGeneratorService } from "src/app/services/components/toasts/toast-
     styleUrls: ["./toast-generator.component.sass"],
 })
 export class ToastGeneratorComponent {
-    constructor(public toastService: ToastGeneratorService) {}
+    public toastType: typeof ToastType = ToastType;
 
-    public test() {
-        console.log("test");
-    }
+    constructor(public toastService: ToastGeneratorService) {}
 }

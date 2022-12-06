@@ -18,8 +18,11 @@ export class UsersComponent {
     ) {}
 
     public openCreateUserModal() {
-        this.modalService.open(CreateUserModalComponent, {
+        const modal = this.modalService.open(CreateUserModalComponent, {
             centered: true,
+        });
+        modal.closed.subscribe((result: any) => {
+            console.log(result);
         });
     }
 }

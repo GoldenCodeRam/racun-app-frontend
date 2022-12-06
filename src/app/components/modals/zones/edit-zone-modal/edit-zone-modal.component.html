@@ -31,6 +31,25 @@
             />
             <label>Codigo</label>
         </div>
+        <div class="input-group mt-2 border rounded">
+            <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="openSelectPlace()"
+            >
+                Seleccionar lugar
+            </button>
+            <input
+                type="text"
+                readonly
+                class="form-control"
+                placeholder="Sin un lugar seleccionado"
+                [value]="zoneForm.value.place?.name"
+                [ngClass]="{
+                    'is-invalid': zoneForm.controls.place.invalid
+                }"
+            />
+        </div>
     <div class="modal-footer">
         <button
             type="button"

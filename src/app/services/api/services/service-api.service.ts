@@ -58,12 +58,26 @@ export class ServicesApiService
         return this.promisify((resolve, reject) => {
             return this.httpClient
                 .put(
-                    `${environment.apiUrl}/services/edit/${updateService.id}`,
+                    `${environment.apiUrl}/services/update/${updateService.id}`,
                     updateService,
                     {
                         withCredentials: true,
                     }
                 )
+                .subscribe({
+                    next: (_) => resolve(),
+                    error: (error) => reject(error),
+                });
+        });
+    }
+
+    public deleteService(serviceId: number) {
+        return this.promisify((resolve, reject) => {
+            return this.httpClient
+                .delete(`${environment.apiUrl}/services/delete/${serviceId}`, {
+                    withCredentials: true,
+                    responseType: "text",
+                })
                 .subscribe({
                     next: (_) => resolve(),
                     error: (error) => reject(error),

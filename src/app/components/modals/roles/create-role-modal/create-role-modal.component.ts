@@ -4,6 +4,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { RolesApiService } from "src/app/services/api/roles/roles-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
     selector: "app-create-role-modal",
@@ -19,15 +20,23 @@ export class CreateRoleModalComponent {
         public activeModal: NgbActiveModal,
 
         private rolesApiService: RolesApiService,
-        private mainLoaderService: MainLoaderService,
-        private toastGeneratorService: ToastGeneratorService
+        private mainLoaderService: MainLoaderService
     ) {}
 
     public async createRole() {
         if (this.roleForm.valid) {
             await this.mainLoaderService.doWithLoadingScreen(async () => {
-                await this.rolesApiService.createRole(this.roleForm.value.name!);
-                this.toastGeneratorService.show("Rol creado", "Rol creado correctamente");
+                try {
+                    await this.rolesApiService.createRole(
+                        this.roleForm.value.name!
+                    );
+                    return Ok({
+                        header: "Rol creado",
+                        body: "Se ha creado el rol correctamente.",
+                    });
+                } catch (error: any) {
+                    return Err(error);
+                }
             });
 
             this.activeModal.close();

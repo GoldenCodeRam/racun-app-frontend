@@ -1,11 +1,18 @@
 <div class="toast-container position-fixed top-0 end-0 p-3">
     <ngb-toast
         *ngFor="let toast of toastService.toasts"
-        [header]="toast.header"
         [animation]="true"
         [autohide]="true"
         (hidden)="toastService.remove(toast)"
     >
+        <ng-template ngbToastHeader>
+            <div
+                class="me-auto"
+                [class.text-danger]="toast.toastType === toastType.ERROR"
+            >
+                {{ toast.header }}
+            </div>
+        </ng-template>
         {{ toast.body }}
     </ngb-toast>
 </div>

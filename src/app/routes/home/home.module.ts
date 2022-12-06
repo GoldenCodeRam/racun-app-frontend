@@ -14,6 +14,8 @@ import { NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { ServicesComponent } from './services/services.component';
 import { ShowServiceComponent } from './services/show-service/show-service.component';
 import { CreateContractComponent } from './clients/show-client/create-contract/create-contract.component';
+import { ShowZoneHardwareComponent } from './zones/show-zone/show-zone-hardware/show-zone-hardware.component';
+import { ShowUserHardwareComponent } from './users/show-user/show-user-hardware/show-user-hardware.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +29,8 @@ import { CreateContractComponent } from './clients/show-client/create-contract/c
         ServicesComponent,
         ShowServiceComponent,
         CreateContractComponent,
+        ShowZoneHardwareComponent,
+        ShowUserHardwareComponent,
     ],
     imports: [
         ComponentsModule,

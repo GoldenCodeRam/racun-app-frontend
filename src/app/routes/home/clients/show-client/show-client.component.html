@@ -119,9 +119,9 @@
             <li [ngbNavItem]="2">
                 <a ngbNavLink>Equipos</a>
                 <ng-template ngbNavContent>
-                    <div class="text-center">
-                        El usuario no tiene equipos asignados.
-                    </div>
+                    <app-show-user-hardware
+                        [clientAccount]="client.clientAccount!"
+                    ></app-show-user-hardware>
                 </ng-template>
             </li>
             <li [ngbNavItem]="3">

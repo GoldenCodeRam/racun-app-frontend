@@ -3,7 +3,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { User } from "src/app/models/user";
 import { UsersApiService } from "src/app/services/api/users/users-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
-import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
     selector: "app-delete-user-modal",
@@ -15,18 +15,20 @@ export class DeleteUserModalComponent {
         private usersApiService: UsersApiService,
         private loaderService: MainLoaderService,
         private user: User,
-        private toastService: ToastGeneratorService,
         public activeModal: NgbActiveModal
     ) {}
 
     public async deleteUser() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.usersApiService.deleteUser(this.user.id);
-
-            this.toastService.show(
-                "Usuario Eliminado",
-                "Se ha eliminado el usuario correctamente."
-            );
+            try {
+                await this.usersApiService.deleteUser(this.user.id);
+                return Ok({
+                    header: "Usuario Eliminado",
+                    body: "Se ha eliminado el usuario correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
         });
 
         this.activeModal.close();

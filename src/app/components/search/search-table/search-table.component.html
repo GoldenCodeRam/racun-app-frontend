@@ -27,12 +27,18 @@
         </div>
     </div>
     <ng-template #table>
-        <div class="flex-1-1-auto">
+        <div class="flex-1-1-auto overflow-auto">
             <ng-content></ng-content>
         </div>
 
         <div class="d-flex justify-content-between mt-3">
-            <ngb-pagination> </ngb-pagination>
+            <ngb-pagination
+                [collectionSize]="collectionSize"
+                [maxSize]="5"
+                [(page)]="page"
+                (pageChange)="search()"
+            >
+            </ngb-pagination>
         </div>
     </ng-template>
 </div>

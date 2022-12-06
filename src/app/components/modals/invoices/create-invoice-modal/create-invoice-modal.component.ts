@@ -5,6 +5,7 @@ import { ClientAccount } from "src/app/models/clientAccount";
 import { InvoicesApiService } from "src/app/services/api/invoices/invoices-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
     selector: "app-create-invoice-modal",
@@ -61,22 +62,26 @@ export class CreateInvoiceModalComponent {
                     this.invoiceForm.value.suspensionDate!.day
                 }`;
 
-                await this.invoiceApiService.createInvoice({
-                    clientAccountId: this.clientAccount.id,
-                    contractId: this.contractId,
-                    periodStart: periodStart,
-                    periodEnd: periodEnd,
-                    paymentDate: paymentDate,
-                    suspensionDate: suspensionDate,
-                    // value: this.invoiceForm.value.value!,
-                    // adjustment: this.invoiceForm.value.adjustment ?? undefined,
-                    value: 1000,
-                    adjustment: 1000,
-                });
-                this.toastGeneratorService.show(
-                    "Factura creada",
-                    "Factura creada correctamente"
-                );
+                try {
+                    await this.invoiceApiService.createInvoice({
+                        clientAccountId: this.clientAccount.id,
+                        contractId: this.contractId,
+                        periodStart: periodStart,
+                        periodEnd: periodEnd,
+                        paymentDate: paymentDate,
+                        suspensionDate: suspensionDate,
+                        // value: this.invoiceForm.value.value!,
+                        // adjustment: this.invoiceForm.value.adjustment ?? undefined,
+                        value: 1000,
+                        adjustment: 1000,
+                    });
+                    return Ok({
+                        header: "Factura creada",
+                        body: "Factura creada correctamente",
+                    });
+                } catch (error: any) {
+                    return Err(error);
+                }
             });
 
             this.activeModal.close();

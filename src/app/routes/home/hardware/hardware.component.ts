@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CreateHardwareModalComponent } from "src/app/components/modals/hardware/create-hardware-modal/create-hardware-modal.component";
 import { HardwareApiService } from "src/app/services/api/hardware/hardware-api.service";
 
 @Component({
@@ -6,10 +8,15 @@ import { HardwareApiService } from "src/app/services/api/hardware/hardware-api.s
     templateUrl: "./hardware.component.html",
     styleUrls: ["./hardware.component.sass"],
 })
-export class HardwareComponent implements OnInit {
-    public readonly HARDWARE_SEARCH_LIMIT = 5;
+export class HardwareComponent {
+    constructor(
+        public modalService: NgbModal,
+        public hardwareApiService: HardwareApiService
+    ) {}
 
-    constructor(public hardwareApiService: HardwareApiService) {}
-
-    ngOnInit(): void {}
+    public openCreateHardwareModal() {
+        this.modalService.open(CreateHardwareModalComponent, {
+            centered: true,
+        });
+    }
 }

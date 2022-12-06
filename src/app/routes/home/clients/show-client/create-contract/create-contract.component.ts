@@ -32,6 +32,7 @@ export class CreateContractComponent implements OnInit {
                 await this.contractsApiService.getContractsByClientAccount(
                     this.client.clientAccount.id
                 );
+
             this.loading.next(false);
         }
     }

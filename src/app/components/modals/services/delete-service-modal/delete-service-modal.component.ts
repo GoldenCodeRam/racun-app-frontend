@@ -1,15 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from "@angular/core";
+import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Service } from "src/app/models/service";
+import { ServicesApiService } from "src/app/services/api/services/service-api.service";
+import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
-  selector: 'app-delete-service-modal',
-  templateUrl: './delete-service-modal.component.html',
-  styleUrls: ['./delete-service-modal.component.sass']
+    selector: "app-delete-service-modal",
+    templateUrl: "./delete-service-modal.component.html",
+    styleUrls: ["./delete-service-modal.component.sass"],
 })
-export class DeleteServiceModalComponent implements OnInit {
+export class DeleteServiceModalComponent {
+    constructor(
+        private servicesApiService: ServicesApiService,
+        private loaderService: MainLoaderService,
+        private service: Service,
+        public activeModal: NgbActiveModal
+    ) {}
 
-  constructor() { }
+    public async deleteService() {
+        await this.loaderService.doWithLoadingScreen(async () => {
+            try {
+                await this.servicesApiService.deleteService(this.service.id);
+                return Ok({
+                    header: "Servicio Eliminado",
+                    body: "Se ha eliminado el servicio correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
+        });
 
-  ngOnInit(): void {
-  }
-
+        this.activeModal.close();
+    }
 }

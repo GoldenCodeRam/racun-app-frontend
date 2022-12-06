@@ -1,8 +1,6 @@
-import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Component } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CreateClientModalComponent } from "src/app/components/modals/clients/create-client-modal/create-client-modal.component";
-import { Client } from "src/app/models/client";
 import { ClientsApiService } from "src/app/services/api/clients/clients-api.service";
 
 @Component({

@@ -19,6 +19,7 @@ import { Service } from "src/app/models/service";
 import { ContractsApiService } from "src/app/services/api/contracts/contracts-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 import { SelectPlaceModalComponent } from "../../places/select-place-modal/select-place-modal.component";
 import { SelectServiceModalComponent } from "../../services/select-service-modal/select-service-modal.component";
 
@@ -106,18 +107,23 @@ export class CreateContractModalComponent {
                       }-${this.contractForm.value.endDate!.day}`
                     : undefined;
 
-                await this.contractsApiService.createContract({
-                    value: this.contractForm.value.contractValue!,
-                    dateStart: startDate,
-                    dateEnd: endDate,
-                    clientAccountId: this.client.clientAccount!.id,
-                    serviceId: this.contractForm.value.service!.id,
-                    placeId: this.contractForm.value.place!.id,
-                });
-                this.toastGeneratorService.show(
-                    "Contrato creado",
-                    "Contrato creado correctamente"
-                );
+                try {
+                    await this.contractsApiService.createContract({
+                        value: this.contractForm.value.contractValue!,
+                        dateStart: startDate,
+                        dateEnd: endDate,
+                        clientAccountId: this.client.clientAccount!.id,
+                        serviceId: this.contractForm.value.service!.id,
+                        placeId: this.contractForm.value.place!.id,
+                    });
+
+                    return Ok({
+                        header: "Contrato creado",
+                        body: "Contrato creado correctamente",
+                    });
+                } catch (error: any) {
+                    return Err(error);
+                }
             });
 
             this.activeModal.close();

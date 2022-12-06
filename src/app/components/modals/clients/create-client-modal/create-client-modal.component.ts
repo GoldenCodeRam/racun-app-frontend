@@ -4,6 +4,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ClientsApiService } from "src/app/services/api/clients/clients-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
     selector: "app-create-client-modal",
@@ -31,19 +32,23 @@ export class CreateClientModalComponent {
 
     public async createClient() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.clientsApiService.createClient({
-                firstName: this.userForm.value!.firstName as string,
-                lastName: this.userForm.value!.lastName as string,
-                document: this.userForm.value!.document as string,
-                phone: this.userForm.value!.phone as string,
-                address: this.userForm.value!.address as string,
-                email: this.userForm.value!.email ?? null,
-            });
+            try {
+                await this.clientsApiService.createClient({
+                    firstName: this.userForm.value!.firstName as string,
+                    lastName: this.userForm.value!.lastName as string,
+                    document: this.userForm.value!.document as string,
+                    phone: this.userForm.value!.phone as string,
+                    address: this.userForm.value!.address as string,
+                    email: this.userForm.value!.email ?? null,
+                });
 
-            this.toastService.show(
-                "Cliente creado",
-                "Se ha creado el cliente correctamente."
-            );
+                return Ok({
+                    header: "Cliente creado",
+                    body: "Se ha creado el cliente correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
         });
 
         this.activeModal.close();

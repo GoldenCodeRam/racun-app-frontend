@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { from, Observable } from "rxjs";
+import { catchError, from, Observable, of } from "rxjs";
 import { Role } from "src/app/models/role";
 
 import { User } from "src/app/models/user";
@@ -58,7 +58,7 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
         return this.promisify((resolve, reject) => {
             return this.httpClient
                 .put(
-                    `${environment.apiUrl}/users/edit/${updateUser.id}`,
+                    `${environment.apiUrl}/users/update/${updateUser.id}`,
                     updateUser,
                     {
                         withCredentials: true,
@@ -76,7 +76,6 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
             return this.httpClient
                 .delete(`${environment.apiUrl}/users/delete/${userId}`, {
                     withCredentials: true,
-                    responseType: "text",
                 })
                 .subscribe({
                     next: (_) => resolve(),

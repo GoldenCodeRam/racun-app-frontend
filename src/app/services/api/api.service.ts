@@ -33,6 +33,7 @@ export class ApiService {
                     next: (value) => {
                         resolve(value as T);
                     },
+                    error: (error) => reject(error),
                 });
         });
     }
@@ -47,6 +48,7 @@ export class ApiService {
                     next: (value) => {
                         resolve(value as T);
                     },
+                    error: (error) => reject(error),
                 });
         });
     }
@@ -54,8 +56,8 @@ export class ApiService {
     protected makeSearchPaginationRequest<T>(
         url: string,
         userSearch: string,
-        currentPage: number,
-        searchAmount: number
+        currentPage: number = 0,
+        searchAmount: number = 10
     ): Promise<SearchResult<T>> {
         return new Promise((resolve, reject) => {
             this.httpClient
@@ -76,6 +78,7 @@ export class ApiService {
                     next: (value) => {
                         resolve(value as SearchResult<T>);
                     },
+                    error: (error) => reject(error),
                 });
         });
     }

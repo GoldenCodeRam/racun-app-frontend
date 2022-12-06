@@ -4,24 +4,22 @@ import { CreateZoneModalComponent } from "src/app/components/modals/zones/create
 import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";
 
 @Component({
-  selector: "app-zones",
-  templateUrl: "./zones.component.html",
-  styleUrls: ["./zones.component.css"],
+    selector: "app-zones",
+    templateUrl: "./zones.component.html",
+    styleUrls: ["./zones.component.css"],
 })
-export class ZonesComponent{
-  zones: any = [];
+export class ZonesComponent {
+    zones: any = [];
 
     constructor(
         public zonesApiService: ZonesApiService,
 
         private modalService: NgbModal
-    ) { }
+    ) {}
 
-
-  public openCreateZoneModal(){
-    this.modalService.open(CreateZoneModalComponent, {
-        centered: true,
-    })
-  }
-
+    public openCreateZoneModal() {
+        this.modalService.open(CreateZoneModalComponent, {
+            centered: true,
+        });
+    }
 }

@@ -17,6 +17,10 @@ export class SearchTableComponent<T> implements OnInit {
 
     public searchInput = "";
 
+    public collectionSize = 0;
+
+    public page = 1;
+
     constructor() {}
 
     ngOnInit() {
@@ -26,9 +30,14 @@ export class SearchTableComponent<T> implements OnInit {
     public search() {
         this.loading.next(true);
 
-        this.searchResult = this.searchFunctionService.search(this.searchInput);
-        this.searchResult.subscribe((data) => {
-            console.log(data);
+        this.searchResult = this.searchFunctionService.search(
+            this.searchInput,
+            // This has to be done so the pagination starts at 0.
+            this.page - 1
+        );
+
+        this.searchResult.subscribe((searchResult: SearchResult<T>) => {
+            this.collectionSize = searchResult.searchCount;
             this.loading.next(false);
         });
     }

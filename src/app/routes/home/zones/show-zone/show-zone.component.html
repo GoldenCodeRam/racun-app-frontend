@@ -1,56 +1,86 @@
 <div class="h-100 d-flex flex-column">
     <app-main-navbar></app-main-navbar>
 
-    <app-loader class="h-100" *ngIf="!zone"></app-loader>
+    <app-loader *ngIf="loader | async; else content"></app-loader>
 
-    <div *ngIf="zone">
-        <h2 class="text-700 text-center">Zona</h2>
-        <h6 class="text-600 text-center border-bottom pb-3">
-            {{ zone.name }}
-        </h6>
+    <ng-template #content>
+        <div class="d-flex flex-column flex-1-1-auto">
+            <h2 class="text-700 text-center">Zona</h2>
+            <h6 class="text-600 text-center border-bottom pb-3">
+                {{ zone.name }}
+            </h6>
 
-        <div class="container">
-            <div class="row">
-                <div class="col-12 col-sm-6">
-                    <div class="form-floating mb-2 m-sm-0 border rounded">
-                        <input
-                            type="text"
-                            readonly
-                            class="form-control-plaintext"
-                            [value]="zone.name"
-                        />
-                        <label>Nombre</label>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating border rounded">
-                        <input
-                            type="text"
-                            readonly
-                            class="form-control-plaintext"
-                            [value]="zone.code"
-                        />
-                        <label>Código</label>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-end gap-2 mt-2">
-                <button
-                    class="btn btn-sm btn-primary "
-                    (click)="openEditZoneModal()"
-                    >
-                    <i class="bi bi-pen-fill"></i>
-                    Editar
-                </button>
-                <button
-                    class="btn btn-sm btn-danger "
-                    (click)="openDeleteZoneModal()"
-                    >
-                    <i class="bi bi-trash-fill"></i>
-                    Eliminar
-                </button>
-            </div>
+            <ul ngbNav #nav="ngbNav" [(activeId)]="activeNav" class="nav-tabs">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>Información</a>
+                    <ng-template ngbNavContent>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-sm-6">
+                                    <div
+                                        class="form-floating mb-2 m-sm-0 border rounded"
+                                    >
+                                        <input
+                                            type="text"
+                                            readonly
+                                            class="form-control-plaintext"
+                                            [value]="zone.name"
+                                        />
+                                        <label>Nombre</label>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-floating border rounded">
+                                        <input
+                                            type="text"
+                                            readonly
+                                            class="form-control-plaintext"
+                                            [value]="zone.code"
+                                        />
+                                        <label>Código</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-floating border rounded mt-2">
+                                <input
+                                    type="text"
+                                    readonly
+                                    class="form-control-plaintext"
+                                    [value]="zone.place.name"
+                                />
+                                <label>Municipio</label>
+                            </div>
+                            <div class="d-flex justify-content-end gap-2 mt-2">
+                                <button
+                                    class="btn btn-sm btn-primary"
+                                    (click)="openEditZoneModal()"
+                                >
+                                    <i class="bi bi-pen-fill"></i>
+                                    Editar
+                                </button>
+                                <button
+                                    class="btn btn-sm btn-danger"
+                                    (click)="openDeleteZoneModal()"
+                                >
+                                    <i class="bi bi-trash-fill"></i>
+                                    Eliminar
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>Equipos</a>
+                    <ng-template ngbNavContent>
+                        <app-show-zone-hardware [zone]="zone">
+                        </app-show-zone-hardware>
+                    </ng-template>
+                </li>
+            </ul>
+            <div
+                [ngbNavOutlet]="nav"
+                class="mt-3 d-flex flex-column flex-1-1-auto pt-2 pb-5"
+            ></div>
         </div>
-    </div>
+    </ng-template>
 </div>
-

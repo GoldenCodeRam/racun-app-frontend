@@ -4,9 +4,13 @@ import {
     createComponent,
     EnvironmentInjector,
     Injectable,
-    ViewRef,
 } from "@angular/core";
 import { LoaderComponent } from "src/app/components/loaders/loader/loader.component";
+import { Result } from "ts-results";
+import {
+    ToastGeneratorService,
+    ToastMessage,
+} from "../toasts/toast-generator.service";
 
 @Injectable({
     providedIn: "root",
@@ -17,12 +21,22 @@ export class MainLoaderService {
 
     constructor(
         private applicationRef: ApplicationRef,
-        private injector: EnvironmentInjector
+        private injector: EnvironmentInjector,
+        private toastService: ToastGeneratorService
     ) {}
 
-    public async doWithLoadingScreen(callback: () => Promise<void>) {
+    public async doWithLoadingScreen(
+        callback: () => Promise<Result<ToastMessage, Error>>
+    ) {
         this.createLoadingScreen();
-        await callback();
+
+        const result = await callback();
+        if (result.ok) {
+            this.toastService.showMessage(result.val);
+        } else {
+            this.toastService.showError(result.val);
+        }
+
         this.removeLoadingScreen();
     }
 

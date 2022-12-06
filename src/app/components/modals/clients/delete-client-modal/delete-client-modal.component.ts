@@ -4,6 +4,7 @@ import { Client } from "src/app/models/client";
 import { ClientsApiService } from "src/app/services/api/clients/clients-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
     selector: "app-delete-client-modal",
@@ -21,12 +22,16 @@ export class DeleteClientModalComponent {
 
     public async deleteClient() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.clientsApiService.deleteClient(this.client.id);
+            try {
+                await this.clientsApiService.deleteClient(this.client.id);
 
-            this.toastService.show(
-                "Cliente Eliminado",
-                "Se ha eliminado el cliente correctamente."
-            );
+                return Ok({
+                    header: "Cliente Eliminado",
+                    body: "Se ha eliminado el cliente correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
         });
 
         this.activeModal.close();

@@ -22,7 +22,17 @@
                         let place of (searchTable.searchResult | async)?.search
                     "
                 >
-                    <td>{{ place.name }}</td>
+                    <td>
+                        {{ place.name }}
+                        <br />
+                        <span class="badge text-bg-primary">
+                            {{
+                                place.parentPlace
+                                    ? place.parentPlace.name
+                                    : "Departamento"
+                            }}
+                        </span>
+                    </td>
                     <td class="text-center">
                         <button
                             class="btn btn-sm btn-primary"

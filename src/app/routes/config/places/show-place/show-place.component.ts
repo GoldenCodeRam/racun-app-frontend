@@ -2,7 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Place } from "src/app/models/place";
 import { PlacesApiService } from "src/app/services/api/places/places-api.service";
-import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 
 @Component({
     selector: "app-show-place",
@@ -14,15 +13,12 @@ export class ShowPlaceComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private placesApiService: PlacesApiService,
-        private mainLoaderService: MainLoaderService
+        private placesApiService: PlacesApiService
     ) {}
 
-    ngOnInit() {
-        this.mainLoaderService.doWithLoadingScreen(async () => {
-            this.place = await this.placesApiService.getPlace(
-                this.route.snapshot.params["placeId"]
-            );
-        });
+    async ngOnInit() {
+        this.place = await this.placesApiService.getPlace(
+            this.route.snapshot.params["placeId"]
+        );
     }
 }

@@ -5,7 +5,7 @@ import { Role } from "src/app/models/role";
 import { User } from "src/app/models/user";
 import { UsersApiService } from "src/app/services/api/users/users-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
-import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 import { SelectRoleModalComponent } from "../../roles/select-role-modal/select-role-modal.component";
 
 @Component({
@@ -37,8 +37,7 @@ export class EditUserModalComponent {
 
         private user: User,
         private usersApiService: UsersApiService,
-        private loaderService: MainLoaderService,
-        private toastService: ToastGeneratorService
+        private loaderService: MainLoaderService
     ) {}
 
     public openSelectRole() {
@@ -51,27 +50,29 @@ export class EditUserModalComponent {
                 (role: any) => {
                     if (role) {
                         this.userForm.value.role = role;
-                        console.log(this.userForm);
                     }
                 },
-                (reason: any) => {}
+                (_) => {}
             );
     }
 
     public async editUser() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.usersApiService.updateUser({
-                id: this.user.id,
-                firstName: this.userForm.value!.firstName as string,
-                lastName: this.userForm.value!.lastName as string,
-                role: this.userForm.value!.role as Role,
-                email: this.userForm.value!.email as string,
-            });
-
-            this.toastService.show(
-                "Usuario editado",
-                "Se ha editado el usuario correctamente."
-            );
+            try {
+                await this.usersApiService.updateUser({
+                    id: this.user.id,
+                    firstName: this.userForm.value!.firstName as string,
+                    lastName: this.userForm.value!.lastName as string,
+                    role: this.userForm.value!.role as Role,
+                    email: this.userForm.value!.email as string,
+                });
+                return Ok({
+                    header: "Usuario editado",
+                    body: "Se ha editado el usuario correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
         });
 
         this.activeModal.close();

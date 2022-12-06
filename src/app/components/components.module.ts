@@ -29,6 +29,13 @@ import { CreateContractModalComponent } from "./modals/contracts/create-contract
 import { SelectPlaceModalComponent } from "./modals/places/select-place-modal/select-place-modal.component";
 import { SelectServiceModalComponent } from "./modals/services/select-service-modal/select-service-modal.component";
 import { CreateInvoiceModalComponent } from "./modals/invoices/create-invoice-modal/create-invoice-modal.component";
+import { CreateHardwareModalComponent } from "./modals/hardware/create-hardware-modal/create-hardware-modal.component";
+import { DeleteHardwareModalComponent } from "./modals/hardware/delete-hardware-modal/delete-hardware-modal.component";
+import { EditHardwareModalComponent } from "./modals/hardware/edit-hardware-modal/edit-hardware-modal.component";
+import { SelectHardwareModalComponent } from "./modals/hardware/select-hardware-modal/select-hardware-modal.component";
+import { SelectZoneModalComponent } from "./modals/zones/select-zone-modal/select-zone-modal.component";
+import { DeleteHardwareOnZoneModalComponent } from './modals/hardware/delete-hardware-on-zone-modal/delete-hardware-on-zone-modal.component';
+import { DeleteHardwareOnClientModalComponent } from './modals/hardware/delete-hardware-on-client-modal/delete-hardware-on-client-modal.component';
 
 @NgModule({
     declarations: [
@@ -57,6 +64,13 @@ import { CreateInvoiceModalComponent } from "./modals/invoices/create-invoice-mo
         SelectPlaceModalComponent,
         SelectServiceModalComponent,
         CreateInvoiceModalComponent,
+        CreateHardwareModalComponent,
+        DeleteHardwareModalComponent,
+        EditHardwareModalComponent,
+        SelectHardwareModalComponent,
+        SelectZoneModalComponent,
+        DeleteHardwareOnZoneModalComponent,
+        DeleteHardwareOnClientModalComponent,
     ],
     exports: [
         CreateRoleModalComponent,

@@ -1,0 +1,47 @@
+<main>
+    <app-loader *ngIf="loader | async; else content"></app-loader>
+
+    <ng-template #content>
+        <div *ngIf="hardwareOnClient.length === 0; else list">
+            <div class="text-center text-secondary text-opacity-50">
+                <i class="bi bi-box display-1"></i>
+                <p>Equipo sin asignar al cliente</p>
+
+                <button class="btn btn-primary" (click)="openAssignHardware()">
+                    <i class="bi bi-plus-lg"></i>
+                    Asignar equipo
+                </button>
+            </div>
+        </div>
+
+        <ng-template #list>
+            <h4 class="text-center mb-3">Equipos registrados en el cliente</h4>
+            <div class="container d-flex flex-wrap gap-3">
+                <div
+                    *ngFor="let hardware of hardwareOnClient"
+                    class="px-3 py-2 border shadow rounded"
+                >
+                    <b>Equipo {{ hardware.hardwareId }}: {{ hardware.id }}</b>
+                    <br />
+                    <p>
+                        {{ hardware.hardware?.name }}
+                        <br />
+                        {{ hardware.hardware?.model }}
+                    </p>
+                    Fecha de asignación:
+                    {{ hardware.startDate | date }}
+
+                    <div class="d-flex justify-content-end gap-2 mt-2">
+                        <button
+                            class="btn btn-sm btn-danger"
+                            (click)="openDeleteHardwareOnClientModal(hardware)"
+                        >
+                            <i class="bi bi-trash-fill"></i>
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-template>
+</main>

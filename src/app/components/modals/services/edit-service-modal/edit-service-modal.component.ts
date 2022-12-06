@@ -5,6 +5,7 @@ import { Service } from "src/app/models/service";
 import { ServicesApiService } from "src/app/services/api/services/service-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
     selector: "app-edit-service-modal",
@@ -25,22 +26,24 @@ export class EditServiceModalComponent {
 
         private servicesApiService: ServicesApiService,
         private service: Service,
-        private loaderService: MainLoaderService,
-        private toastService: ToastGeneratorService
+        private loaderService: MainLoaderService
     ) {}
 
     public async editService() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.servicesApiService.updateService({
-                id: this.service.id,
-                name: this.serviceForm.value!.name as string,
-                description: this.serviceForm.value!.description as string,
-            });
-
-            this.toastService.show(
-                "Servicio editado",
-                "Se ha editado el servicio correctamente."
-            );
+            try {
+                await this.servicesApiService.updateService({
+                    id: this.service.id,
+                    name: this.serviceForm.value!.name as string,
+                    description: this.serviceForm.value!.description as string,
+                });
+                return Ok({
+                    header: "Servicio editado",
+                    body: "Se ha editado el servicio correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
         });
 
         this.activeModal.close();

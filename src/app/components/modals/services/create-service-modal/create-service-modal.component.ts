@@ -4,6 +4,7 @@ import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ServicesApiService } from "src/app/services/api/services/service-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 
 @Component({
     selector: "app-create-service-modal",
@@ -27,16 +28,19 @@ export class CreateServiceModalComponent {
 
     public async createService() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.serviceApiService.createService({
-                name: this.serviceForm.value!.name as string,
-                description: this.serviceForm.value!.description as string,
-                value: this.serviceForm.value.value! as number,
-            });
-
-            this.toastService.show(
-                "Servicio creado",
-                "Se ha creado el servicio correctamente."
-            );
+            try {
+                await this.serviceApiService.createService({
+                    name: this.serviceForm.value!.name as string,
+                    description: this.serviceForm.value!.description as string,
+                    value: this.serviceForm.value.value! as number,
+                });
+                return Ok({
+                    header: "Servicio creado",
+                    body: "Se ha creado el servicio correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
         });
 
         this.activeModal.close();

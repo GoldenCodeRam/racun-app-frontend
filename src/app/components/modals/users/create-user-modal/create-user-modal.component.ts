@@ -4,7 +4,7 @@ import { NgbActiveModal, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { Role } from "src/app/models/role";
 import { UsersApiService } from "src/app/services/api/users/users-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
-import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
+import { Err, Ok } from "ts-results";
 import { SelectRoleModalComponent } from "../../roles/select-role-modal/select-role-modal.component";
 
 @Component({
@@ -34,8 +34,7 @@ export class CreateUserModalComponent {
         public activeModal: NgbActiveModal,
 
         private usersApiService: UsersApiService,
-        private loaderService: MainLoaderService,
-        private toastService: ToastGeneratorService
+        private loaderService: MainLoaderService
     ) {}
 
     public openSelectRole() {
@@ -58,18 +57,22 @@ export class CreateUserModalComponent {
 
     public async createUser() {
         await this.loaderService.doWithLoadingScreen(async () => {
-            await this.usersApiService.createUser({
-                firstName: this.userForm.value!.firstName as string,
-                lastName: this.userForm.value!.lastName as string,
-                email: this.userForm.value!.email as string,
-                password: this.userForm.value!.password as string,
-                role: this.userForm.value!.role as Role,
-            });
+            try {
+                await this.usersApiService.createUser({
+                    firstName: this.userForm.value!.firstName as string,
+                    lastName: this.userForm.value!.lastName as string,
+                    email: this.userForm.value!.email as string,
+                    password: this.userForm.value!.password as string,
+                    role: this.userForm.value!.role as Role,
+                });
 
-            this.toastService.show(
-                "Usuario creado",
-                "Se ha creado el usuario correctamente."
-            );
+                return Ok({
+                    header: "Usuario creado",
+                    body: "El usuario se ha creado correctamente.",
+                });
+            } catch (error: any) {
+                return Err(error);
+            }
         });
 
         this.activeModal.close();
