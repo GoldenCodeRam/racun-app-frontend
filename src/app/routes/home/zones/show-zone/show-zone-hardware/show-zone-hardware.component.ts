@@ -29,6 +29,11 @@ export class ShowZoneHardwareComponent implements OnInit {
     ) {}
 
     public async ngOnInit() {
+        await this.loadHardwareOnZone();
+    }
+
+    public async loadHardwareOnZone() {
+        this.loader.next(true);
         this.hardwareOnZone =
             await this.hardwareApiService.getHardwareOnZonesByZoneId(
                 this.zone.id
@@ -61,6 +66,8 @@ export class ShowZoneHardwareComponent implements OnInit {
                             return Err(error);
                         }
                     });
+
+                    this.loadHardwareOnZone();
                 }
             },
             (_) => {}
@@ -68,13 +75,20 @@ export class ShowZoneHardwareComponent implements OnInit {
     }
 
     public openDeleteHardwareOnZoneModal(hardwareOnZone: HardwareOnZone) {
-        this.modalService.open(DeleteHardwareOnZoneModalComponent, {
-            centered: true,
-            injector: Injector.create({
-                providers: [
-                    { provide: HardwareOnZone, useValue: hardwareOnZone },
-                ],
-            }),
+        const modal = this.modalService.open(
+            DeleteHardwareOnZoneModalComponent,
+            {
+                centered: true,
+                injector: Injector.create({
+                    providers: [
+                        { provide: HardwareOnZone, useValue: hardwareOnZone },
+                    ],
+                }),
+            }
+        );
+
+        modal.result.then((_) => {
+            this.loadHardwareOnZone();
         });
     }
 }

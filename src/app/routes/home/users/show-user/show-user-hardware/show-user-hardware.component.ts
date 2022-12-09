@@ -29,6 +29,11 @@ export class ShowUserHardwareComponent implements OnInit {
     ) {}
 
     public async ngOnInit() {
+        await this.loadHardwareOnClient();
+    }
+
+    public async loadHardwareOnClient() {
+        this.loader.next(true);
         this.hardwareOnClient =
             await this.hardwareApiService.getHardwareOnClientsByClientAccountId(
                 this.clientAccount.id
@@ -61,6 +66,8 @@ export class ShowUserHardwareComponent implements OnInit {
                             return Err(error);
                         }
                     });
+
+                    await this.loadHardwareOnClient();
                 }
             },
             (_) => {}
@@ -68,13 +75,23 @@ export class ShowUserHardwareComponent implements OnInit {
     }
 
     public openDeleteHardwareOnClientModal(hardwareOnClient: HardwareOnClient) {
-        this.modalService.open(DeleteHardwareOnClientModalComponent, {
-            centered: true,
-            injector: Injector.create({
-                providers: [
-                    { provide: HardwareOnClient, useValue: hardwareOnClient },
-                ],
-            }),
+        const modal = this.modalService.open(
+            DeleteHardwareOnClientModalComponent,
+            {
+                centered: true,
+                injector: Injector.create({
+                    providers: [
+                        {
+                            provide: HardwareOnClient,
+                            useValue: hardwareOnClient,
+                        },
+                    ],
+                }),
+            }
+        );
+
+        modal.result.then((_) => {
+            this.loadHardwareOnClient();
         });
     }
 }
