@@ -34,8 +34,10 @@ import { DeleteHardwareModalComponent } from "./modals/hardware/delete-hardware-
 import { EditHardwareModalComponent } from "./modals/hardware/edit-hardware-modal/edit-hardware-modal.component";
 import { SelectHardwareModalComponent } from "./modals/hardware/select-hardware-modal/select-hardware-modal.component";
 import { SelectZoneModalComponent } from "./modals/zones/select-zone-modal/select-zone-modal.component";
-import { DeleteHardwareOnZoneModalComponent } from './modals/hardware/delete-hardware-on-zone-modal/delete-hardware-on-zone-modal.component';
-import { DeleteHardwareOnClientModalComponent } from './modals/hardware/delete-hardware-on-client-modal/delete-hardware-on-client-modal.component';
+import { DeleteHardwareOnZoneModalComponent } from "./modals/hardware/delete-hardware-on-zone-modal/delete-hardware-on-zone-modal.component";
+import { DeleteHardwareOnClientModalComponent } from "./modals/hardware/delete-hardware-on-client-modal/delete-hardware-on-client-modal.component";
+import { InputReadonlyComponent } from "./inputs/input-readonly/input-readonly.component";
+import { EditInvoiceDateModalComponent } from './modals/config/edit-invoice-date-modal/edit-invoice-date-modal.component';
 
 @NgModule({
     declarations: [
@@ -71,6 +73,8 @@ import { DeleteHardwareOnClientModalComponent } from './modals/hardware/delete-h
         SelectZoneModalComponent,
         DeleteHardwareOnZoneModalComponent,
         DeleteHardwareOnClientModalComponent,
+        InputReadonlyComponent,
+        EditInvoiceDateModalComponent,
     ],
     exports: [
         CreateRoleModalComponent,
@@ -81,6 +85,7 @@ import { DeleteHardwareOnClientModalComponent } from './modals/hardware/delete-h
         LoaderComponent,
         ToastGeneratorComponent,
         SearchTableComponent,
+        InputReadonlyComponent,
     ],
     imports: [
         ReactiveFormsModule,

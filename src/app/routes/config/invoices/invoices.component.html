@@ -1,0 +1,33 @@
+<div class="h-100 d-flex flex-column">
+    <app-main-navbar></app-main-navbar>
+
+    <div class="container h-100">
+        <p class="fs-3 text-500">Configuración de facturas</p>
+
+        <p class="fs-4 mb-2">Próxima fecha de facturación</p>
+
+        <p>
+            La fecha de facturación se usa para determinar cuándo se van a
+            generar las facturas en la plataforma. La fecha se actualiza
+            automáticamente una vez el sistema detecta que se ha llegado a la
+            fecha, de manera que se tiene que tener cuidado cuando se cambia la
+            fecha, porque puede activar la generación de facturas un día que no
+            se debería.
+        </p>
+
+        <app-input-readonly
+            label="Fecha de facturación"
+            [value]="invoiceGenerationDate?.toLocaleString()"
+        ></app-input-readonly>
+
+        <div class="d-flex justify-content-end gap-2 mt-2">
+            <button
+                class="btn btn-sm btn-primary"
+                (click)="openUpdateInvoiceDate()"
+            >
+                <i class="bi bi-pen-fill"></i>
+                Editar
+            </button>
+        </div>
+    </div>
+</div>

@@ -38,6 +38,24 @@ export class ApiService {
         });
     }
 
+    protected async makeSimplePatchRequest<T>(
+        url: string,
+        body: T
+    ): Promise<T> {
+        return this.promisify((resolve, reject) => {
+            this.httpClient
+                .patch(`${environment.apiUrl}${url}`, body, {
+                    withCredentials: true,
+                })
+                .subscribe({
+                    next: (value) => {
+                        resolve(value as T);
+                    },
+                    error: (error) => reject(error),
+                });
+        });
+    }
+
     protected async makeSimplePostRequest<T>(url: string, body: T): Promise<T> {
         return this.promisify((resolve, reject) => {
             this.httpClient

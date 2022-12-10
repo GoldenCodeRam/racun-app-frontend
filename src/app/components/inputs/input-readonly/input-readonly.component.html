@@ -1,0 +1,23 @@
+<main>
+    <div class="position-relative" *ngIf="!value; else content">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="form-floating mt-2 border rounded">
+            <input type="text" readonly class="form-control-plaintext" />
+        </div>
+    </div>
+    <ng-template #content>
+        <div class="form-floating mt-2 border rounded">
+            <input
+                type="text"
+                readonly
+                class="form-control-plaintext"
+                [value]="value"
+            />
+            <label>{{ label }}</label>
+        </div>
+    </ng-template>
+</main>

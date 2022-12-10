@@ -20,6 +20,8 @@ import { MainLoaderService } from "./services/components/loaders/main-loader.ser
 import { ActionsComponent } from "./routes/config/actions/actions.component";
 import { PlacesComponent } from "./routes/config/places/places.component";
 import { ShowPlaceComponent } from "./routes/config/places/show-place/show-place.component";
+import { InvoicesComponent } from "./routes/config/invoices/invoices.component";
+import { PageNotFoundComponent } from "./routes/home/page-not-found/page-not-found.component";
 
 @NgModule({
     declarations: [
@@ -33,6 +35,8 @@ import { ShowPlaceComponent } from "./routes/config/places/show-place/show-place
         ActionsComponent,
         PlacesComponent,
         ShowPlaceComponent,
+        InvoicesComponent,
+        PageNotFoundComponent,
     ],
     imports: [
         BrowserModule,

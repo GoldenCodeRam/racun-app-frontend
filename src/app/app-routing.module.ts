@@ -20,6 +20,7 @@ import { ServicesComponent } from "./routes/home/services/services.component";
 import { ShowServiceComponent } from "./routes/home/services/show-service/show-service.component";
 import { PlacesComponent } from "./routes/config/places/places.component";
 import { ShowPlaceComponent } from "./routes/config/places/show-place/show-place.component";
+import { InvoicesComponent } from "./routes/config/invoices/invoices.component";
 
 const routes: Routes = [
     {
@@ -105,6 +106,11 @@ const routes: Routes = [
     {
         path: "config/roles/:roleId",
         component: ShowRoleComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "config/invoices",
+        component: InvoicesComponent,
         canActivate: [AuthGuard],
     },
     {
