@@ -27,7 +27,6 @@ export class AuthService {
             method: "POST",
             credentials: "include",
         });
-        console.log(response.status);
         return true;
     }
 

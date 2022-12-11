@@ -20,7 +20,9 @@ import { ServicesComponent } from "./routes/home/services/services.component";
 import { ShowServiceComponent } from "./routes/home/services/show-service/show-service.component";
 import { PlacesComponent } from "./routes/config/places/places.component";
 import { ShowPlaceComponent } from "./routes/config/places/show-place/show-place.component";
-import { InvoicesComponent } from "./routes/config/invoices/invoices.component";
+import { InvoicesComponent as InvoicesConfigComponent } from "./routes/config/invoices/invoices.component";
+import { InvoicesComponent } from "./routes/home/invoices/invoices.component";
+import { ValidateInvoicesComponent } from "./routes/home/invoices/validate-invoices/validate-invoices.component";
 
 const routes: Routes = [
     {
@@ -79,6 +81,16 @@ const routes: Routes = [
         canActivate: [AuthGuard],
     },
     {
+        path: "invoices",
+        component: InvoicesComponent,
+        canActivate: [AuthGuard],
+    },
+    {
+        path: "validate-invoices",
+        component: ValidateInvoicesComponent,
+        canActivate: [AuthGuard],
+    },
+    {
         path: "config",
         component: ConfigComponent,
         canActivate: [AuthGuard],
@@ -110,7 +122,7 @@ const routes: Routes = [
     },
     {
         path: "config/invoices",
-        component: InvoicesComponent,
+        component: InvoicesConfigComponent,
         canActivate: [AuthGuard],
     },
     {
