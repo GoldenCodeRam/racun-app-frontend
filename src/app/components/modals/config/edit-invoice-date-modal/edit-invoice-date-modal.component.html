@@ -2,27 +2,37 @@
     <h1 class="modal-title fs-5">Editar próxima fecha de facturación</h1>
     <button type="button" class="btn-close" aria-label="Close"></button>
 </div>
-<div class="modal-body">
-    <div class="input-group mb-3">
-        <div class="form-floating">
-            <input
-                type="text"
-                class="form-control"
-                placeholder="yyyy-mm-dd"
-                ngbDatepicker
-                [formControl]="invoiceDateControl"
-                [ngClass]="{
-                    'is-invalid': invoiceDateControl.invalid
-                }"
-                #periodStart="ngbDatepicker"
-            />
-            <label>Próxima fecha de facturación</label>
+<form [formGroup]="editInvoiceFormControl">
+    <div class="modal-body">
+        <div class="input-group mb-3">
+            <div class="form-floating">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    ngbDatepicker
+                    formControlName="invoiceDateControl"
+                    [ngClass]="{
+                        'is-invalid':
+                            editInvoiceFormControl.controls.invoiceDateControl
+                                .invalid
+                    }"
+                    #periodStart="ngbDatepicker"
+                />
+                <label>Próxima fecha de facturación</label>
+            </div>
+            <button
+                class="btn btn-outline-secondary bi bi-calendar3"
+                (click)="periodStart.toggle()"
+                type="button"
+            ></button>
         </div>
-        <button
-            class="btn btn-outline-secondary bi bi-calendar3"
-            (click)="periodStart.toggle()"
-            type="button"
-        ></button>
+        <div class="d-flex flex-row gap-3 justify-content-center">
+            <p class="my-auto">Hora de generación, en formato 24 horas:</p>
+            <ngb-timepicker
+                formControlName="invoiceHourControl"
+            ></ngb-timepicker>
+        </div>
     </div>
     <div class="modal-footer">
         <button
@@ -35,10 +45,10 @@
         <button
             type="button"
             class="btn btn-primary"
-            [disabled]="invoiceDateControl.invalid"
+            [disabled]="editInvoiceFormControl.invalid"
             (click)="editInvoiceGenerationDate()"
         >
             Guardar
         </button>
     </div>
-</div>
+</form>

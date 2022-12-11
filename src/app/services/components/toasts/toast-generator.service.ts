@@ -32,6 +32,7 @@ export class ToastGeneratorService {
     }
 
     public showError(error: any) {
+        console.log("test");
         this.toasts.push(this.getMessageFromErrorCode(error));
     }
 
@@ -54,6 +55,12 @@ export class ToastGeneratorService {
                     return {
                         header: "Último Super Usuario",
                         body: "No se puede eliminar o actualizar la información del Super Usuario. Tienes que crear otro usuario primero.",
+                        toastType: ToastType.ERROR,
+                    };
+                case "QRCE":
+                    return {
+                        header: "Error de código QR",
+                        body: "El código QR no pudo ser reconocido.",
                         toastType: ToastType.ERROR,
                     };
             }

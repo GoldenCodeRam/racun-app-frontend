@@ -56,6 +56,21 @@ export class ApiService {
         });
     }
 
+    protected async makeSimplePutRequest<T>(url: string, body: T): Promise<T> {
+        return this.promisify((resolve, reject) => {
+            this.httpClient
+                .put(`${environment.apiUrl}${url}`, body, {
+                    withCredentials: true,
+                })
+                .subscribe({
+                    next: (value) => {
+                        resolve(value as T);
+                    },
+                    error: (error) => reject(error),
+                });
+        });
+    }
+
     protected async makeSimplePostRequest<T>(url: string, body: T): Promise<T> {
         return this.promisify((resolve, reject) => {
             this.httpClient

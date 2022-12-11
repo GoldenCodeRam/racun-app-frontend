@@ -16,6 +16,8 @@ import { ShowServiceComponent } from './services/show-service/show-service.compo
 import { CreateContractComponent } from './clients/show-client/create-contract/create-contract.component';
 import { ShowZoneHardwareComponent } from './zones/show-zone/show-zone-hardware/show-zone-hardware.component';
 import { ShowUserHardwareComponent } from './users/show-user/show-user-hardware/show-user-hardware.component';
+import { InvoicesComponent } from './invoices/invoices.component';
+import { ValidateInvoicesComponent } from './invoices/validate-invoices/validate-invoices.component';
 
 @NgModule({
     declarations: [
@@ -31,6 +33,8 @@ import { ShowUserHardwareComponent } from './users/show-user/show-user-hardware/
         CreateContractComponent,
         ShowZoneHardwareComponent,
         ShowUserHardwareComponent,
+        InvoicesComponent,
+        ValidateInvoicesComponent,
     ],
     imports: [
         ComponentsModule,
