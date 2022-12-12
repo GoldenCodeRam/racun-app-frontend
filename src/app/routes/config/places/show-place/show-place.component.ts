@@ -17,8 +17,12 @@ export class ShowPlaceComponent implements OnInit {
     ) {}
 
     async ngOnInit() {
-        this.place = await this.placesApiService.getPlace(
+        const result = await this.placesApiService.getPlace(
             this.route.snapshot.params["placeId"]
         );
+
+        if (result.ok) {
+            this.place = result.val;
+        }
     }
 }

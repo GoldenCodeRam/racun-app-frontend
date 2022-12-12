@@ -4,13 +4,6 @@
 @import "bootstrap/scss/maps";
 @import "bootstrap/scss/utilities";
 
-html,
-body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
 .flex-1-1-auto {
     flex: 1 1 auto;
 }
@@ -90,3 +83,10 @@ $utilities: map-merge(
 
 @import "bootstrap/scss/utilities/api";
 @import "bootstrap/scss/root";
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}

@@ -134,50 +134,6 @@
                     }}
                 </div>
             </div>
-
-            <div>
-                <div class="input-group">
-                    <div class="form-floating">
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Sin fecha de finalización"
-                            formControlName="endDate"
-                            ngbDatepicker
-                            [ngClass]="{
-                                'is-invalid':
-                                    contractForm.controls.endDate.invalid
-                            }"
-                            #endDateDatepicker="ngbDatepicker"
-                        />
-                        <label>Fecha de finalización del contrato</label>
-                    </div>
-                    <button
-                        class="btn btn-outline-secondary bi bi-calendar3"
-                        (click)="endDateDatepicker.toggle()"
-                        type="button"
-                    ></button>
-                    <button
-                        class="btn btn-outline-secondary bi bi-calendar3"
-                        (click)="
-                            contractForm.controls.endDate.reset();
-                            validateDates()
-                        "
-                        type="button"
-                    ></button>
-                </div>
-                <div
-                    class="invalid-feedback"
-                    [ngClass]="{
-                        'd-block':
-                            contractForm.controls.endDate.errors?.['date']
-                    }"
-                >
-                    {{
-                            contractForm.controls.endDate.errors?.["date"]
-                    }}
-                </div>
-            </div>
         </fieldset>
 
         <fieldset class="mb-5 border shadow rounded px-4 py-3">

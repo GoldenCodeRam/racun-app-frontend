@@ -1,42 +1,46 @@
-<div
-    class="h-100 d-flex justify-content-center align-items-center"
-    *ngIf="loading | async; else content"
->
-    <div class="text-center">
-        <div class="spinner-border text-blue-700" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-        <p>Cargando...</p>
-    </div>
+<div class="container text-center" *ngIf="!clientContract; else contract">
+    <p>El usuario no tiene un contrato.</p>
+    <button class="btn btn-primary" (click)="openCreateContractModal()">
+        <i class="bi bi-plus-lg"></i>
+        Crear nuevo contrato
+    </button>
 </div>
-
-<ng-template #content>
-    <div
-        class="container text-center"
-        *ngIf="clientContracts.length === 0; else contracts"
-    >
-        <p>El usuario no tiene un contrato.</p>
-        <button class="btn btn-primary" (click)="openCreateContractModal()">
-            <i class="bi bi-plus-lg"></i>
-            Crear nuevo contrato
-        </button>
-    </div>
-    <ng-template #contracts>
-        <div class="container">
-            <div
-                *ngFor="let contract of clientContracts"
-                class="shadow-sm border rounded px-4 py-2"
+<ng-template #contract>
+    <div class="container">
+        <div class="d-flex flex-row gap-3 justify-content-end">
+            <button
+                class="btn btn-outline-danger"
+                (click)="endContract(clientContract!.id)"
             >
-                <h3>Contrato {{ contract.id }}</h3>
-
-                <button
-                    class="btn btn-primary"
-                    (click)="generateInvoice(contract.id)"
-                >
-                    <i class="bi bi-filetype-pdf"></i>
-                    Generar factura
-                </button>
+                <i class="bi bi-archive"></i>
+                Terminar contrato
+            </button>
+        </div>
+        <h3 class="text-500">Contrato {{ clientContract!.id }}</h3>
+        <h4 class="text-primary">
+            {{ clientContract!.value | currency }}
+        </h4>
+        <div *ngIf="clientContract!.invoices.length > 0; else noInvoices">
+            El usuario tiene facturas pendientes por pagar.
+            <div
+                *ngFor="let invoice of clientContract!.invoices"
+                class="border shadow-sm rounded px-5 py-3 my-3"
+            >
+                <p class="m-0 p-0 text-500">Factura {{ invoice.id }}</p>
+                Valor {{ invoice.value | currency }}
+                <p class="m-0 p-0 text-danger">
+                    Valor en mora:
+                    {{ invoice.latePaymentValue | currency }}
+                </p>
             </div>
         </div>
-    </ng-template>
+        <ng-template #noInvoices>
+            <div
+                class="border shadow border-success px-5 py-3 rounded d-flex flex-row gap-3 justify-content-center align-items-center"
+            >
+                <i class="bi bi-clipboard-check display-5 text-success"></i>
+                El contrato no tiene facturas por pagar.
+            </div>
+        </ng-template>
+    </div>
 </ng-template>

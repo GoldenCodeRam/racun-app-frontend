@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from "@angular/common/http";
 import {
     ApplicationRef,
     ComponentRef,
@@ -26,15 +27,18 @@ export class MainLoaderService {
     ) {}
 
     public async doWithLoadingScreen(
-        callback: () => Promise<Result<ToastMessage, Error>>
+        callback: () => Promise<Result<ToastMessage, ToastMessage> | void>
     ) {
         this.createLoadingScreen();
 
         const result = await callback();
-        if (result.ok) {
-            this.toastService.showMessage(result.val);
-        } else {
-            this.toastService.showError(result.val);
+        // Check that the result is not a void.
+        if (result) {
+            if (result.ok) {
+                this.toastService.showMessage(result.val);
+            } else {
+                this.toastService.showError(result.val);
+            }
         }
 
         this.removeLoadingScreen();

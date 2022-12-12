@@ -27,45 +27,56 @@ export class RolesApiService extends ApiService implements ApiWithSearch<Role> {
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Role>> {
-        return this.makeSearchPaginationRequest(
+        const result = await this.makeSearchPaginationRequest<Role>(
             "/roles/search",
             userSearch,
             currentPage,
             searchAmount
         );
+
+        return result.unwrap();
     }
 
-    public getRole(roleId: number): Promise<Role> {
-        return this.makeSimpleGetRequest<Role>(`/roles/${roleId}`);
+    public getRole(roleId: number) {
+        return this.makeSimpleGetRequest<
+            Role & {
+                apisOnRoles: {
+                    api: {
+                        name: string;
+                    };
+                    get: boolean;
+                    post: boolean;
+                    delete: boolean;
+                }[];
+            }
+        >(`/roles/${roleId}`);
     }
 
-    public async getRolePermissions(role: Role): Promise<Permission[]> {
+    public updateApisOnRoles(changes: any) {
+        return this.makeSimplePutRequest(
+            "/roles/update-apis-on-roles",
+            changes
+        );
+    }
+
+    public async getRolePermissions(role: Role) {
         return this.makeSimpleGetRequest<Permission[]>(
             `/permissions/${role.id}`
         );
     }
 
     public async createRole(roleName: string) {
-        await this.promisify((resolve, reject) => {
-            this.httpClient
-                .post(
-                    `${environment.apiUrl}/roles/create`,
-                    {
-                        roleName: roleName,
-                    },
-                    {
-                        withCredentials: true,
-                        responseType: "text",
-                    }
-                )
-                .subscribe({
-                    next: (_) => {
-                        resolve();
-                    },
-                    error: (_) => {
-                        reject();
-                    },
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.post(
+                `${environment.apiUrl}/roles/create`,
+                {
+                    roleName: roleName,
+                },
+                {
+                    withCredentials: true,
+                    responseType: "text",
+                }
+            )
+        );
     }
 }

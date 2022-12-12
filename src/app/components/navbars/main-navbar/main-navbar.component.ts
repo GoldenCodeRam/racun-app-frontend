@@ -23,6 +23,9 @@ export class MainNavbarComponent implements OnInit {
 
     public async ngOnInit() {
         const user = await this.usersApiService.getCurrentUser();
-        this.user = user;
+
+        if (user.ok) {
+            this.user = user.val;
+        }
     }
 }

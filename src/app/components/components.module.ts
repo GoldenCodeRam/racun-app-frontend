@@ -38,6 +38,7 @@ import { DeleteHardwareOnZoneModalComponent } from "./modals/hardware/delete-har
 import { DeleteHardwareOnClientModalComponent } from "./modals/hardware/delete-hardware-on-client-modal/delete-hardware-on-client-modal.component";
 import { InputReadonlyComponent } from "./inputs/input-readonly/input-readonly.component";
 import { EditInvoiceDateModalComponent } from './modals/config/edit-invoice-date-modal/edit-invoice-date-modal.component';
+import { ConfirmModalComponent } from './modals/confirm-modal/confirm-modal.component';
 
 @NgModule({
     declarations: [
@@ -75,6 +76,7 @@ import { EditInvoiceDateModalComponent } from './modals/config/edit-invoice-date
         DeleteHardwareOnClientModalComponent,
         InputReadonlyComponent,
         EditInvoiceDateModalComponent,
+        ConfirmModalComponent,
     ],
     exports: [
         CreateRoleModalComponent,
@@ -86,6 +88,7 @@ import { EditInvoiceDateModalComponent } from './modals/config/edit-invoice-date
         ToastGeneratorComponent,
         SearchTableComponent,
         InputReadonlyComponent,
+        ConfirmModalComponent,
     ],
     imports: [
         ReactiveFormsModule,

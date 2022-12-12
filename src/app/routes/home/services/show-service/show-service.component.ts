@@ -5,6 +5,7 @@ import { DeleteServiceModalComponent } from "src/app/components/modals/services/
 import { EditServiceModalComponent } from "src/app/components/modals/services/edit-service-modal/edit-service-modal.component";
 import { Service } from "src/app/models/service";
 import { ServicesApiService } from "src/app/services/api/services/service-api.service";
+import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 
 @Component({
     selector: "app-show-service",
@@ -17,13 +18,20 @@ export class ShowServiceComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private servicesApiService: ServicesApiService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private mainLoaderService: MainLoaderService
     ) {}
 
     async ngOnInit() {
-        this.service = await this.servicesApiService.getService(
-            this.route.snapshot.params["serviceId"]
-        );
+        this.mainLoaderService.doWithLoadingScreen(async () => {
+            const result = await this.servicesApiService.getService(
+                this.route.snapshot.params["serviceId"]
+            );
+
+            if (result.ok) {
+                this.service = result.val;
+            }
+        });
     }
 
     public openEditServiceModal() {

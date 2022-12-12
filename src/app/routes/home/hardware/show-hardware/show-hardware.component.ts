@@ -5,6 +5,7 @@ import { DeleteHardwareModalComponent } from "src/app/components/modals/hardware
 import { EditHardwareModalComponent } from "src/app/components/modals/hardware/edit-hardware-modal/edit-hardware-modal.component";
 import { Hardware } from "src/app/models/hardware";
 import { HardwareApiService } from "src/app/services/api/hardware/hardware-api.service";
+import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 
 @Component({
     selector: "app-show-hardware",
@@ -17,13 +18,19 @@ export class ShowHardwareComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private hardwareApiService: HardwareApiService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private mainLoaderService: MainLoaderService
     ) {}
 
     async ngOnInit() {
-        this.hardware = await this.hardwareApiService.getHardwareById(
-            this.route.snapshot.params["hardwareId"]
-        );
+        this.mainLoaderService.doWithLoadingScreen(async () => {
+            const result = await this.hardwareApiService.getHardwareById(
+                this.route.snapshot.params["hardwareId"]
+            );
+            if (result.ok) {
+                this.hardware = result.val;
+            }
+        });
     }
 
     public openEditHardwareModal() {

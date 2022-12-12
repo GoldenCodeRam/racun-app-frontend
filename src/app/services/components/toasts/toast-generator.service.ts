@@ -31,9 +31,12 @@ export class ToastGeneratorService {
         });
     }
 
-    public showError(error: any) {
-        console.log("test");
-        this.toasts.push(this.getMessageFromErrorCode(error));
+    public showError(error: ToastMessage) {
+        this.toasts.push({
+            header: error.header,
+            body: error.body,
+            toastType: ToastType.ERROR,
+        });
     }
 
     public remove(toast: SimpleToastInformation) {
@@ -41,7 +44,9 @@ export class ToastGeneratorService {
     }
 
     private getMessageFromErrorCode(
-        response: HttpErrorResponse
+        response: HttpErrorResponse & {
+            code: string;
+        }
     ): SimpleToastInformation {
         if (response.error.code) {
             switch (response.error.code) {

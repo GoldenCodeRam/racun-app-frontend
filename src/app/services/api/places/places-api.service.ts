@@ -28,15 +28,17 @@ export class PlacesApiService
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Place>> {
-        return this.makeSearchPaginationRequest(
+        const result = await this.makeSearchPaginationRequest<Place>(
             "/places/search",
             userSearch,
             currentPage,
             searchAmount
         );
+
+        return result.unwrap();
     }
 
-    public async getPlace(placeId: number): Promise<Place> {
-        return this.makeSimpleGetRequest(`/places/get/${placeId}`);
+    public async getPlace(placeId: number) {
+        return this.makeSimpleGetRequest<Place>(`/places/get/${placeId}`);
     }
 }

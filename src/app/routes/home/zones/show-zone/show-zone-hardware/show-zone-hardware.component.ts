@@ -1,6 +1,5 @@
 import { Component, Injector, Input, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { BehaviorSubject } from "rxjs";
 import { DeleteHardwareOnZoneModalComponent } from "src/app/components/modals/hardware/delete-hardware-on-zone-modal/delete-hardware-on-zone-modal.component";
 import { SelectHardwareModalComponent } from "src/app/components/modals/hardware/select-hardware-modal/select-hardware-modal.component";
 import { Hardware, HardwareOnZone } from "src/app/models/hardware";
@@ -18,8 +17,6 @@ export class ShowZoneHardwareComponent implements OnInit {
     @Input("zone")
     public zone!: Zone;
 
-    public loader = new BehaviorSubject(true);
-
     public hardwareOnZone: HardwareOnZone[] = [];
 
     constructor(
@@ -33,12 +30,15 @@ export class ShowZoneHardwareComponent implements OnInit {
     }
 
     public async loadHardwareOnZone() {
-        this.loader.next(true);
-        this.hardwareOnZone =
-            await this.hardwareApiService.getHardwareOnZonesByZoneId(
-                this.zone.id
-            );
-        this.loader.next(false);
+        this.loaderService.doWithLoadingScreen(async () => {
+            const result =
+                await this.hardwareApiService.getHardwareOnZonesByZoneId(
+                    this.zone.id
+                );
+            if (result.ok) {
+                this.hardwareOnZone = result.val;
+            }
+        });
     }
 
     public openAssignHardware() {

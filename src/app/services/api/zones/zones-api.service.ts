@@ -19,25 +19,29 @@ export class ZonesApiService extends ApiService implements ApiWithSearch<Zone> {
         return from(this.getZones(userSearch, currentSearchPage, searchLimit));
     }
 
-    public count(): Promise<number> {
-        return this.makeSimpleGetRequest("/zones/count");
+    public async count(): Promise<number> {
+        const result = await this.makeSimpleGetRequest<number>("/zones/count");
+
+        return result.unwrap();
     }
 
-    public getZones(
+    public async getZones(
         userSearch: string,
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Zone>> {
-        return this.makeSearchPaginationRequest(
+        const result = await this.makeSearchPaginationRequest<Zone>(
             "/zones/search",
             userSearch,
             currentPage,
             searchAmount
         );
+
+        return result.unwrap();
     }
 
-    public getZone(zoneId: number): Observable<Zone> {
-        return from(this.makeSimpleGetRequest<Zone>(`/zones/${zoneId}`));
+    public getZone(zoneId: number) {
+        return this.makeSimpleGetRequest<Zone>(`/zones/${zoneId}`);
     }
 
     public saveZone(zone: Zone) {
@@ -45,34 +49,24 @@ export class ZonesApiService extends ApiService implements ApiWithSearch<Zone> {
     }
 
     public updateZone(updateZone: Zone) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .put(
-                    `${environment.apiUrl}/zones/update/${updateZone.id}`,
-                    updateZone,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.put(
+                `${environment.apiUrl}/zones/update/${updateZone.id}`,
+                updateZone,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 
     public deleteZone(id: number) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .delete(`${environment.apiUrl}/zones/delete/${id}`, {
-                    withCredentials: true,
-                    responseType: "text",
-                })
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.delete(`${environment.apiUrl}/zones/delete/${id}`, {
+                withCredentials: true,
+                responseType: "text",
+            })
+        );
     }
 
     public createZone(zoneInformation: {

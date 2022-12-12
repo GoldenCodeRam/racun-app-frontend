@@ -5,6 +5,7 @@ import { DeleteUserModalComponent } from "src/app/components/modals/users/delete
 import { EditUserModalComponent } from "src/app/components/modals/users/edit-user-modal/edit-user-modal.component";
 import { User } from "src/app/models/user";
 import { UsersApiService } from "src/app/services/api/users/users-api.service";
+import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 
 @Component({
     selector: "app-show-user",
@@ -17,13 +18,19 @@ export class ShowUserComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private usersApiService: UsersApiService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private mainLoaderService: MainLoaderService
     ) {}
 
     async ngOnInit() {
-        this.user = await this.usersApiService.getUser(
-            this.route.snapshot.params["userId"]
-        );
+        this.mainLoaderService.doWithLoadingScreen(async () => {
+            const result = await this.usersApiService.getUser(
+                this.route.snapshot.params["userId"]
+            );
+            if (result.ok) {
+                this.user = result.val;
+            }
+        });
     }
 
     openEditUserModal() {

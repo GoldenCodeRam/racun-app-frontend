@@ -17,7 +17,11 @@ export class ActionApiService
         searchLimit: number
     ): Observable<SearchResult<Action>> {
         return from(
-            this.getActions(userSearch, currentSearchPage, searchLimit)
+            this.getActions(userSearch, currentSearchPage, searchLimit).then(
+                (result) => {
+                    return result.unwrap();
+                }
+            )
         );
     }
 
@@ -29,8 +33,8 @@ export class ActionApiService
         userSearch: string,
         currentPage: number,
         searchAmount: number
-    ): Promise<SearchResult<Action>> {
-        return this.makeSearchPaginationRequest(
+    ) {
+        return this.makeSearchPaginationRequest<Action>(
             "/actions/search",
             userSearch,
             currentPage,

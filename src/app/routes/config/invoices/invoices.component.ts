@@ -22,7 +22,9 @@ export class InvoicesComponent implements OnInit {
 
     public load() {
         this.configApiService.getInvoiceGenerationDate().then((date) => {
-            this.invoiceGenerationDate = new Date(date);
+            if (date.ok) {
+                this.invoiceGenerationDate = new Date(date.val);
+            }
         });
     }
 

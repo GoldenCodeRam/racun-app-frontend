@@ -23,25 +23,29 @@ export class ClientsApiService
         );
     }
 
-    count(): Promise<number> {
-        return this.makeSimpleGetRequest<number>("/clients/count");
+    async count() {
+        const result = await this.makeSimpleGetRequest<number>(
+            "/clients/count"
+        );
+        return result.unwrap();
     }
 
-    public getClientAccounts(): Promise<ClientAccount[]> {
+    public getClientAccounts() {
         return this.makeSimpleGetRequest("/clients/accounts");
     }
 
-    public getClients(
+    public async getClients(
         userSearch: string,
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Client>> {
-        return this.makeSearchPaginationRequest(
+        const result = await this.makeSearchPaginationRequest<Client>(
             "/clients/search",
             userSearch,
             currentPage,
             searchAmount
         );
+        return result.unwrap();
     }
 
     public createClient(client: {
@@ -56,17 +60,15 @@ export class ClientsApiService
     }
 
     public deleteClient(clientId: number) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .delete(`${environment.apiUrl}/clients/delete/${clientId}`, {
+        return this.observableToResult(
+            this.httpClient.delete(
+                `${environment.apiUrl}/clients/delete/${clientId}`,
+                {
                     withCredentials: true,
                     responseType: "text",
-                })
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+                }
+            )
+        );
     }
 
     public getClient(clientId: number) {
@@ -78,19 +80,14 @@ export class ClientsApiService
     }
 
     public updateClient(updateClient: Client) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .put(
-                    `${environment.apiUrl}/clients/update/${updateClient.id}`,
-                    updateClient,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.put(
+                `${environment.apiUrl}/clients/update/${updateClient.id}`,
+                updateClient,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 }

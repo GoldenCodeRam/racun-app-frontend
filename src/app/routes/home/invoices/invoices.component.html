@@ -14,11 +14,12 @@
             </div>
         </div>
         <div class="my-3">
-            <div class="row m-0 p-0">
-                <div class="col-12 col-md-6 d-flex">
-                    <p class="fs-5 my-auto text-500">Facturas por pagar</p>
-                </div>
-                <div class="col-12 col-md-6 text-end">
+            <p class="fs-5 my-auto text-500">Facturas por pagar</p>
+            <div
+                class="d-flex flex-column gap-3 py-3"
+                *ngIf="invoices.length > 0; else noInvoices"
+            >
+                <div class="text-end">
                     <button
                         class="btn btn-primary"
                         (click)="downloadInvoices()"
@@ -27,8 +28,6 @@
                         Descargar facturas
                     </button>
                 </div>
-            </div>
-            <div class="d-flex flex-column gap-3 py-3">
                 <div
                     *ngFor="let invoice of invoices"
                     class="rounded shadow-sm border px-4 py-2"
@@ -42,6 +41,15 @@
                     </p>
                 </div>
             </div>
+
+            <ng-template #noInvoices>
+                <div
+                    class="border shadow border-success px-5 py-3 rounded d-flex flex-row gap-3 justify-content-center align-items-center mt-2"
+                >
+                    <i class="bi bi-clipboard-check display-5 text-success"></i>
+                    No hay facturas por pagar.
+                </div>
+            </ng-template>
         </div>
     </div>
 </div>

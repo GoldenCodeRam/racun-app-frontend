@@ -7,6 +7,7 @@ import { EditZoneModalComponent } from "src/app/components/modals/zones/edit-zon
 
 import { Zone } from "src/app/models/zone";
 import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";
+import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
 
 @Component({
     selector: "app-show-zone",
@@ -14,8 +15,6 @@ import { ZonesApiService } from "src/app/services/api/zones/zones-api.service";
     styleUrls: ["./show-zone.component.sass"],
 })
 export class ShowZoneComponent implements OnInit {
-    public loader = new BehaviorSubject(true);
-
     public zoneObservable!: Observable<Zone>;
     public zone!: Zone;
 
@@ -24,16 +23,19 @@ export class ShowZoneComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private zonesApiService: ZonesApiService,
-        private modalService: NgbModal
+        private modalService: NgbModal,
+        private mainLoaderService: MainLoaderService
     ) {}
 
     async ngOnInit() {
-        this.zoneObservable = this.zonesApiService.getZone(
-            this.route.snapshot.params["zoneId"]
-        );
-        this.zoneObservable.subscribe((zone) => {
-            this.zone = zone;
-            this.loader.next(false);
+        this.mainLoaderService.doWithLoadingScreen(async () => {
+            const result = await this.zonesApiService.getZone(
+                this.route.snapshot.params["zoneId"]
+            );
+
+            if (result.ok) {
+                this.zone = result.val;
+            }
         });
     }
 

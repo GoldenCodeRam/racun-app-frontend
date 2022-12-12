@@ -1,6 +1,5 @@
 import { Component, Injector, Input, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { BehaviorSubject } from "rxjs";
 import { DeleteHardwareOnClientModalComponent } from "src/app/components/modals/hardware/delete-hardware-on-client-modal/delete-hardware-on-client-modal.component";
 import { SelectHardwareModalComponent } from "src/app/components/modals/hardware/select-hardware-modal/select-hardware-modal.component";
 import { ClientAccount } from "src/app/models/clientAccount";
@@ -18,8 +17,6 @@ export class ShowUserHardwareComponent implements OnInit {
     @Input("clientAccount")
     public clientAccount!: ClientAccount;
 
-    public loader = new BehaviorSubject(true);
-
     public hardwareOnClient: HardwareOnClient[] = [];
 
     constructor(
@@ -33,12 +30,15 @@ export class ShowUserHardwareComponent implements OnInit {
     }
 
     public async loadHardwareOnClient() {
-        this.loader.next(true);
-        this.hardwareOnClient =
-            await this.hardwareApiService.getHardwareOnClientsByClientAccountId(
-                this.clientAccount.id
-            );
-        this.loader.next(false);
+        this.loaderService.doWithLoadingScreen(async () => {
+            const result =
+                await this.hardwareApiService.getHardwareOnClientsByClientAccountId(
+                    this.clientAccount.id
+                );
+            if (result.ok) {
+                this.hardwareOnClient = result.val;
+            }
+        });
     }
 
     public openAssignHardware() {

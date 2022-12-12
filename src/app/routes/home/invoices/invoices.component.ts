@@ -43,12 +43,20 @@ export class InvoicesComponent implements OnInit {
     }
 
     private async load() {
-        this.configApiService.getInvoiceGenerationDate().then((date) => {
-            this.invoiceGenerationDate = new Date(date);
-        });
-        this.generateCountdown();
+        this.mainLoaderService.doWithLoadingScreen(async () => {
+            const invoiceGenerationDateResult =
+                await this.configApiService.getInvoiceGenerationDate();
+            const invoicesResult = await this.invoicesApiService.findAll();
 
-        this.invoices = await this.invoicesApiService.findAll();
+            if (invoiceGenerationDateResult.ok && invoicesResult.ok) {
+                this.invoiceGenerationDate = new Date(
+                    invoiceGenerationDateResult.val
+                );
+                this.invoices = invoicesResult.val;
+            }
+
+            this.generateCountdown();
+        });
     }
 
     private generateCountdown() {

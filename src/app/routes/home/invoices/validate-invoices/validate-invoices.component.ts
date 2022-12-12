@@ -1,11 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { Html5Qrcode, Html5QrcodeScanner } from "html5-qrcode";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Html5Qrcode } from "html5-qrcode";
 import {
     InvoiceDto,
     InvoicesApiService,
 } from "src/app/services/api/invoices/invoices-api.service";
 import { MainLoaderService } from "src/app/services/components/loaders/main-loader.service";
-import { ToastGeneratorService } from "src/app/services/components/toasts/toast-generator.service";
 import { Err, Ok } from "ts-results";
 
 @Component({
@@ -13,7 +12,7 @@ import { Err, Ok } from "ts-results";
     templateUrl: "./validate-invoices.component.html",
     styleUrls: ["./validate-invoices.component.sass"],
 })
-export class ValidateInvoicesComponent implements OnInit {
+export class ValidateInvoicesComponent implements OnInit, OnDestroy {
     private htmlQrCodeReader!: Html5Qrcode;
 
     public cameraError = false;
@@ -21,7 +20,6 @@ export class ValidateInvoicesComponent implements OnInit {
     public invoiceToValidate?: InvoiceDto;
 
     constructor(
-        private toastGeneratorService: ToastGeneratorService,
         private invoicesApiService: InvoicesApiService,
         private mainLoaderService: MainLoaderService
     ) {}
@@ -30,6 +28,12 @@ export class ValidateInvoicesComponent implements OnInit {
         this.htmlQrCodeReader = new Html5Qrcode("reader");
 
         this.startCamera();
+    }
+
+    ngOnDestroy(): void {
+        try {
+            this.htmlQrCodeReader.stop();
+        } catch (error) {}
     }
 
     public async startCamera() {
@@ -50,10 +54,15 @@ export class ValidateInvoicesComponent implements OnInit {
                 async (decodedText, _) => {
                     if (decodedText) {
                         await this.htmlQrCodeReader.stop();
-                        this.invoiceToValidate =
+
+                        const result =
                             await this.invoicesApiService.getInvoiceFromQrCode(
                                 decodedText
                             );
+
+                        if (result.ok) {
+                            this.invoiceToValidate = result.val;
+                        }
                     }
                 },
                 (_) => {}
@@ -66,6 +75,7 @@ export class ValidateInvoicesComponent implements OnInit {
     public async updateInvoiceAsPaid() {
         await this.mainLoaderService.doWithLoadingScreen(async () => {
             if (this.invoiceToValidate) {
+                // This status is PAID
                 this.invoiceToValidate.status = 1;
                 await this.invoicesApiService.updateInvoice(
                     this.invoiceToValidate
@@ -76,7 +86,10 @@ export class ValidateInvoicesComponent implements OnInit {
                     body: "Factura actualizada correctamente.",
                 });
             }
-            return Err(new Error());
+            return Err({
+                header: "Factura no actualizada",
+                body: "Ha ocurrido un error al intentar validar la factura.",
+            });
         });
 
         this.startCamera();

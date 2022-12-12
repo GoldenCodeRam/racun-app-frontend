@@ -19,29 +19,33 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
         return from(this.getUsers(userSearch, currentSearchPage, searchLimit));
     }
 
-    public count(): Promise<number> {
-        return this.makeSimpleGetRequest("/users/count");
+    public async count() {
+        const result = await this.makeSimpleGetRequest<number>("/users/count");
+
+        return result.unwrap();
     }
 
-    public async getCurrentUser(): Promise<User> {
-        return this.makeSimpleGetRequest("/users/current-user");
+    public async getCurrentUser() {
+        return this.makeSimpleGetRequest<User>("/users/current-user");
     }
 
-    public getUser(userId: number): Promise<User> {
-        return this.makeSimpleGetRequest(`/users/get/${userId}`);
+    public getUser(userId: number) {
+        return this.makeSimpleGetRequest<User>(`/users/get/${userId}`);
     }
 
-    public getUsers(
+    public async getUsers(
         userSearch: string,
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<User>> {
-        return this.makeSearchPaginationRequest(
+        const result = await this.makeSearchPaginationRequest<User>(
             "/users/search",
             userSearch,
             currentPage,
             searchAmount
         );
+
+        return result.unwrap();
     }
 
     public createUser(userInformation: {
@@ -55,32 +59,25 @@ export class UsersApiService extends ApiService implements ApiWithSearch<User> {
     }
 
     public updateUser(updateUser: User) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .put(
-                    `${environment.apiUrl}/users/update/${updateUser.id}`,
-                    updateUser,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.put(
+                `${environment.apiUrl}/users/update/${updateUser.id}`,
+                updateUser,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 
     public deleteUser(userId: number) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .delete(`${environment.apiUrl}/users/delete/${userId}`, {
+        return this.observableToResult(
+            this.httpClient.delete(
+                `${environment.apiUrl}/users/delete/${userId}`,
+                {
                     withCredentials: true,
-                })
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+                }
+            )
+        );
     }
 }

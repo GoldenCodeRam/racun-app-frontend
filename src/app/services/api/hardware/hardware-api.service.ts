@@ -38,12 +38,14 @@ export class HardwareApiService
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Hardware>> {
-        return this.makeSearchPaginationRequest(
+        const result = await this.makeSearchPaginationRequest<Hardware>(
             "/hardware/search",
             userSearch,
             currentPage,
             searchAmount
         );
+
+        return result.unwrap();
     }
 
     public createHardware(hardwareInfo: HardwareInfo) {
@@ -64,84 +66,64 @@ export class HardwareApiService
         );
     }
 
-    public getHardwareOnClientsByClientAccountId(
-        id: number
-    ): Promise<HardwareOnClient[]> {
-        return this.makeSimpleGetRequest(`/hardware-on-clients/${id}`);
+    public getHardwareOnClientsByClientAccountId(id: number) {
+        return this.makeSimpleGetRequest<HardwareOnClient[]>(
+            `/hardware-on-clients/${id}`
+        );
     }
 
-    public getHardwareOnZonesByZoneId(id: number): Promise<HardwareOnZone[]> {
-        return this.makeSimpleGetRequest(`/hardware-on-zones/${id}`);
+    public getHardwareOnZonesByZoneId(id: number) {
+        return this.makeSimpleGetRequest<HardwareOnZone[]>(
+            `/hardware-on-zones/${id}`
+        );
     }
 
-    public async getHardwareById(hardwareId: number): Promise<Hardware> {
-        return this.makeSimpleGetRequest(`/hardware/${hardwareId}`);
+    public async getHardwareById(hardwareId: number) {
+        return this.makeSimpleGetRequest<Hardware>(`/hardware/${hardwareId}`);
     }
 
     public updateHardware(hardware: Hardware) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .put(
-                    `${environment.apiUrl}/hardware/update/${hardware.id}`,
-                    hardware,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.put(
+                `${environment.apiUrl}/hardware/update/${hardware.id}`,
+                hardware,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 
     public deleteHardwareOnZone(hardwareOnZone: HardwareOnZone) {
-        console.log(hardwareOnZone);
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .delete(
-                    `${environment.apiUrl}/hardware-on-zones/delete/${hardwareOnZone.id}`,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.delete(
+                `${environment.apiUrl}/hardware-on-zones/delete/${hardwareOnZone.id}`,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 
     public deleteHardwareOnClient(hardwareOnClient: HardwareOnClient) {
-        console.log(hardwareOnClient);
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .delete(
-                    `${environment.apiUrl}/hardware-on-clients/delete/${hardwareOnClient.id}`,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.delete(
+                `${environment.apiUrl}/hardware-on-clients/delete/${hardwareOnClient.id}`,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 
     public deleteHardware(hardware: Hardware) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .delete(
-                    `${environment.apiUrl}/hardware/delete/${hardware.id}`,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.delete(
+                `${environment.apiUrl}/hardware/delete/${hardware.id}`,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 }

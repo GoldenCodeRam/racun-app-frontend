@@ -26,17 +26,19 @@ export class ServicesApiService
         throw new Error("Method not implemented.");
     }
 
-    public getServices(
+    public async getServices(
         userSearch: string,
         currentPage: number,
         searchAmount: number
     ): Promise<SearchResult<Service>> {
-        return this.makeSearchPaginationRequest(
+        const result = await this.makeSearchPaginationRequest<Service>(
             "/services/search",
             userSearch,
             currentPage,
             searchAmount
         );
+
+        return result.unwrap();
     }
 
     public createService(serviceInformation: {
@@ -50,38 +52,31 @@ export class ServicesApiService
         );
     }
 
-    public getService(serviceId: number): Promise<Service> {
+    public getService(serviceId: number) {
         return this.makeSimpleGetRequest<Service>(`/services/${serviceId}`);
     }
 
     public updateService(updateService: Service) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .put(
-                    `${environment.apiUrl}/services/update/${updateService.id}`,
-                    updateService,
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+        return this.observableToResult(
+            this.httpClient.put(
+                `${environment.apiUrl}/services/update/${updateService.id}`,
+                updateService,
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 
     public deleteService(serviceId: number) {
-        return this.promisify((resolve, reject) => {
-            return this.httpClient
-                .delete(`${environment.apiUrl}/services/delete/${serviceId}`, {
+        return this.observableToResult(
+            this.httpClient.delete(
+                `${environment.apiUrl}/services/delete/${serviceId}`,
+                {
                     withCredentials: true,
                     responseType: "text",
-                })
-                .subscribe({
-                    next: (_) => resolve(),
-                    error: (error) => reject(error),
-                });
-        });
+                }
+            )
+        );
     }
 }

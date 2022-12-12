@@ -4,7 +4,17 @@ import { ApiService } from "../api.service";
 
 export type InvoiceDto = {
     id: number;
-} & CreateInvoiceDto;
+    generationDate: string;
+    adjustment: number;
+    contractId: number;
+    latePaymentValue: number;
+    paymentDate: string;
+    periodEnd: string;
+    periodStart: string;
+    status: number;
+    suspensionDate: string;
+    value: number;
+};
 
 export type CreateInvoiceDto = {
     adjustment: number;
@@ -22,8 +32,10 @@ export type CreateInvoiceDto = {
     providedIn: "root",
 })
 export class InvoicesApiService extends ApiService {
-    public async findAll(): Promise<InvoiceDto[]> {
-        return await this.makeSimpleGetRequest("/invoices/findAll");
+    public async findAll() {
+        return await this.makeSimpleGetRequest<InvoiceDto[]>(
+            "/invoices/findAll"
+        );
     }
 
     public async generateInvoices() {
@@ -60,34 +72,28 @@ export class InvoicesApiService extends ApiService {
 
         adjustment?: number;
     }) {
-        await this.promisify((resolve, reject) => {
-            this.httpClient
-                .post(
-                    `${environment.apiUrl}/contracts/generate-invoice/${invoiceData.contractId}`,
-                    invoiceData,
-                    {
-                        withCredentials: true,
-                        responseType: "blob",
-                    }
-                )
-                .subscribe({
-                    next: (response: any) => {
-                        var blob = new Blob([response], {
-                            type: "application/zip",
-                        });
-                        const fileUrl = URL.createObjectURL(blob);
-                        window.open(fileUrl);
-                        resolve();
-                    },
-                    error: (_) => {
-                        reject();
-                    },
-                });
-        });
+        const result = await this.observableToResult<any>(
+            this.httpClient.post(
+                `${environment.apiUrl}/contracts/generate-invoice/${invoiceData.contractId}`,
+                invoiceData,
+                {
+                    withCredentials: true,
+                    responseType: "blob",
+                }
+            )
+        );
+
+        if (result.ok) {
+            var blob = new Blob([result.val], {
+                type: "application/zip",
+            });
+            const fileUrl = URL.createObjectURL(blob);
+            window.open(fileUrl);
+        }
     }
 
-    public async getInvoiceFromQrCode(qrCode: string): Promise<InvoiceDto> {
-        return await this.makeSimplePostRequest<any>(
+    public async getInvoiceFromQrCode(qrCode: string) {
+        return await this.makeSimplePostRequest<InvoiceDto>(
             "/invoices/findWithQrCode",
             {
                 qrCode: qrCode,
@@ -96,6 +102,9 @@ export class InvoicesApiService extends ApiService {
     }
 
     public async updateInvoice(invoice: any) {
-        return this.makeSimplePutRequest(`/invoices/update/${invoice.id}`, invoice);
+        return this.makeSimplePutRequest(
+            `/invoices/update/${invoice.id}`,
+            invoice
+        );
     }
 }

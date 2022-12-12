@@ -1,7 +1,8 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { lastValueFrom, Observable } from "rxjs";
 import { environment } from "src/environments/environment";
+import { Err, Ok, Result } from "ts-results";
 import { SearchResult } from "./apiTypes";
 
 /**
@@ -23,67 +24,36 @@ export interface ApiWithSearch<T> {
 })
 export class ApiService {
     constructor(protected httpClient: HttpClient) {}
-    protected async makeSimpleGetRequest<T>(url: string): Promise<T> {
-        return this.promisify((resolve, reject) => {
-            this.httpClient
-                .get(`${environment.apiUrl}${url}`, {
-                    withCredentials: true,
-                })
-                .subscribe({
-                    next: (value) => {
-                        resolve(value as T);
-                    },
-                    error: (error) => reject(error),
-                });
-        });
+    protected makeSimpleGetRequest<T>(url: string) {
+        return this.observableToResult<T>(
+            this.httpClient.get(`${environment.apiUrl}${url}`, {
+                withCredentials: true,
+            })
+        );
     }
 
-    protected async makeSimplePatchRequest<T>(
-        url: string,
-        body: T
-    ): Promise<T> {
-        return this.promisify((resolve, reject) => {
-            this.httpClient
-                .patch(`${environment.apiUrl}${url}`, body, {
-                    withCredentials: true,
-                })
-                .subscribe({
-                    next: (value) => {
-                        resolve(value as T);
-                    },
-                    error: (error) => reject(error),
-                });
-        });
+    protected makeSimplePatchRequest<T>(url: string, body: T) {
+        return this.observableToResult(
+            this.httpClient.patch(`${environment.apiUrl}${url}`, body, {
+                withCredentials: true,
+            })
+        );
     }
 
-    protected async makeSimplePutRequest<T>(url: string, body: T): Promise<T> {
-        return this.promisify((resolve, reject) => {
-            this.httpClient
-                .put(`${environment.apiUrl}${url}`, body, {
-                    withCredentials: true,
-                })
-                .subscribe({
-                    next: (value) => {
-                        resolve(value as T);
-                    },
-                    error: (error) => reject(error),
-                });
-        });
+    protected makeSimplePutRequest<T>(url: string, body: T) {
+        return this.observableToResult(
+            this.httpClient.put(`${environment.apiUrl}${url}`, body, {
+                withCredentials: true,
+            })
+        );
     }
 
-    protected async makeSimplePostRequest<T>(url: string, body: T): Promise<T> {
-        return this.promisify((resolve, reject) => {
-            this.httpClient
-                .post(`${environment.apiUrl}${url}`, body, {
-                    withCredentials: true,
-                })
-                .subscribe({
-                    next: (value) => {
-                        resolve(value as T);
-                    },
-                    error: (error) => reject(error),
-                });
-        });
+    protected makeSimplePostRequest<T>(url: string, body: any) {
+        return this.observableToResult<T>(
+            this.httpClient.post(`${environment.apiUrl}${url}`, body, {
+                withCredentials: true,
+            })
+        );
     }
 
     protected makeSearchPaginationRequest<T>(
@@ -91,34 +61,31 @@ export class ApiService {
         userSearch: string,
         currentPage: number = 0,
         searchAmount: number = 10
-    ): Promise<SearchResult<T>> {
-        return new Promise((resolve, reject) => {
-            this.httpClient
-                .post(
-                    `${environment.apiUrl}${url}`,
-                    {
-                        userSearch: userSearch,
-                        // Say we are on page 3 with a search amount of 5, so we
-                        // need to skip 15 ahead and search five more.
-                        skip: currentPage * searchAmount,
-                        take: searchAmount,
-                    },
-                    {
-                        withCredentials: true,
-                    }
-                )
-                .subscribe({
-                    next: (value) => {
-                        resolve(value as SearchResult<T>);
-                    },
-                    error: (error) => reject(error),
-                });
-        });
+    ) {
+        return this.observableToResult<SearchResult<T>>(
+            this.httpClient.post(
+                `${environment.apiUrl}${url}`,
+                {
+                    userSearch: userSearch,
+                    // Say we are on page 3 with a search amount of 5, so we
+                    // need to skip 15 ahead and search five more.
+                    skip: currentPage * searchAmount,
+                    take: searchAmount,
+                },
+                {
+                    withCredentials: true,
+                }
+            )
+        );
     }
 
-    protected promisify<T>(
-        callback: (resolve: any, reject: any) => void
-    ): Promise<T> {
-        return new Promise<T>(callback);
+    protected async observableToResult<T>(
+        observable: Observable<any>
+    ): Promise<Result<T, Error>> {
+        try {
+            return Ok(await lastValueFrom(observable));
+        } catch (error: any) {
+            return Err(error);
+        }
     }
 }
